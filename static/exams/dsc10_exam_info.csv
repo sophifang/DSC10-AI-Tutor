@@ -1,0 +1,643 @@
+,Quarter,Year,Exam_type,Quiz_number,Info
+0,Fa,23,Quiz,1.0,
+1,Fa,23,Quiz,2.0,"The DataFrame items describes various items available to
+collect or purchase using bells, the currency used in the game
+Animal Crossing: New Horizons.
+For each item, we have:""Item"" (str): The name of the item.
+""Cost"" (int): The cost of the item in bells. Items that
+cost 0 bells cannot be purchased and must be collected through other
+means (such as crafting).
+""Location"" (str): The store or action through which the
+item can be obtained.The first 6 rows of items are below, though
+items has more rows than are shown here.
+"
+2,Fa,23,Quiz,3.0,"Ciro is an avid fan of Costco, a members-only warehouse store. On his
+recent trip to the Morena Boulevard location near campus, he was
+surprised by how full shoppers’ carts were and was inspired to
+investigate how much people typically spend at Costco."
+3,Fa,23,Quiz,4.0,"Video streaming services, such as Netflix and Hulu, are more popular
+than ever. Let’s investigate trends in the video streaming habits of
+UCSD students."
+4,Fa,24,Quiz,1.0,
+5,Fa,24,Quiz,2.0,"The DataFrame uc has information about the number of
+degrees awarded by each University of California campus, for each of the
+past six academic years ""2018-2019"" through
+""2023-2024"". Since there are ten UC campuses and six years
+of data, there are 60 rows. The columns are ""Campus"" (str),
+""Year"" (str), and ""Degrees"" (int).
+The first 3 rows of uc are shown here.
+"
+6,Fa,24,Quiz,3.0,
+7,Wi,24,Quiz,1.0,
+8,Wi,24,Quiz,2.0,"The laptops DataFrame contains information on various
+factors that influence the pricing of laptops. Each row represents a
+laptop, and the columns are:""Mfr"" (str): the company that manufactures the laptop,
+like “Apple” or “Dell”.
+""Model"" (str): the model name of the laptop, such as
+“MacBook Pro”.
+""OS"" (str): the operating system, such as “macOS” or
+“Windows 11”.
+""Screen Size"" (float): the diagonal length of the
+screen, in inches.
+""Price"" (float): the price of the laptop, in
+dollars.
+"
+9,Wi,24,Quiz,3.0,"The DataFrame flights contains information about recent
+flights, with each row representing a specific flight and the following
+columns:""flight num"" (str): The unique code of the flight,
+consisting of a two-character airline designator followed by 1 to 4
+digits (e.g., ""UA1989"").
+""airline"" (str): The airline name (e.g.,
+""United"").
+""departure"" (str): The code for the airport from which
+the flight departs (e.g., ""SAN"").
+""arrival"" (str): The code for the airport at which the
+flight arrives (e.g., ""LAX"").
+"
+10,Wi,24,Quiz,4.0,
+11,Wi,24,Quiz,5.0,
+12,Wi,24,Quiz,6.0,"It can be hard to find a parking spot on UCSD’s campus! The
+parking DataFrame contains UCSD parking occupancy data for
+two on-campus parking structures. The ""Structure"" column
+contains either ""Gilman"" or ""Hopkins"". Each
+row of parking represents one day. The
+""Occupancy"" column contains a float representing the
+proportion of occupied spaces at noon on that day. We’ll use this data
+to test the following hypotheses:Null Hypothesis: At noon, Gilman and Hopkins are
+equally occupied. The observed differences in our samples are simply due
+to random chance.
+Alternative Hypothesis: At noon, Hopkins is less
+occupied than Gilman. The observed differences in our samples cannot be
+explained by random chance alone.As our test statistic, we will use the mean noontime
+""Occupancy"" of Hopkins minus the mean noontime
+""Occupancy"" of Gilman."
+13,Sp,24,Quiz,1.0,
+14,Sp,24,Quiz,2.0,"An art museum records information about its collection in a DataFrame
+called art. The columns of art are as
+follows:""title"" (str): the name of the art piece.
+""artist"" (str): the name of the artist.
+""year"" (int): the year the art piece was produced.
+""price"" (float): the selling price of hte art piece in
+dollars
+"
+15,Sp,24,Quiz,3.0,
+16,Sp,24,Quiz,4.0,
+17,Sp,24,Quiz,5.0,"The DataFrame bikes contains a sample of 500 bikes for
+sale locally. Columns are:""serial number"" (int): An integer that uniquely
+identifies the bicycle.
+""price"" (int): The list price of the bicycle.
+""style"" (str): Values are ""electric"",
+""mountain"", ""road"", ""hybrid"", and
+""recumbent"".
+"
+18,Fa,21,Midterm,,"King Triton, UCSD’s mascot, is quite the traveler! Throughout this
+exam, we will be working with the flights DataFrame, which
+details several facts about each of the flights that King Triton has
+been on over the past few years. The first few rows of
+flights are shown below.
+Here’s a description of the columns in flights:'DATE': the date on which the flight occurred. Assume
+that there were no “redeye” flights that spanned multiple days.
+'FLIGHT': the flight number. Note that this is not
+unique; airlines reuse flight numbers on a daily basis.
+'FROM' and 'TO': the 3-letter airport code
+for the departure and arrival airports, respectively. Note that it’s not
+possible to have a flight from and to the same airport.
+'DIST': the distance of the flight, in miles.
+'HOURS': the length of the flight, in hours.
+'SEAT': the kind of seat King Triton sat in on the
+flight; the only possible values are 'WINDOW',
+'MIDDLE', and 'AISLE'.Tip: Open this page in another tab, so that it is
+easy to refer to this data description as you work through the exam."
+19,Fa,21,Final,,"Welcome to the Final Exam! In honor of the (at the time) brand-new
+Comic-Con Museum that just opened at Balboa Park here in San Diego, this
+exam will contain questions about various museums and zoos around the
+world.
+In this question, we’ll work with the DataFrame
+art_museums, which contains the name, city, number of
+visitors in 2019, and rank (based on number of visitors) for the 100
+most visited art museums in 2019. The first few rows of
+art_museums are shown below.
+Tip: Open this page in another tab, so that it is
+easy to refer to this data description as you work through the exam."
+20,Fa,22,Midterm,,"Video 🎥
+Here’s
+a walkthrough video of some of the problems on the exam.In September 2020, Governor Gavin Newsom announced that by 2035, all
+new vehicles sold in California must be zero-emissions vehicles.
+Electric vehicles (EVs) are among the most popular zero-emissions
+vehicles (though other examples include plug-in hybrids and hydrogen
+fuel cell vehicles).
+The DataFrame evs consists of 32 rows,
+each of which contains information about a different EV model.""Brand"" (str): The vehicle’s manufacturer.
+""Model"" (str): The vehicle’s model name.
+""BodyStyle"" (str): The vehicle’s body style.
+""Seats"" (int): The vehicle’s number of seats.
+""TopSpeed"" (int): The vehicle’s top speed, in
+kilometers per hour.
+""Range"" (int): The vehicle’s range, or distance it can
+travel on a single charge, in kilometers.The first few rows of evs are shown below (though
+remember, evs has 32 rows total).
+Throughout this exam, we will refer to evs
+repeatedly.
+Assume that:The only four values in the ""Brand"" column are
+""Tesla"", ""BMW"", ""Audi"", and
+""Nissan"".
+We have already run import babypandas as bpd and
+import numpy as np.Tip: Open this page in another tab, so that it is
+easy to refer to this data description as you work through the exam."
+21,Fa,22,Final,,"Credit cards allow consumers to make purchases by borrowing money and
+paying it back later. Credit card companies are wary of granting this
+borrowing ability to consumers who may not be able to pay back their
+debt. Therefore, potential credit card carriers must submit an
+application that contains information about themselves and their history
+of paying back debt.
+The DataFrame apps contains application data for a
+random sample of 1,000 applicants for a particular credit card from the
+1990s. The columns are:""status"" (str): Whether the credit card application
+was approved: ""approved"" or ""denied"" values
+only.
+""age"" (float): The applicant’s age, in years, to the
+nearest twelfth of a year.
+""income"" (float): The applicant’s annual income, in
+tens of thousands of dollars.
+""homeowner"" (str): Whether the credit card applicant
+owns their own home: ""yes"" or ""no"" values
+only.
+""dependents"" (int): The number of dependents, or
+individuals that rely on the applicant as a primary source of income,
+such as children.The first few rows of apps are shown below, though
+remember that apps has 1,000 rows.
+Throughout this exam, we will refer to apps
+repeatedly.
+Assume that:Each applicant only submitted a single application.
+We have already run import babypandas as bpd and
+import numpy as np.Tip: Open this page in another tab, so that it is
+easy to refer to this data description as you work through the exam."
+22,Fa,23,Midterm,,"An area’s cost of living describes how expensive it is to live in
+that area. In this exam, we’ll work with the DataFrame
+living_cost, which describes the typical cost of living for
+different types of families across all 3143 counties in the 50 United
+States. The first few rows of living_cost are shown below,
+but living_cost has many more rows than
+shown.
+Two counties in the same state will never have the same name, but as
+the last two rows above illustrate, there are some counties in different
+states with the same name, like Lee County.
+The ""family_type"" column uses a code to describe the
+number of adults and children in a family. For example, a value of
+""2a1c"" represents families with two adults and one child.
+There are ten unique values, as follows: ""1a0c"",
+""1a1c"", ""1a2c"", ""1a3c"",
+""1a4c"", ""2a0c"", ""2a1c"",
+""2a2c"", ""2a3c"", ""2a4c"". We will
+assume that all families fall into one of these ten
+categories, and all ten family structures are present
+in each US county.
+Each of the 31430 rows of the DataFrame represents a unique
+combination of ""state"", ""county"", and
+""family_type"". As a result, there will be more than one row
+with a ""state"" of ""CA"" and a
+""county"" of ""San Diego"", corresponding to
+different values of ""family_type"". Similarly, there will be
+many rows such that ""family_type"" is ""2a1c"",
+all corresponding to different counties. There is only one
+row, however, where ""state"" is ""CA"",
+""county"" is ""San Diego"", and
+""family_type"" is ""1a2c""
+In addition to the ""state"", ""county"", and
+""family_type"" columns, living_cost includes
+the following columns.""is_metro"" (bool): True if
+the county is part of a metropolitan (urban) area, False
+otherwise. This value is the same for all rows of the DataFrame
+corresponding to the same county and state.
+""avg_housing_cost"" (int): The average
+yearly cost of housing, in dollars, for families of the given size in
+the given county and state.
+""avg_childcare_cost"" (int): The average
+yearly cost of childcare, in dollars, for families of the given size in
+the given county and state.
+""median_income"" (int): The median annual
+income, in dollars, for families of the given size in the given county
+and state.Throughout the exam, assume we have already run
+import babypandas as bpd and
+import numpy as np."
+23,Fa,23,Final,,"Data Overview: Fraudulent
+Transactions
+Today, we’re diving into the high-stakes world of fraud detection.
+Each row in the DataFrame txn represents one online
+transaction, or purchase. The txn DataFrame is indexed by
+""transaction_id"" (int), which is a unique identifier for a
+transaction. The columns of txn are as follows:""is_fraud"" (bool): True if the transaction
+was fraudulent and False if not.
+""amount"" (float): The dollar amount of the
+transaction.
+""method"" (str): The payment method; either
+""debit"" or ""credit"".
+""card"" (str): The payment network of the card used for
+the transaction; either ""visa"", ""mastercard"",
+""american express"", or ""discover"".
+""lifetime"" (float): The total transaction amount of all
+transactions made with this card over its lifetime.
+""browser"" (str): The web browser used for the online
+transaction. There are 100 distinct browser types in this column; some
+examples include ""samsung browser 6.2"",
+""mobile safari 11.0"", and ""chrome 62.0"".The first few rows of txn are shown below, though
+txn has 140,000 rows in total. Assume that the data in
+txn is a simple random sample from the much larger
+population of all online transactions.Throughout this exam, assume that we have already run
+import babypandas as bpd and
+import numpy as np."
+24,Fa,24,Midterm,,"Trick-or-treating is a Halloween tradition, where children wear
+costumes and walk around their neighborhood from house to house to
+collect candy. In this exam, you’ll work with a data set representing
+the candy given out on Halloween. Each row represents one type of candy
+given out by one house in San Diego.
+The columns of treat are as follows:""address"" (str): The address of the house
+giving out candy.
+""candy"" (str): The type of candy that is
+being given out.
+""how_many"" (int): How many pieces of candy
+are being given out.
+""neighborhood"" (str): The neighborhood
+that the house is in.The first few rows of treat are shown below, though
+treat has many more rows than pictured.
+Throughout this exam, we will refer to treat repeatedly.
+Assume that we have already run import babypandas as bpd
+and import numpy as np."
+25,Wi,21,Midterm,,
+26,Wi,21,Final,,
+27,Wi,22,Midterm,,"Welcome to the Midterm Exam for DSC 10 Winter 2022! Throughout this
+exam, we will work with a dataset consisting of various skyscrapers in
+the US, which we’ve loaded into a DataFrame called sky. The
+first few rows of sky are shown below (though the full
+DataFrame has more rows):Each row of sky corresponds to a single skyscraper. For
+each skyscraper, we have: - its name, which is stored in the index of
+sky (string) - the 'material' it is made up of
+(string) - the 'city' in the US where it is located
+(string) - the number of 'floors' (levels) it contains
+(int) - its 'height' in meters (float), and - the
+'year' in which it was opened (int)
+Note that the height of a floor may be different in each
+building.
+Tip: Open this page in another tab, so that it is
+easy to refer to this data description as you work through the exam."
+28,Wi,22,Final,,"Welcome to the Final Exam for DSC 10 Winter 2022! In this exam, we
+will use data from the 2021 Women’s National Basketball Association
+(WNBA) season. In basketball, players score points by shooting the ball
+into a hoop. The team that scores the most points wins the game.
+Kelsey Plum, a WNBA player, attended La Jolla Country Day School,
+which is adjacent to UCSD’s campus. Her current team is the Las Vegas
+Aces (three-letter code 'LVA'). In 2021, the Las
+Vegas Aces played 31 games, and Kelsey Plum played in all
+31.
+The DataFrame plum contains her stats for all games the
+Las Vegas Aces played in 2021. The first few rows of plum
+are shown below (though the full DataFrame has 31 rows, not 5):Each row in plum corresponds to a single game. For each
+game, we have:'Date' (str), the date on which the game
+was played
+'Opp' (str), the three-letter code of the
+opponent team
+'Home' (bool), True if the
+game was played in Las Vegas (“home”) and False if it was
+played at the opponent’s arena (“away”)
+'Won' (bool), True if the Las
+Vegas Aces won the game and False if they lost
+'PTS' (int), the number of points Kelsey
+Plum scored in the game
+'AST' (int), the number of assists
+(passes) Kelsey Plum made in the game
+'TOV' (int), the number of turnovers
+Kelsey Plum made in the game (a turnover is when you lose the ball –
+turnovers are bad!)Tip: Open this page in another tab, so that it is
+easy to refer to this data description as you work through the exam."
+29,Wi,23,Midterm,,"Video 🎥
+Here’s
+a walkthrough video of some of the problems on the exam.Tropical cyclones, such as hurricanes, are storms characterized by
+high wind speeds. These storms can cause great devastation when they
+make landfall. In the US, the National Hurricane Center (NHC) is the
+government entity responsible for tracking and predicting these tropical
+weather systems. The NHC names tropical storms of sufficient intensity,
+using a list of people’s names that gets reused every six years. For
+example, there have been many different storms named Cindy, all
+occurring in different years. We’ll assume that no tropical storm has
+ever spanned more than one calendar year.
+The DataFrame storms contains information about all
+named tropical storms in the Atlantic Ocean between 1965 and 2015. Each
+row corresponds to a data entry describing the storm at a particular
+moment in time, and one storm usually has many data entries throughout
+the duration of the storm. The columns of storms are as
+follows.""Name"" (str): The name of the storm.
+""Date"" (int): The year, month, and day of
+the data entry, stored as an 8-digit integer. For example,
+20151113 corresponds to November 13, 2015.
+""Time"" (str): The time of the data
+entry.
+""Status"" (str): A categorical variable
+describing the intensity of the storm at the time of the data entry.
+There are many possible values, for example ""TD"" stands for
+“tropical depression” and ""TS"" stands for “tropical
+storm.”
+""Latitude"" (str): The latitude of the
+center of the storm at the time of the data entry. Describes the
+north-south location of the storm.
+""Longitude"" (str): The longitude of the
+center of the storm at the time of the data entry. Describes the
+east-west location of the storm.A preview of storms is shown below.
+Throughout this exam, we will refer to storms
+repeatedly. Assume that we have already run
+import babypandas as bpd and
+import numpy as np."
+30,Wi,23,Final,,"Video 🎥
+Here’s
+a walkthrough video of Problems 6-9, and
+here’s a
+walkthrough video of Problems 10-14.The DataFrame games contains information about a sample
+of popular games, including board games, dice games, and card games. The
+data comes from Board Game Geek, a popular website and vibrant online
+community for game enthusiasts.
+The columns of games are as follows.""Name"" (str): The name of the game.
+""Mechanics"" (str): A sequence of
+descriptors for how the game is played. A game can have several
+descriptors, each of which is separated by a comma.
+""Domains"" (str): A sequence of domains to
+which the game belongs. A game can belong to multiple domains.
+""Play Time"" (int): The average play time
+of the game, in minutes, as suggested by the game’s creators.
+""Complexity"" (float): The average
+complexity of the game, on a scale of 1 to 5 points, as reported by
+Board Game Geek community members.
+""Rating"" (str): The average rating of the
+game, on a scale of 1 to 10 points, as rated by Board Game Geek
+community members. Note that while this data should be numerical, it is
+actually stored as a string, because some entries use a comma in place
+of a decimal point. For example 8,79 actually represents the number
+8.79.
+""BGG Rank"" (int): The rank of the game in
+Board Game Geek’s database. The formula for how this rank is calculated
+is not publicly known, but it likely includes many factors, such as
+""Rating"", number of registered owners of the game, and
+number of reviews.The first few rows of games are shown below (though
+games has many more rows than pictured here).
+Throughout this exam, we will refer to games repeatedly. Assume that
+we have already run import babypandas as bpd and
+import numpy as np."
+31,Wi,24,Midterm,,"Video 🎥
+Here’s
+a walkthrough video of some of the problems on the exam.Clue is a murder mystery game where players use the process
+of elimination to figure out the details of a crime. The premise is that
+a murder was committed inside a large home, by one of 6
+suspects, with one of 7 weapons, and in one of
+9 rooms.
+The game comes with 22 cards, one for each of the 6
+suspects, 7 weapons, and 9 rooms. To set up the game, one suspect card,
+one weapon card, and one room card are chosen randomly, without being
+looked at, and placed aside in an envelope. The cards in the envelope
+represent the details of the murder: who did it, with what weapon, and
+in what room.
+The remaining 19 cards are randomly shuffled and dealt out to the
+players (as equally as possible). Players then look at the cards they
+were dealt and can conclude that any cards they see were
+not involved in the murder. In the gameplay, players
+take turns moving around to different rooms of the house on the
+gameboard, which gives them opportunities to see cards in other players’
+hands and further eliminate suspects, weapons, and rooms. The first
+player to narrow it down to one suspect, with one weapon, and in one
+room can make an accusation and win the game!
+Suppose Janine, Henry, and Paige are playing a game of Clue. Janine
+and Paige are each dealt 6 cards, and Henry is dealt 7. The DataFrame
+clue has 22 rows, one for each card in the game.
+clue represents Janine’s knowledge of who
+is holding each card. clue is indexed by
+“Card”, which contains the name of each suspect, weapon,
+and room in the game. The “Category” column contains
+“suspect”, “weapon”, or “room”.
+The “Cardholder” column contains “Janine”,
+“Henry”, “Paige”, or
+“Unknown”.
+Since Janine’s knowledge is changing throughout the game, the
+“Cardholder” column needs to be updated frequently. At the
+beginning of the game, the “Cardholder” column contains
+only “Janine” and “Unknown” values. We’ll
+assume throughout this exam that clue contains Janine’s
+current knowledge at an arbitrary point in time, not necessarily at the
+beginning of the game. For example, clue may look
+like the DataFrame below.
+Note: Throughout the exam, assume we have already
+run import babypandas as bpd and
+import numpy as np."
+32,Wi,24,Final,,"The Olympic Games are the world’s leading international sporting
+event, dating back to ancient Greece. Today, we’ll explore data on
+modern Olympic medalists. Each row in the DataFrame
+olympians corresponds to a type of medal earned by one
+Olympic athlete in one year.
+The columns of olympians are as follows:""Name"" (str): The name of the athlete.
+Unique for each athlete.
+""Sex"" (str): The sex of the athlete,
+denoted by “M” or “F”.
+""Age"" (int): The age of the athlete at the
+time of the Olympics.
+""Height"" (float): The height of the
+athlete in centimeters.
+""Weight"" (float): The weight of the
+athlete in kilograms.
+""Sport"" (str): The sport in which the
+athlete competed.
+""Team"" (str): The team or country the
+athlete represented.
+""Medal"" (str): The type of medal won
+(“Gold”, “Silver”, or “Bronze”).
+""Year"" (int): The year of the Olympic
+Games.
+""Count"" (int): The number of medals of
+this type earned by this athlete in this year.The first few rows of olympians are shown below, though
+olympians has many more rows than pictured. The data in
+olympians is only a sample from the much larger population
+of all Olympic medalists.
+Throughout this exam, assume that we have already run
+import babypandas as bpd and
+import numpy as np."
+33,Sp,22,Midterm,,"Welcome to Sun God!After a two-year hiatus due to the pandemic, UCSD’s annual music
+festival, the Sun God festival, is back this year! In this exam, we’ll
+be looking at a DataFrame named sungod that contains
+information on the artists who have performed at Sun God in years past.
+For each year that the festival was held, we have one row for
+each artist that performed that year. The columns are:'Year' (int): the year of the
+festival
+'Artist' (str): the name of the
+artist
+'Appearance_Order' (int): the order in
+which the artist appeared in that year’s festival (1 means they came
+onstage first)The rows of sungod are arranged in no particular
+order. The first few rows of sungod are shown
+below (though sungod has many more rows
+than pictured here).Assume:Only one artist ever appeared at a time (for example, we can’t have
+two separate artists with a 'Year' of 2015 and an
+'Appearance_Order' of 3).
+An artist may appear in multiple different Sun God festivals (they
+could be invited back).
+We have already run import babypandas as bpd and
+import numpy as np.Throughout this exam, we will refer to sungod
+repeatedly.
+Tip: Open this page in another tab, so that it is
+easy to refer to this data description as you work through the exam."
+34,Sp,22,Final,,"Welcome to
+ !
+IKEA is a Swedish furniture company that designs and sells
+ready-to-assemble furniture and other home furnishings. IKEA has
+locations worldwide, including one in San Diego. IKEA is known for its
+cheap prices, modern designs, huge showrooms, and wordless instruction
+manuals. They also sell really good Swedish meatballs in their cafe!
+This exam is all about IKEA. Here are the DataFrames you’ll be
+working with:ikeaThe ikea DataFrame has a row for each ready-to-assemble
+IKEA furniture product. The columns are:'product' (str): the name of the product,
+which includes the product line as the first word, followed by a
+description of the product
+'category' (str): a categorical
+description of the type of product
+'price' (int): the current price of the
+product, in dollars
+'assembly_cost' (int): the additional cost
+to have the product assembled, in dollars
+'packages' (int): the number of packages
+in which the product is boxedThe first few rows of ikea are shown below, though
+ikea has many more rows than pictured.offersIKEA sometimes runs certain special offers, including coupons, sales,
+and promotions. For each offer currently available, the DataFrame
+offers has a separate row for each category of products to
+which the offer can be applied. The columns are:'offer' (str): the name of the offer
+'category' (str): the category to which
+the offer applies
+'percent_off' (int): the percent discount
+when applying this offer to this categoryThe full offers DataFrame is shown below. All rows are
+pictured.app_dataAn IKEA fan created an app where people can log the amount of time it
+took them to assemble their IKEA furniture. The DataFrame
+app_data has a row for each product build that was logged
+on the app. The columns are:'product' (str): the name of the product,
+which includes the product line as the first word, followed by a
+description of the product
+'category' (str): a categorical
+description of the type of product
+'assembly_time' (str): the amount of time
+to assemble the product, formatted as 'x hr, y min' where
+x and y represent integers, possibly zero
+'minutes' (int): integer values
+representing the number of minutes it took to assemble each productThe first few rows of app_data are shown below, though
+app_data has many more rows than pictured (5000 rows
+total).
+Assume that we have already run import babypandas as bpd
+and import numpy as np.
+Tip: Open this page in another tab, so that it is
+easy to refer to this data description as you work through the exam."
+35,Sp,23,Midterm,,"Video 🎥
+Here are two walkthrough videos of Problems 4 through 8 on this
+exam: one by
+Janine
+and one by
+Suraj.Recall, at the start of the quarter, you were asked to complete a
+Welcome Survey to tell us about your background coming into the course.
+You were also asked to share seemingly irrelevant details, like the
+number of followers you have on Instagram and the number of unread
+emails in your primary email account. Well, those details are no longer
+irrelevant – in this exam, we will work with the data from this
+quarter’s Welcome Survey!
+Each row in the DataFrame survey represents one student
+in DSC 10. The information stored in the columns of survey
+are as follows:""Section"" (str): The lecture section the
+student is enrolled in (either ""A"" or
+""B"").
+""IG Followers"" (int): The number of
+followers the student has on Instagram. If the student does not have an
+Instagram account, this number is 0.
+""Unread Emails"" (int): The number of
+unread emails in the student’s primary email account.
+""College"" (str): The college the student
+is a member of (either ""ERC"", ""Marshall"",
+""Muir"", ""Revelle"", ""Seventh"",
+""Sixth"" or ""Warren"").
+""Major"" (str): The student’s primary
+major, in major code form. For instance, the major code for the Data
+Science major is ""DS25"".
+""Class Standing"" (str): The student’s
+class standing (either ""Freshman"",
+""Sophomore"", ""Junior"", or
+""Senior"").The first few rows of survey are shown below, though
+survey has many more rows than are pictured below (since
+there are more than 5 students in DSC 10 this quarter).
+Throughout this exam, we will refer to survey
+repeatedly.
+Assume that we have already run import babypandas as bpd
+and import numpy as np."
+36,Sp,23,Final,,"Video 🎥
+Here’s
+a walkthrough video of Problems 3, 5, and 6, and
+here’s a
+walkthrough video of Problems 7, 8.4, 10, and 11.You may have noticed that San Diego was quite cloudy in May (2023).
+In fact, according to the National Weather Service, San Diego was the
+single cloudiest city in the contiguous United States in May, with
+clouds covering the sky 82% of the time. (Only a remote town in Alaska
+was cloudier!)
+In this exam, we will work with the DataFrame sun, which
+describes the number of sunshine hours per month in various cities
+around the world. Each number in sun is an average across
+multiple years and multiple sensors.
+The first 2 columns in sun are ""Country""
+and ""City"", which are strings describing a particular city.
+The next 12 columns are ""Jan"", ""Feb"",
+""Mar"", …, ""Dec"", which describe the number of
+sunshine hours seen each month. The last column, ""Year"", is
+the sum of the month-specific columns.
+The first few rows of sun are shown below, though
+sun has many more rows than are shown below.
+For instance, we see that Tashkent, Uzbekistan sees 164.3 sunshine
+hours in March.
+Throughout the exam, assume that we have already run
+import babypandas as bpd and
+import numpy as np."
+37,Sp,24,Midterm,,"In this exam, you’ll work with a data set representing your phone’s
+contact list. contacts is indexed by ""Person"".
+You store each person in your contacts under a unique name.
+The columns of contacts are as follows:""Phone"" (str): Your contact’s phone
+number, formatted like ""xxx-xxx-xxxx"", where each
+x represents a digit 0 through 9. All of your contacts have
+distinct phone numbers.
+""Day"" (int): The day of the month your
+contact was born. Values are 1 through 31.
+""Month"" (str): The month your contact
+was born.
+""Year"" (int): The year your contact was
+born.
+""DOB"" (str): Your contact’s date of
+birth, in the form ""MM-DD-YYYY"".The first few rows of contacts are shown below, though
+contacts has many more rows than pictured.Throughout this exam, we will refer to contacts
+repeatedly.
+Assume that we have already run import babypandas as bpd
+and import numpy as np."
+38,Sp,24,Final,,"In this final, we’ll explore data on 800 different apartments
+available for rent in San Diego. Each row in the DataFrame
+apts corresponds to an individual apartment. The DataFrame
+is indexed by ""Apartment ID"" (int), which is a
+unique identifier for the apartment.
+The columns of apts are as follows:""Rent"" (int): The monthly rent for the
+apartment, in dollars.
+""Bed"" (str): The number of bedrooms in the
+apartment. Values are ""Studio"", ""One"",
+""Two"", and ""Three"".
+""Bath"" (int): The number of bathrooms in
+the apartment. Values are ""One"",
+""One and a half"", ""Two"",
+""Two and a half"", and ""Three"".
+""Laundry"" (bool): If the apartment comes
+with an in-unit washer and dryer.
+""Sqft"" (int): The area of the apartment,
+in square feet.
+""Neighborhood"" (str): The neighborhood in
+which the apartment is located.
+""Complex"" (str): The complex the apartment
+is a part of.
+""Lease Term"" (str): The duration of the
+apartment’s lease. Values are ""1 month"",
+""6 months"", and ""1 year"".The first few rows of apts are shown below, though
+apts has many more rows than pictures, 800 in total. The
+data in apts is only a sample from the much larger
+population of all San Diego apartments.
+Throughout this exam, assume that we have already run
+import babypandas as bpd and
+import numpy as np."
