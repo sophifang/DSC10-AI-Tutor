@@ -1,0 +1,219 @@
+lecture_number,lecture_title,section_name,section
+12,Simulation,Announcements,"Quiz 2 is today in your assigned quiz session.
+
+Check your email for your seating assignment.
+Bring your ID and a pencil.
+This is a 20 minute paper-based quiz with no aids allowed.
+The quiz covers Lecture 5 through 9 and related labs and homeworks.
+Quiz 2 is more challenging than Quiz 1, and next week's Midterm Exam will be more challenging than Quiz 2. 📈 Check your email for your seating assignment. Bring your ID and a pencil. This is a 20 minute paper-based quiz with no aids allowed. The quiz covers Lecture 5 through 9 and related labs and homeworks. Quiz 2 is more challenging than Quiz 1, and next week's Midterm Exam will be more challenging than Quiz 2. 📈 Homework 3 is due on Tuesday.
+
+Problems 1 and 2 only are relevant to Quiz 2. Problems 1 and 2 only are relevant to Quiz 2. Make sure to get started on the Midterm Project!"
+12,Simulation,Agenda,"Recap: iteration. Simulations.
+
+Example: What's the probability of getting 60 or more heads if we flip 100 coins?
+Example: The ""Monty Hall"" Problem. Example: What's the probability of getting 60 or more heads if we flip 100 coins? Example: The ""Monty Hall"" Problem."
+12,Simulation,for-loops,"for-loops are used to repeat the execution of code for every element of a sequence. Lists, arrays, and strings are examples of sequences. Input: for x in [""my boyfriend"", ""a god"", ""the breeze in my hair on the weekend"", ""a relaxing thought""]:
+    print(""Karma is "" + x) Output: Karma is my boyfriend
+Karma is a god
+Karma is the breeze in my hair on the weekend
+Karma is a relaxing thought Input: # Saving the lyrics in a variable.
+lyrics = """"
+for x in [""my boyfriend"", ""a god"", ""the breeze in my hair on the weekend"", ""a relaxing thought""]:
+    lyrics = lyrics + ""Karma is "" + x +""\n"" Input: lyrics Output: 'Karma is my boyfriend\nKarma is a god\nKarma is the breeze in my hair on the weekend\nKarma is a relaxing thought\n' Input: print(lyrics) Output: Karma is my boyfriend
+Karma is a god
+Karma is the breeze in my hair on the weekend
+Karma is a relaxing thought"
+12,Simulation,The accumulator pattern,"To store our results, we'll typically use an int, array, or string. If using an int, we define an int variable (usually set to 0) before the loop, then use + to add to it inside the loop.
+
+Think of this like using a tally. Think of this like using a tally. If using an array, we create an array (usually empty) before the loop, then use np.append to add to it inside the loop.
+
+Think of this like writing the results on a piece of paper. Think of this like writing the results on a piece of paper. If using a string, we define a string variable (usually set to """") before the loop, then use string concatenation + to add to it inside the loop.
+
+Think of this like writing a word, one letter at a time. Think of this like writing a word, one letter at a time. This pattern – of repeatedly adding to an int, array, or string – is called the accumulator pattern."
+12,Simulation,for-loops in DSC 10,"Almost every for-loop in DSC 10 will use the accumulator pattern. Almost every for-loop in DSC 10 will use the accumulator pattern. Do not use for-loops to perform mathematical operations on every element of an array or Series.
+
+
+Instead use DataFrame manipulations and built-in array or Series methods.  Instead use DataFrame manipulations and built-in array or Series methods. Helpful video 🎥: For Loops (and when not to use them) in DSC 10. Helpful video 🎥: For Loops (and when not to use them) in DSC 10."
+12,Simulation,Working with strings,"String are sequences, so we can iterate over them, too! Input: for letter in 'uc san diego':
+    print(letter.upper()) Output: U
+C
+ 
+S
+A
+N
+ 
+D
+I
+E
+G
+O Input: 'california'.count('a') Output: 2 Input: >>> vowel_count('king triton')
+3
+
+>>> vowel_count('i go to uc san diego')
+8"
+12,Simulation,Example: Vowel count,"Below, complete the implementation of the function vowel_count, which returns the number of vowels in the input string s (including repeats). Example behavior is shown below. Input: def vowel_count(s):
+    # We need to keep track of the number of vowels seen so far. 
+    # Before we start, we've seen zero vowels.
+    
+    # For each of the 5 vowels:
+    
+        # Count the number of occurrences of this vowel in s.
+        
+        # Add this count to the variable number.
+        
+        
+    # Once we've gotten through all 5 vowels, return the answer.
+    return ... Input: vowel_count('king triton') Output: Ellipsis Input: vowel_count('i go to uc san diego') Output: Ellipsis"
+12,Simulation,Simulations to estimate probabilities,"What is the probability of getting 60 or more heads if we flip 100 coins? While we could calculate it by hand (and will learn how to in future courses), we can also estimate it using the computer:
+
+Figure out how to run the experiment (flipping 100 coins) once.
+Repeat the experiment many times.
+Find the proportion of experiments in which the number of heads was 60 or more. Figure out how to run the experiment (flipping 100 coins) once. Repeat the experiment many times. Find the proportion of experiments in which the number of heads was 60 or more. This is how we'll use simulations – to estimate, or approximate, probabilities through computation.
+
+The techniques we will introduce in today's lecture will appear in almost every lecture for the remainder of the quarter! The techniques we will introduce in today's lecture will appear in almost every lecture for the remainder of the quarter!"
+12,Simulation,Making a random choice,"To simulate, we need a way to perform a random experiment on the computer (e.g. flipping a coin, rolling a die). A helpful function is np.random.choice(options).
+
+The input, options, is a list or array to choose from.
+The output is a random element in options. By default, all elements are equally likely to be chosen. The input, options, is a list or array to choose from. The output is a random element in options. By default, all elements are equally likely to be chosen. Input: # Simulate a fair coin flip.
+np.random.choice(['Heads', 'Tails']) Output: 'Heads' Input: # Simulate a roll of a die.
+np.random.choice(np.arange(1, 7)) Output: 3"
+12,Simulation,Making multiple random choices,"np.random.choice(options, n) will return an array of n randomly selected elements from options. Input: # Simulate 10 fair coin flips.
+np.random.choice(['Heads', 'Tails'], 10) Output: array(['Tails', 'Heads', 'Tails', 'Tails', 'Heads', 'Tails', 'Tails',
+       'Tails', 'Tails', 'Tails'], dtype='<U5')"
+12,Simulation,With replacement vs. without replacement,"By default, np.random.choice selects with replacement. That is, after making a selection, that option is still available.
+
+e.g. if every time you draw a marble from a bag, you put it back. e.g. if every time you draw a marble from a bag, you put it back. If an option can only be selected once, select without replacement by specifying replace=False.
+
+e.g. if every time you draw a marble from a bag, you do not put it back. e.g. if every time you draw a marble from a bag, you do not put it back. Input: # Choose three colleges to win free HDH swag.
+colleges = ['Revelle', 'John Muir', 'Thurgood Marshall', 
+            'Earl Warren', 'Eleanor Roosevelt', 'Sixth', 'Seventh', 'Eighth']
+
+np.random.choice(colleges, 3, replace=False) Output: array(['Earl Warren', 'Revelle', 'Seventh'], dtype='<U17')"
+12,Simulation,Flipping coins,What's the probability of getting 60 or more heads if we flip 100 coins? Plan: Figure out how to run the experiment (flipping 100 coins) once. Repeat the experiment many times. Find the proportion of experiments in which the number of heads was 60 or more.
+12,Simulation,Step 1: Figure out how to run the experiment once,"Use np.random.choice to flip 100 coins. Use np.count_nonzero to count the number of heads.
+
+np.count_nonzero(array) returns the number of entries in array that are True. np.count_nonzero(array) returns the number of entries in array that are True. Input: coins = np.random.choice(['Heads', 'Tails'], 100)
+coins Output: array(['Tails', 'Heads', 'Heads', 'Heads', 'Tails', 'Tails', 'Tails',
+       'Heads', 'Tails', 'Heads', 'Heads', 'Tails', 'Tails', 'Tails',
+       'Tails', 'Heads', 'Heads', 'Tails', 'Heads', 'Tails', 'Tails',
+       'Tails', 'Tails', 'Heads', 'Tails', 'Heads', 'Heads', 'Heads',
+       'Heads', 'Heads', 'Tails', 'Heads', 'Tails', 'Tails', 'Tails',
+       'Tails', 'Tails', 'Tails', 'Heads', 'Heads', 'Heads', 'Tails',
+       'Heads', 'Tails', 'Tails', 'Heads', 'Heads', 'Tails', 'Heads',
+       'Heads', 'Heads', 'Tails', 'Tails', 'Heads', 'Tails', 'Tails',
+       'Heads', 'Tails', 'Tails', 'Tails', 'Heads', 'Tails', 'Tails',
+       'Heads', 'Tails', 'Tails', 'Tails', 'Heads', 'Heads', 'Heads',
+       'Heads', 'Heads', 'Heads', 'Heads', 'Tails', 'Tails', 'Tails',
+       'Heads', 'Heads', 'Tails', 'Tails', 'Heads', 'Tails', 'Heads',
+       'Heads', 'Tails', 'Tails', 'Heads', 'Heads', 'Tails', 'Heads',
+       'Heads', 'Tails', 'Tails', 'Heads', 'Heads', 'Tails', 'Heads',
+       'Tails', 'Heads'], dtype='<U5') Input: coins == 'Heads' Output: array([False,  True,  True,  True, False, False, False,  True, False,
+        True,  True, False, False, False, False,  True,  True, False,
+        True, False, False, False, False,  True, False,  True,  True,
+        True,  True,  True, False,  True, False, False, False, False,
+       False, False,  True,  True,  True, False,  True, False, False,
+        True,  True, False,  True,  True,  True, False, False,  True,
+       False, False,  True, False, False, False,  True, False, False,
+        True, False, False, False,  True,  True,  True,  True,  True,
+        True,  True, False, False, False,  True,  True, False, False,
+        True, False,  True,  True, False, False,  True,  True, False,
+        True,  True, False, False,  True,  True, False,  True, False,
+        True]) Input: (coins == 'Heads').sum() Output: 49 Input: np.count_nonzero(coins == 'Heads') # Counts the number of Trues in the sequence. Output: 49 Input: np.count_nonzero([5, 6, 0, 2]) Output: 3 Question: Why is it called count_nonzero? Answer: In Python, True == 1 and False == 0, so counting the non-zero elements counts the number of Trues."
+12,Simulation,Aside: Defining a function to run the experiment,"This makes it easy to run the experiment repeatedly. Input: def coin_experiment():
+    coins = np.random.choice(['Heads', 'Tails'], 100)
+    return np.count_nonzero(coins == 'Heads') Input: coin_experiment() Output: 48"
+12,Simulation,Step 2: Repeat the experiment many times,"How do we run a piece of code many times? Using a for-loop! Each time we run the experiment, we'll need to store the results in an array.
+
+To do this, we'll use np.append! To do this, we'll use np.append! Input: head_counts = np.array([])
+head_counts Output: array([], dtype=float64) Input: head_counts = np.append(head_counts, 15)
+head_counts Output: array([15.]) Input: head_counts = np.append(head_counts, 25)
+head_counts Output: array([15., 25.])"
+12,Simulation,Step 2: Repeat the experiment many times,"Imagine we start with a blank sheet of paper, and each time we run the experiment, we write the number of heads we see down on the sheet of paper. The sheet will start off empty, but eventually will have one number for each time we ran the experiment. Input: # Specify the number of repetitions.
+repetitions = 10000
+
+# Create an empty array to store the results.
+head_counts = np.array([])
+
+for i in np.arange(repetitions):
+    # For each repetition, run the experiment and add the result to head_counts.
+    head_count = coin_experiment()
+    head_counts = np.append(head_counts, head_count) Input: len(head_counts) Output: 10000 Input: head_counts Output: array([60., 52., 45., ..., 44., 53., 47.])"
+12,Simulation,Step 3: Find the proportion of experiments in which the number of heads was 60 or more,"Input: # In how many experiments was the number of heads >= 60?
+at_least_60 = np.count_nonzero(head_counts >= 60)
+at_least_60 Output: 270 Input: # What is this as a proportion?
+at_least_60 / repetitions Output: 0.027 Input: # Can also use np.mean()! Why?
+np.mean(head_counts >= 60) Output: 0.027 This is quite close to the true theoretical answer! Input: # The theoretical answer – don't worry about how or why this code works.
+import math
+sum([math.comb(100, i) * (1 / 2) ** 100 for i in np.arange(60, 101)]) Output: 0.028443966820490392"
+12,Simulation,Visualizing the distribution,"Input: head_counts Output: array([60., 52., 45., ..., 44., 53., 47.]) Input: bpd.DataFrame().assign(
+    Number_of_Heads=head_counts
+).plot(kind='hist', bins=np.arange(30, 70), density=True, ec='w', figsize=(10, 5));
+plt.axvline(60, color='C1', linewidth=4); This histogram describes the distribution of the number of heads in each experiment. Now we see another reason to use density histograms.
+
+Using density means that areas are probabilities. Using density means that areas are probabilities. Next class, we'll learn more about why it's valid to estimate probabilities using simulations."
+12,Simulation,"The ""Monty Hall"" Problem","Suppose you’re on a game show, and you’re given the choice of three doors. A car 🚗 is behind one of the doors, and goats 🐐🐐 are behind the other two. You pick a door, say Door #2, and the host, who knows what’s behind the doors, opens another door, say Door #3, which has a goat. You pick a door, say Door #2, and the host, who knows what’s behind the doors, opens another door, say Door #3, which has a goat. The host then says to you, “Do you want to switch to Door #1 or stay with Door #2?” The host then says to you, “Do you want to switch to Door #1 or stay with Door #2?” Question: Should you stay or switch? Question: Should you stay or switch? (The question was posed in Parade magazine’s ""Ask Marilyn"" column in 1990. It is called the ""Monty Hall problem"" because Monty Hall hosted a similar game show called ""Let's Make a Deal."")"
+12,Simulation,Let's play!,"Below, we've embedded the Monty Hall simulator from this site. Input: from IPython.display import IFrame
+IFrame('https://montyhall.io/', width=600, height=400)"
+12,Simulation,Concept Check ✅ – Answer at cc.dsc10.com,Suppose you originally selected Door #2. The host reveals Door #3 to have a goat behind it. What should you do? A. Stay with Door #2; it has just as high a chance of winning as Door #1. It doesn't matter whether you switch or not. B. Switch to Door #1; it has a higher chance of winning than Door #2.
+12,Simulation,Time to simulate!,"Let's estimate the probability of winning if you switch. If it's higher than 50%, then switching is the better strategy, otherwise staying is the better strategy. Plan: Figure out how to simulate a single game. Play the game many times, switching each time. Compute the proportion of wins."
+12,Simulation,Step 1: Simulate a single game,"When you pick a door, there are three equally-likely outcomes for what is behind the door you picked: Car. Goat #1. Goat #2. Input: options = np.array(['Car', 'Goat #1', 'Goat #2'])
+behind_picked_door = np.random.choice(options)
+behind_picked_door Output: 'Goat #1'"
+12,Simulation,Step 1: Simulate a single game,"When the host opens a different door, they always reveal a goat. Input: if behind_picked_door == 'Goat #1':
+    revealed = 'Goat #2'
+elif behind_picked_door == 'Goat #2':
+    revealed = 'Goat #1'
+else:
+    # This is the case in which you originally picked a car!
+    revealed = np.random.choice(['Goat #1', 'Goat #2'])
+
+revealed Output: 'Goat #2' If you always switch, you'll end up winning the prize that is neither behind_picked_door nor revealed. Input: options Output: array(['Car', 'Goat #1', 'Goat #2'], dtype='<U7') Input: behind_picked_door Output: 'Goat #1' Input: revealed Output: 'Goat #2' Input: your_prize = options[(options != behind_picked_door) & (options != revealed)][0]
+your_prize Output: 'Car'"
+12,Simulation,Step 1: Simulate a single game,"Let's put all of our work into a single function to make it easier to repeat. Input: def simulate_switch_strategy():
+    options = np.array(['Car', 'Goat #1', 'Goat #2'])
+    behind_picked_door = np.random.choice(options)
+    
+    if behind_picked_door == 'Goat #1':
+        revealed = 'Goat #2'
+    elif behind_picked_door == 'Goat #2':
+        revealed = 'Goat #1'
+    else:
+        revealed = np.random.choice(['Goat #1', 'Goat #2'])
+        
+    your_prize = options[(options != behind_picked_door) & (options != revealed)][0]
+        
+    #print(behind_picked_door, 'was behind the door.', revealed, 'was revealed by the host. Your prize was:', your_prize)
+    return your_prize Now, every time we call simulate_switch_strategy, the result is your prize. Input: simulate_switch_strategy() Output: 'Car'"
+12,Simulation,Step 2: Play the game many times,"We should save your prize in each game; to do so, we'll use np.append. Input: repetitions = 10000
+
+your_prizes = np.array([])
+
+for i in np.arange(repetitions):
+    your_prize = simulate_switch_strategy()
+    your_prizes = np.append(your_prizes, your_prize) Input: your_prizes Output: array(['Car', 'Goat #2', 'Car', ..., 'Car', 'Car', 'Car'], dtype='<U32')"
+12,Simulation,Step 3: Count the proportion of wins for this strategy (switching),"Input: your_prizes Output: array(['Car', 'Goat #2', 'Car', ..., 'Car', 'Car', 'Car'], dtype='<U32') Input: np.count_nonzero(your_prizes == 'Car') Output: 6604 Input: np.count_nonzero(your_prizes == 'Car') / repetitions Output: 0.6604 This is quite close to the true probability of winning if you switch, $\frac{2}{3}$."
+12,Simulation,Alternate implementation,"Looking back at our implementation, we kept track of your prize in each game. However, all we really needed to keep track of was the number of games in which you won a car. 💡 Idea: Keep a tally of the number of times you won a car. That is, initialize car_count to 0, and add 1 to it each time your prize is a car. Input: car_count = 0 Input: for i in np.arange(repetitions):
+    your_prize = simulate_switch_strategy()
+    if your_prize == 'Car':
+        car_count = car_count + 1 Input: car_count / repetitions Output: 0.667 No arrays needed! This strategy won't always work; it depends on the goal of the simulation."
+12,Simulation,What if you always stay with your original door?,"In this case, your prize is always the same as what was behind the picked door. Input: car_count = 0
+
+for i in np.arange(repetitions):
+    options = np.array(['Car', 'Goat #1', 'Goat #2'])
+    behind_picked_door = np.random.choice(options)
+    your_prize = behind_picked_door
+    if your_prize == 'Car':
+        car_count = car_count + 1
+        
+car_count / repetitions Output: 0.334 This is quite close to the true probability of winning if you stay, $\frac{1}{3}$. Conclusion: It's better to switch. Why?
+
+If you originally choose a goat, Monty will reveal the other goat, and you'll win the car by switching.
+If you originally choose a car, you'll win by staying.
+But there are 2 goats and only 1 car, so you win twice as often by switching. If you originally choose a goat, Monty will reveal the other goat, and you'll win the car by switching. If you originally choose a car, you'll win by staying. But there are 2 goats and only 1 car, so you win twice as often by switching."
+12,Simulation,Marilyn vos Savant's column in Parade magazine,"When asked this question by a reader, vos Savant stated the correct answer: switch. She received over 10,000 letters in disagreement, including over 1,000 letters from people with Ph.D.s. This became a nationwide controversy, even getting a front-page New York Times article in 1991."
+12,Simulation,Simulations find probabilities,"Calculating probabilities is important, but can be hard!
+
+You'll learn plenty of formulas in future DSC classes, if you end up taking them. You'll learn plenty of formulas in future DSC classes, if you end up taking them. Simulations let us find probabilities through code rather than through math. Many real-world scenarios are complicated.
+
+Simulations are much easier than math in many of these cases. Simulations are much easier than math in many of these cases."
+12,Simulation,"The simulation ""recipe""","To estimate the probability of an event through simulation: Make a function that runs the experiment once. Run that function many times (usually 10,000) with a for-loop, and save the results in an array with np.append. Compute the proportion of times the event occurs using np.count_nonzero."

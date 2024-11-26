@@ -1,0 +1,540 @@
+tag,content
+pre input,"# Run this cell to set up packages for lecture.
+from lec05_imports import *"
+h1,Lecture 5 –  Querying and Grouping
+h2,"DSC 10, Spring 2024"
+h3,Announcements
+li,"Quiz 1 is coming up on Friday in your assigned quiz session.
+You should have been assigned a quiz time in an email with subject ""DSC 10 Quiz Time"".
+This will be a 20 minute paper-based quiz consisting of short answer and multiple choice questions. 
+No aids are allowed (no notes, no calculators, no computers, no reference sheet). Questions are designed with this in mind.
+The quiz covers Lectures 1 through 4, or BPD 1-9 in the babypandas notes. 
+This includes ""Example 4: What is the population density of Pennsylvania?"" which is in the Lecture 4 slides, though we'll cover it today.
+Attend discussion section today to work on practice problems.
+Homework 1 is due Tuesday, but working on the homework is excellent preparation for the quiz."
+li,Come to office hours (see the schedule here) and post on Ed for help!
+h3,Agenda
+li,Recap: accessing using row labels.
+li,Querying.
+li,Querying with multiple conditions.
+li,Grouping.
+li,After class: challenge problems.
+h4,Don't forget about these resources!
+li,DSC 10 Reference Sheet 📌.
+li,babypandas notes.
+li,babypandas documentation.
+li,The Resources tab of the course website.
+h3,You belong here! 🤝
+li,We're moving very quickly in this class.
+li,"This may be the first time you're ever writing code, and you may question whether or not you belong in this class, or if data science is for you."
+li,"We promise, no matter what your prior experience is, the answer is yes, you belong!
+Watch: 🎥 Developing a Growth Mindset with Carol Dweck."
+li,Please come to office hours (see the schedule here) and post on Ed for help – we're here to make sure you succeed in this course.
+h3,The data: US states  🗽
+p,We'll continue working with the same data from last time.
+pre input,"states = bpd.read_csv('data/states.csv')
+states = states.assign(Density=states.get('Population') / states.get('Land Area'))
+states"
+table,"[['', 'State', 'Region', 'Capital City', 'Population', 'Land Area', 'Party', 'Density'], ['0', 'Alabama', 'South', 'Montgomery', '5024279', '50645', 'Republican', '99.21'], ['1', 'Alaska', 'West', 'Juneau', '733391', '570641', 'Republican', '1.29'], ['2', 'Arizona', 'West', 'Phoenix', '7151502', '113594', 'Republican', '62.96'], ['...', '...', '...', '...', '...', '...', '...', '...'], ['47', 'West Virginia', 'South', 'Charleston', '1793716', '24038', 'Republican', '74.62'], ['48', 'Wisconsin', 'Midwest', 'Madison', '5893718', '54158', 'Republican', '108.82'], ['49', 'Wyoming', 'West', 'Cheyenne', '576851', '97093', 'Republican', '5.94']]"
+p,50 rows × 7 columns
+h2,Example 4: What is the population density of Pennsylvania?
+p,Key concepts: Setting the index. Accessing using row labels.
+h3,Population density of Pennsylvania
+p,We know how to get the 'Density' of all states. How do we find the one that corresponds to Pennsylvania?
+pre input,states
+table,"[['', 'State', 'Region', 'Capital City', 'Population', 'Land Area', 'Party', 'Density'], ['0', 'Alabama', 'South', 'Montgomery', '5024279', '50645', 'Republican', '99.21'], ['1', 'Alaska', 'West', 'Juneau', '733391', '570641', 'Republican', '1.29'], ['2', 'Arizona', 'West', 'Phoenix', '7151502', '113594', 'Republican', '62.96'], ['...', '...', '...', '...', '...', '...', '...', '...'], ['47', 'West Virginia', 'South', 'Charleston', '1793716', '24038', 'Republican', '74.62'], ['48', 'Wisconsin', 'Midwest', 'Madison', '5893718', '54158', 'Republican', '108.82'], ['49', 'Wyoming', 'West', 'Cheyenne', '576851', '97093', 'Republican', '5.94']]"
+p,50 rows × 7 columns
+pre input,"# Which one is Pennsylvania?
+states.get('Density')"
+pre output,"0      99.21
+1       1.29
+2      62.96
+       ...  
+47     74.62
+48    108.82
+49      5.94
+Name: Density, Length: 50, dtype: float64"
+h3,Utilizing the index
+li,"When we load in a DataFrame from a CSV, columns have meaningful names, but rows do not."
+pre input,bpd.read_csv('data/states.csv')
+table,"[['', 'State', 'Region', 'Capital City', 'Population', 'Land Area', 'Party'], ['0', 'Alabama', 'South', 'Montgomery', '5024279', '50645', 'Republican'], ['1', 'Alaska', 'West', 'Juneau', '733391', '570641', 'Republican'], ['2', 'Arizona', 'West', 'Phoenix', '7151502', '113594', 'Republican'], ['...', '...', '...', '...', '...', '...', '...'], ['47', 'West Virginia', 'South', 'Charleston', '1793716', '24038', 'Republican'], ['48', 'Wisconsin', 'Midwest', 'Madison', '5893718', '54158', 'Republican'], ['49', 'Wyoming', 'West', 'Cheyenne', '576851', '97093', 'Republican']]"
+p,50 rows × 6 columns
+li,"The row labels (or the index) are how we refer to specific rows. Instead of using numbers, let's refer to these rows by the names of the states they correspond to."
+li,"This way, we can easily identify, for example, which row corresponds to Pennsylvania."
+h3,Setting the index
+li,"To change the index, use .set_index(column_name)."
+li,"Row labels should be unique identifiers.
+Each row should has a different, descriptive name that corresponds to the contents of that row's data."
+pre input,states
+table,"[['', 'State', 'Region', 'Capital City', 'Population', 'Land Area', 'Party', 'Density'], ['0', 'Alabama', 'South', 'Montgomery', '5024279', '50645', 'Republican', '99.21'], ['1', 'Alaska', 'West', 'Juneau', '733391', '570641', 'Republican', '1.29'], ['2', 'Arizona', 'West', 'Phoenix', '7151502', '113594', 'Republican', '62.96'], ['...', '...', '...', '...', '...', '...', '...', '...'], ['47', 'West Virginia', 'South', 'Charleston', '1793716', '24038', 'Republican', '74.62'], ['48', 'Wisconsin', 'Midwest', 'Madison', '5893718', '54158', 'Republican', '108.82'], ['49', 'Wyoming', 'West', 'Cheyenne', '576851', '97093', 'Republican', '5.94']]"
+p,50 rows × 7 columns
+pre input,states.set_index('State')
+table,"[['', 'Region', 'Capital City', 'Population', 'Land Area', 'Party', 'Density'], ['State', '', '', '', '', '', ''], ['Alabama', 'South', 'Montgomery', '5024279', '50645', 'Republican', '99.21'], ['Alaska', 'West', 'Juneau', '733391', '570641', 'Republican', '1.29'], ['Arizona', 'West', 'Phoenix', '7151502', '113594', 'Republican', '62.96'], ['...', '...', '...', '...', '...', '...', '...'], ['West Virginia', 'South', 'Charleston', '1793716', '24038', 'Republican', '74.62'], ['Wisconsin', 'Midwest', 'Madison', '5893718', '54158', 'Republican', '108.82'], ['Wyoming', 'West', 'Cheyenne', '576851', '97093', 'Republican', '5.94']]"
+p,50 rows × 6 columns
+li,"Now there is one fewer column. When you set the index, a column becomes the index, and the old index disappears."
+li,"🚨 Like most DataFrame methods, .set_index returns a new DataFrame; it does not modify the original DataFrame."
+pre input,states
+table,"[['', 'State', 'Region', 'Capital City', 'Population', 'Land Area', 'Party', 'Density'], ['0', 'Alabama', 'South', 'Montgomery', '5024279', '50645', 'Republican', '99.21'], ['1', 'Alaska', 'West', 'Juneau', '733391', '570641', 'Republican', '1.29'], ['2', 'Arizona', 'West', 'Phoenix', '7151502', '113594', 'Republican', '62.96'], ['...', '...', '...', '...', '...', '...', '...', '...'], ['47', 'West Virginia', 'South', 'Charleston', '1793716', '24038', 'Republican', '74.62'], ['48', 'Wisconsin', 'Midwest', 'Madison', '5893718', '54158', 'Republican', '108.82'], ['49', 'Wyoming', 'West', 'Cheyenne', '576851', '97093', 'Republican', '5.94']]"
+p,50 rows × 7 columns
+pre input,"states = states.set_index('State')
+states"
+table,"[['', 'Region', 'Capital City', 'Population', 'Land Area', 'Party', 'Density'], ['State', '', '', '', '', '', ''], ['Alabama', 'South', 'Montgomery', '5024279', '50645', 'Republican', '99.21'], ['Alaska', 'West', 'Juneau', '733391', '570641', 'Republican', '1.29'], ['Arizona', 'West', 'Phoenix', '7151502', '113594', 'Republican', '62.96'], ['...', '...', '...', '...', '...', '...', '...'], ['West Virginia', 'South', 'Charleston', '1793716', '24038', 'Republican', '74.62'], ['Wisconsin', 'Midwest', 'Madison', '5893718', '54158', 'Republican', '108.82'], ['Wyoming', 'West', 'Cheyenne', '576851', '97093', 'Republican', '5.94']]"
+p,50 rows × 6 columns
+pre input,"# Which one is Pennsylvania? The one whose row label is ""Pennsylvania""!
+states.get('Density')"
+pre output,"State
+Alabama           99.21
+Alaska             1.29
+Arizona           62.96
+                  ...  
+West Virginia     74.62
+Wisconsin        108.82
+Wyoming            5.94
+Name: Density, Length: 50, dtype: float64"
+h3,Accessing using the row label
+p,To pull out one particular entry of a DataFrame corresponding to a row and column with certain labels:
+li,Use .get(column_name) to extract the entire column as a Series.
+li,Use .loc[] to access the element of a Series with a particular row label.
+p,"In this class, we'll always first access a column, then a row (but row, then column is also possible)."
+pre input,states.get('Density')
+pre output,"State
+Alabama           99.21
+Alaska             1.29
+Arizona           62.96
+                  ...  
+West Virginia     74.62
+Wisconsin        108.82
+Wyoming            5.94
+Name: Density, Length: 50, dtype: float64"
+pre input,states.get('Density').loc['Pennsylvania']
+pre output,290.60858681804973
+h3,Summary: Accessing elements of a DataFrame
+li,"First, .get the appropriate column as a Series."
+li,"Then, use one of two ways to access an element of a Series:
+.iloc[] uses the integer position.
+.loc[] uses the row label.
+Each is best for different scenarios."
+pre input,states.get('Density')
+pre output,"State
+Alabama           99.21
+Alaska             1.29
+Arizona           62.96
+                  ...  
+West Virginia     74.62
+Wisconsin        108.82
+Wyoming            5.94
+Name: Density, Length: 50, dtype: float64"
+pre input,states.get('Density').iloc[2]
+pre output,62.956687853231685
+pre input,states.get('Density').loc['Arizona']
+pre output,62.956687853231685
+h3,Note
+li,Sometimes the integer position and row label are the same.
+li,This happens by default with bpd.read_csv.
+pre input,bpd.read_csv('data/states.csv')
+table,"[['', 'State', 'Region', 'Capital City', 'Population', 'Land Area', 'Party'], ['0', 'Alabama', 'South', 'Montgomery', '5024279', '50645', 'Republican'], ['1', 'Alaska', 'West', 'Juneau', '733391', '570641', 'Republican'], ['2', 'Arizona', 'West', 'Phoenix', '7151502', '113594', 'Republican'], ['...', '...', '...', '...', '...', '...', '...'], ['47', 'West Virginia', 'South', 'Charleston', '1793716', '24038', 'Republican'], ['48', 'Wisconsin', 'Midwest', 'Madison', '5893718', '54158', 'Republican'], ['49', 'Wyoming', 'West', 'Cheyenne', '576851', '97093', 'Republican']]"
+p,50 rows × 6 columns
+pre input,bpd.read_csv('data/states.csv').get('Capital City').loc[35]
+pre output,'Oklahoma City'
+pre input,bpd.read_csv('data/states.csv').get('Capital City').iloc[35]
+pre output,'Oklahoma City'
+h3,Quiz 1 material ends here!
+h2,Example 5: Which states are in the West?
+p,Key concept: Querying.
+h3,The problem
+p,We want to create a DataFrame consisting of only the states whose 'Region' is 'West'. How do we do that?
+h3,The solution
+pre input,"# This DataFrame only contains rows where the 'Region' is 'West'!
+only_west = states[states.get('Region') == 'West']
+only_west"
+table,"[['', 'Region', 'Capital City', 'Population', 'Land Area', 'Party', 'Density'], ['State', '', '', '', '', '', ''], ['Alaska', 'West', 'Juneau', '733391', '570641', 'Republican', '1.29'], ['Arizona', 'West', 'Phoenix', '7151502', '113594', 'Republican', '62.96'], ['California', 'West', 'Sacramento', '39538223', '155779', 'Democratic', '253.81'], ['...', '...', '...', '...', '...', '...', '...'], ['Utah', 'West', 'Salt Lake City', '3271616', '82170', 'Republican', '39.82'], ['Washington', 'West', 'Olympia', '7705281', '66456', 'Democratic', '115.95'], ['Wyoming', 'West', 'Cheyenne', '576851', '97093', 'Republican', '5.94']]"
+p,13 rows × 6 columns
+p,🤯 What just happened?
+h3,Aside: Booleans
+li,"When we compare two values, the result is either True or False.
+Notice, these words are not in quotes."
+li,"bool is a data type in Python, just like int, float, and str. 
+It stands for ""Boolean"", named after George Boole, an early mathematician."
+li,"There are only two possible Boolean values: True or False.
+Yes or no.
+On or off.
+1 or 0."
+pre input,5 == 6
+pre output,False
+pre input,type(5 == 6)
+pre output,bool
+pre input,9 + 10 < 21
+pre output,True
+h3,Comparison operators
+p,There are several types of comparisons we can make.
+table,"[['symbol', 'meaning'], ['==', 'equal to'], ['!=', 'not equal to'], ['<', 'less than'], ['<=', 'less than or equal to'], ['>', 'greater than'], ['>=', 'greater than or equal to']]"
+p,"When comparing an entire Series to a single value, the result is a Series of bools (via broadcasting)."
+pre input,states
+table,"[['', 'Region', 'Capital City', 'Population', 'Land Area', 'Party', 'Density'], ['State', '', '', '', '', '', ''], ['Alabama', 'South', 'Montgomery', '5024279', '50645', 'Republican', '99.21'], ['Alaska', 'West', 'Juneau', '733391', '570641', 'Republican', '1.29'], ['Arizona', 'West', 'Phoenix', '7151502', '113594', 'Republican', '62.96'], ['...', '...', '...', '...', '...', '...', '...'], ['West Virginia', 'South', 'Charleston', '1793716', '24038', 'Republican', '74.62'], ['Wisconsin', 'Midwest', 'Madison', '5893718', '54158', 'Republican', '108.82'], ['Wyoming', 'West', 'Cheyenne', '576851', '97093', 'Republican', '5.94']]"
+p,50 rows × 6 columns
+pre input,states.get('Region') == 'West'
+pre output,"State
+Alabama          False
+Alaska            True
+Arizona           True
+                 ...  
+West Virginia    False
+Wisconsin        False
+Wyoming           True
+Name: Region, Length: 50, dtype: bool"
+h3,What is a query? 🤔
+li,A query is code that extracts rows from a DataFrame for which certain condition(s) are true.
+li,We use queries to filter DataFrames to contain only the rows that satisfy given conditions.
+h3,How do we query a DataFrame?
+p,To select only certain rows of states:
+li,"Make a sequence (list/array/Series) of Trues (keep) and Falses (toss), usually by making a comparison."
+li,Then pass it into states[sequence_goes_here].
+pre input,states[states.get('Region') == 'West']
+table,"[['', 'Region', 'Capital City', 'Population', 'Land Area', 'Party', 'Density'], ['State', '', '', '', '', '', ''], ['Alaska', 'West', 'Juneau', '733391', '570641', 'Republican', '1.29'], ['Arizona', 'West', 'Phoenix', '7151502', '113594', 'Republican', '62.96'], ['California', 'West', 'Sacramento', '39538223', '155779', 'Democratic', '253.81'], ['...', '...', '...', '...', '...', '...', '...'], ['Utah', 'West', 'Salt Lake City', '3271616', '82170', 'Republican', '39.82'], ['Washington', 'West', 'Olympia', '7705281', '66456', 'Democratic', '115.95'], ['Wyoming', 'West', 'Cheyenne', '576851', '97093', 'Republican', '5.94']]"
+p,13 rows × 6 columns
+h3,What if the condition isn't satisfied?
+pre input,states[states.get('Region') == 'Pacific Northwest']
+table,"[['', 'Region', 'Capital City', 'Population', 'Land Area', 'Party', 'Density'], ['State', '', '', '', '', '', '']]"
+h2,Example 6: What proportion of US states are Republican?
+p,Key concept: Shape of a DataFrame.
+li,Query to extract a DataFrame of just the states where the 'Party' is 'Republican'.
+li,Count the number of such states.
+li,Divide by the total number of states.
+pre input,"only_rep = states[states.get('Party') == 'Republican']
+only_rep"
+table,"[['', 'Region', 'Capital City', 'Population', 'Land Area', 'Party', 'Density'], ['State', '', '', '', '', '', ''], ['Alabama', 'South', 'Montgomery', '5024279', '50645', 'Republican', '99.21'], ['Alaska', 'West', 'Juneau', '733391', '570641', 'Republican', '1.29'], ['Arizona', 'West', 'Phoenix', '7151502', '113594', 'Republican', '62.96'], ['...', '...', '...', '...', '...', '...', '...'], ['West Virginia', 'South', 'Charleston', '1793716', '24038', 'Republican', '74.62'], ['Wisconsin', 'Midwest', 'Madison', '5893718', '54158', 'Republican', '108.82'], ['Wyoming', 'West', 'Cheyenne', '576851', '97093', 'Republican', '5.94']]"
+p,31 rows × 6 columns
+h3,Shape of a DataFrame
+li,".shape returns the number of rows and columns in a given DataFrame.
+.shape is not a method, so we don't use parentheses.
+.shape is an attribute, as it describes the DataFrame."
+li,"Access each with []: 
+.shape[0] for rows.
+.shape[1] for columns."
+pre input,only_rep.shape
+pre output,"(31, 6)"
+pre input,"# Number of rows.
+only_rep.shape[0]"
+pre output,31
+pre input,"# Number of columns.
+only_rep.shape[1]"
+pre output,6
+pre input,"# What proportion of US states are Republican?
+only_rep.shape[0] / states.shape[0]"
+pre output,0.62
+h2,Example 7: Which Midwestern state has the most land area?
+p,Key concepts: Working with the index. Combining multiple steps.
+li,Query to extract a DataFrame of just the states in the 'Midwest'.
+li,Sort by 'Land Area' in descending order.
+li,Extract the first element from the index.
+pre input,"midwest = states[states.get('Region') == 'Midwest']
+midwest"
+table,"[['', 'Region', 'Capital City', 'Population', 'Land Area', 'Party', 'Density'], ['State', '', '', '', '', '', ''], ['Illinois', 'Midwest', 'Springfield', '12812508', '55519', 'Democratic', '230.78'], ['Indiana', 'Midwest', 'Indianapolis', '6785528', '35826', 'Republican', '189.40'], ['Iowa', 'Midwest', 'Des Moines', '3190369', '55857', 'Republican', '57.12'], ['...', '...', '...', '...', '...', '...', '...'], ['Ohio', 'Midwest', 'Columbus', '11799448', '40861', 'Republican', '288.77'], ['South Dakota', 'Midwest', 'Pierre', '886667', '75811', 'Republican', '11.70'], ['Wisconsin', 'Midwest', 'Madison', '5893718', '54158', 'Republican', '108.82']]"
+p,12 rows × 6 columns
+pre input,"midwest_sorted = midwest.sort_values(by='Land Area', ascending=False)
+midwest_sorted"
+table,"[['', 'Region', 'Capital City', 'Population', 'Land Area', 'Party', 'Density'], ['State', '', '', '', '', '', ''], ['Kansas', 'Midwest', 'Topeka', '2937880', '81759', 'Republican', '35.93'], ['Minnesota', 'Midwest', 'Saint Paul', '5706494', '79627', 'Democratic', '71.67'], ['Nebraska', 'Midwest', 'Lincoln', '1961504', '76824', 'Republican', '25.53'], ['...', '...', '...', '...', '...', '...', '...'], ['Wisconsin', 'Midwest', 'Madison', '5893718', '54158', 'Republican', '108.82'], ['Ohio', 'Midwest', 'Columbus', '11799448', '40861', 'Republican', '288.77'], ['Indiana', 'Midwest', 'Indianapolis', '6785528', '35826', 'Republican', '189.40']]"
+p,12 rows × 6 columns
+li,"The answer is Kansas, but how do we get it in code?"
+pre input,midwest_sorted.get('State').iloc[0]
+pre output,"---------------------------------------------------------------------------
+KeyError                                  Traceback (most recent call last)
+/var/folders/28/vs8cp38n1r1520g8bhzr4v5h0000gn/T/ipykernel_26705/3899766623.py in <module>
+----> 1 midwest_sorted.get('State').iloc[0]
+
+~/opt/anaconda3/lib/python3.9/site-packages/babypandas/utils.py in wrapper(*args, **kwargs)
+     18         with warnings.catch_warnings():
+     19             warnings.simplefilter(""ignore"")
+---> 20             return func(*args, **kwargs)
+     21 
+     22     return wrapper
+
+~/opt/anaconda3/lib/python3.9/site-packages/babypandas/bpd.py in get(self, key)
+    325         if any(mask):
+    326             k = [key] if isinstance(key, str) else key
+--> 327             raise KeyError(""{} not found in columns"".format(np.array(k)[mask]))
+    328 
+    329         f = _lift_to_pd(self._pd.get)
+
+KeyError: ""['State'] not found in columns"""
+h3,Working with the index
+li,"We can't use .get because .get is only for columns, and there is no column called 'State'. 
+Instead, 'State' is the index of the DataFrame."
+li,"To extract the index of a DataFrame, use .index.
+Like .shape, this is an attribute of the DataFrame, not a method. Don't use parentheses."
+li,Access particular elements in the index with [].
+pre input,midwest_sorted.index
+pre input,midwest_sorted.index[0]
+pre output,'Kansas'
+h3,Combining multiple steps
+li,It is not necessary to define the intermediate variables midwest and midwest_sorted. We can do everything in one line of code.
+p,It is not necessary to define the intermediate variables midwest and midwest_sorted. We can do everything in one line of code.
+li,"When solving a multi-step problem, develop your solution incrementally. Write one piece of code at a time and run it."
+p,"When solving a multi-step problem, develop your solution incrementally. Write one piece of code at a time and run it."
+pre input,"# Final solution, which you should build up one step at a time.
+states[states.get('Region') == 'Midwest'].sort_values(by='Land Area', ascending=False).index[0]"
+pre output,'Kansas'
+li,"If a line of code gets too long, enclose it in parentheses to split it over multiple lines."
+pre input,"# You can space your code out like this if needed.
+(
+    states[states.get('Region') == 'Midwest']
+    .sort_values(by='Land Area', ascending=False)
+    .index[0]
+)"
+pre output,'Kansas'
+h3,Concept Check ✅ – Answer at cc.dsc10.com
+p,Which expression below evaluates to the total population of the 'West'?
+p,A. states[states.get('Region') == 'West'].get('Population').sum()
+p,B. states.get('Population').sum()[states.get('Region') == 'West']
+p,C. states['West'].get('Population').sum()
+p,D. More than one of the above.
+pre input,...
+pre output,Ellipsis
+h2,Example 8: What are the top three most-populated Republican states in the South?
+p,Key concepts: Queries with multiple conditions. Selecting rows by position.
+h3,Multiple conditions
+li,"To write a query with multiple conditions, use & for ""and"" and | for ""or"".
+&: All conditions must be true.
+|: At least one condition must be true."
+li,You must use (parentheses) around each condition!
+li,"🚨 Don't use the Python keywords and and or here! They do not behave as you'd want.
+See BPD 10.3 for an explanation."
+pre input,states[(states.get('Party') == 'Republican') & (states.get('Region') == 'South')]
+table,"[['', 'Region', 'Capital City', 'Population', 'Land Area', 'Party', 'Density'], ['State', '', '', '', '', '', ''], ['Alabama', 'South', 'Montgomery', '5024279', '50645', 'Republican', '99.21'], ['Arkansas', 'South', 'Little Rock', '3011524', '52035', 'Republican', '57.87'], ['Florida', 'South', 'Tallahassee', '21538187', '53625', 'Republican', '401.64'], ['...', '...', '...', '...', '...', '...', '...'], ['Tennessee', 'South', 'Nashville', '6910840', '41235', 'Republican', '167.60'], ['Texas', 'South', 'Austin', '29145505', '261232', 'Republican', '111.57'], ['West Virginia', 'South', 'Charleston', '1793716', '24038', 'Republican', '74.62']]"
+p,13 rows × 6 columns
+pre input,"# You can also add line breaks within brackets.
+states[(states.get('Party') == 'Republican') & 
+       (states.get('Region') == 'South')]"
+table,"[['', 'Region', 'Capital City', 'Population', 'Land Area', 'Party', 'Density'], ['State', '', '', '', '', '', ''], ['Alabama', 'South', 'Montgomery', '5024279', '50645', 'Republican', '99.21'], ['Arkansas', 'South', 'Little Rock', '3011524', '52035', 'Republican', '57.87'], ['Florida', 'South', 'Tallahassee', '21538187', '53625', 'Republican', '401.64'], ['...', '...', '...', '...', '...', '...', '...'], ['Tennessee', 'South', 'Nashville', '6910840', '41235', 'Republican', '167.60'], ['Texas', 'South', 'Austin', '29145505', '261232', 'Republican', '111.57'], ['West Virginia', 'South', 'Charleston', '1793716', '24038', 'Republican', '74.62']]"
+p,13 rows × 6 columns
+h3,The & and | operators work element-wise!
+pre input,(states.get('Party') == 'Republican')
+pre output,"State
+Alabama          True
+Alaska           True
+Arizona          True
+                 ... 
+West Virginia    True
+Wisconsin        True
+Wyoming          True
+Name: Party, Length: 50, dtype: bool"
+pre input,(states.get('Region') == 'South')
+pre output,"State
+Alabama           True
+Alaska           False
+Arizona          False
+                 ...  
+West Virginia     True
+Wisconsin        False
+Wyoming          False
+Name: Region, Length: 50, dtype: bool"
+pre input,(states.get('Party') == 'Republican') & (states.get('Region') == 'South')
+pre output,"State
+Alabama           True
+Alaska           False
+Arizona          False
+                 ...  
+West Virginia     True
+Wisconsin        False
+Wyoming          False
+Length: 50, dtype: bool"
+h3,Original Question: What are the top three most-populated Republican states in the South?
+pre input,"(
+    states[(states.get('Party') == 'Republican') & 
+       (states.get('Region') == 'South')]
+    .sort_values(by='Population', ascending=False)
+)"
+table,"[['', 'Region', 'Capital City', 'Population', 'Land Area', 'Party', 'Density'], ['State', '', '', '', '', '', ''], ['Texas', 'South', 'Austin', '29145505', '261232', 'Republican', '111.57'], ['Florida', 'South', 'Tallahassee', '21538187', '53625', 'Republican', '401.64'], ['Georgia', 'South', 'Atlanta', '10711908', '57513', 'Republican', '186.25'], ['...', '...', '...', '...', '...', '...', '...'], ['Arkansas', 'South', 'Little Rock', '3011524', '52035', 'Republican', '57.87'], ['Mississippi', 'South', 'Jackson', '2961279', '46923', 'Republican', '63.11'], ['West Virginia', 'South', 'Charleston', '1793716', '24038', 'Republican', '74.62']]"
+p,13 rows × 6 columns
+p,How do we extract the first three rows of this DataFrame?
+h3,Using .take to select rows by position
+li,Querying allows us to select rows that satisfy a certain condition.
+li,"We can also select rows in specific positions with .take(seqence_of_integer_positions). This keeps only the rows whose positions are in the specified sequence (list/array).
+This is analogous to using .iloc[] on a Series.
+It's rare to need to select rows by integer position. Querying is far more useful."
+pre input,"(
+    states[(states.get('Party') == 'Republican') & 
+       (states.get('Region')=='South')]
+    .sort_values(by='Population', ascending=False)
+    .take([0, 1, 2])
+)"
+table,"[['', 'Region', 'Capital City', 'Population', 'Land Area', 'Party', 'Density'], ['State', '', '', '', '', '', ''], ['Texas', 'South', 'Austin', '29145505', '261232', 'Republican', '111.57'], ['Florida', 'South', 'Tallahassee', '21538187', '53625', 'Republican', '401.64'], ['Georgia', 'South', 'Atlanta', '10711908', '57513', 'Republican', '186.25']]"
+li,".take(np.arange(3)) could equivalently be used in place of .take([0, 1, 2])."
+pre input,"states[states.get('Region') == 'West'].sort_values(by='Land Area', ascending=False).get('Capital City').iloc[0]"
+h3,Extra Practice
+p,Write code to answer each question below.
+li,What is the capital city of the state in the 'West' with the largest land area?
+li,How many states in the 'Northeast' have more land area than an average US state?
+li,"What is the total population of the 'Midwest', 'South', and 'Northeast?"
+pre input,...
+pre output,Ellipsis
+h2,Example 9: Which region is most populated?
+p,Key concept: Grouping by one column.
+h3,Organizing states by region
+p,We can find the total population of any one region using the tools we already have.
+pre input,states[states.get('Region') == 'West'].get('Population').sum()
+pre output,78588572
+pre input,states[states.get('Region') == 'Midwest'].get('Population').sum()
+pre output,68985454
+p,"But can we find the total population of every region all at the same time, without writing very similar code multiple times? Yes, there is a better way!"
+h3,A new method: .groupby
+p,Observe what happens when we use the .groupby method on states with the argument 'Region'.
+pre input,states.groupby('Region').sum()
+table,"[['', 'Population', 'Land Area', 'Density'], ['Region', '', '', ''], ['Midwest', '68985454', '750524', '1298.78'], ['Northeast', '57609148', '161912', '4957.49'], ['South', '125576562', '868356', '3189.37'], ['West', '78588572', '1751054', '881.62']]"
+p,"These populations (for the 'West' and 'Midwest') match the ones we found on the previous slide, except now we get the populations for all regions at the same time. What just happened? 🤯"
+h3,An illustrative example: Pets 🐱 🐶🐹
+p,"Consider the DataFrame pets, shown below."
+table,"[['', 'Species', 'Color', 'Weight', 'Age'], ['0', 'dog', 'black', '40', '5.0'], ['1', 'cat', 'golden', '15', '8.0'], ['2', 'cat', 'black', '20', '9.0'], ['3', 'dog', 'white', '80', '2.0'], ['4', 'dog', 'golden', '25', '0.5'], ['5', 'hamster', 'golden', '1', '3.0']]"
+p,Let's see what happens under the hood when we run pets.groupby('Species').mean().
+pre input,show_grouping_animation()
+h3,Let's try it out!
+pre input,"pets = bpd.DataFrame().assign(
+    Species=['dog', 'cat', 'cat', 'dog', 'dog', 'hamster'],
+    Color=['black', 'golden', 'black', 'white', 'golden', 'golden'],
+    Weight=[40, 15, 20, 80, 25, 1],
+    Age=[5, 8, 9, 2, 0.5, 3]
+)
+pets"
+table,"[['', 'Species', 'Color', 'Weight', 'Age'], ['0', 'dog', 'black', '40', '5.0'], ['1', 'cat', 'golden', '15', '8.0'], ['2', 'cat', 'black', '20', '9.0'], ['3', 'dog', 'white', '80', '2.0'], ['4', 'dog', 'golden', '25', '0.5'], ['5', 'hamster', 'golden', '1', '3.0']]"
+pre input,pets.groupby('Species').mean()
+table,"[['', 'Weight', 'Age'], ['Species', '', ''], ['cat', '17.50', '8.5'], ['dog', '48.33', '2.5'], ['hamster', '1.00', '3.0']]"
+p,"It takes several steps to go from the original pets DataFrame to this grouped DataFrame, but we don't get to see any of Python's inner workings, just the final output."
+h3,Back to states: which region is most populated?
+pre input,states
+table,"[['', 'Region', 'Capital City', 'Population', 'Land Area', 'Party', 'Density'], ['State', '', '', '', '', '', ''], ['Alabama', 'South', 'Montgomery', '5024279', '50645', 'Republican', '99.21'], ['Alaska', 'West', 'Juneau', '733391', '570641', 'Republican', '1.29'], ['Arizona', 'West', 'Phoenix', '7151502', '113594', 'Republican', '62.96'], ['...', '...', '...', '...', '...', '...', '...'], ['West Virginia', 'South', 'Charleston', '1793716', '24038', 'Republican', '74.62'], ['Wisconsin', 'Midwest', 'Madison', '5893718', '54158', 'Republican', '108.82'], ['Wyoming', 'West', 'Cheyenne', '576851', '97093', 'Republican', '5.94']]"
+p,50 rows × 6 columns
+pre input,states.groupby('Region').sum()
+table,"[['', 'Population', 'Land Area', 'Density'], ['Region', '', '', ''], ['Midwest', '68985454', '750524', '1298.78'], ['Northeast', '57609148', '161912', '4957.49'], ['South', '125576562', '868356', '3189.37'], ['West', '78588572', '1751054', '881.62']]"
+pre input,"# Note the use of .index – remember, the index isn't a column!
+(
+    states
+    .groupby('Region')
+    .sum()
+    .sort_values(by='Population', ascending=False)
+    .index[0]
+)"
+pre output,'South'
+h3,Using .groupby in general
+p,"In short, .groupby aggregates (collects) all rows with the same value in a specified column (e.g. 'Region') into a single row in the resulting DataFrame, using an aggregation method (e.g. .sum()) to combine values from different rows with the same value in the specified column."
+p,To use .groupby:
+li,"Choose a column to group by.
+.groupby(column_name) will gather rows which have the same value in the specified column (column_name).
+In the resulting DataFrame, there will be one row for every unique value in that column."
+li,"Choose an aggregation method.
+The aggregation method will be applied within each group.
+The aggregation method is applied individually to each column.
+If it doesn't make sense to use the aggregation method on a column, the column is dropped from the output.
+
+
+Common aggregation methods include .count(), .sum(), .mean(), .median(), .max(), and .min()."
+pre input,states
+table,"[['', 'Region', 'Capital City', 'Population', 'Land Area', 'Party', 'Density'], ['State', '', '', '', '', '', ''], ['Alabama', 'South', 'Montgomery', '5024279', '50645', 'Republican', '99.21'], ['Alaska', 'West', 'Juneau', '733391', '570641', 'Republican', '1.29'], ['Arizona', 'West', 'Phoenix', '7151502', '113594', 'Republican', '62.96'], ['...', '...', '...', '...', '...', '...', '...'], ['West Virginia', 'South', 'Charleston', '1793716', '24038', 'Republican', '74.62'], ['Wisconsin', 'Midwest', 'Madison', '5893718', '54158', 'Republican', '108.82'], ['Wyoming', 'West', 'Cheyenne', '576851', '97093', 'Republican', '5.94']]"
+p,50 rows × 6 columns
+pre input,states.groupby('Region').sum()
+table,"[['', 'Population', 'Land Area', 'Density'], ['Region', '', '', ''], ['Midwest', '68985454', '750524', '1298.78'], ['Northeast', '57609148', '161912', '4957.49'], ['South', '125576562', '868356', '3189.37'], ['West', '78588572', '1751054', '881.62']]"
+p,"Tip: look for keywords ""per,"" ""for each,"" and ""indexed by"" when solving problems."
+li,"The aggregation method is applied separately to each column. If it does not make sense to apply the aggregation method to a certain column, the column will disappear. 🐇🎩"
+li,"Since the aggregation method is applied to each column separately, the rows of the resulting DataFrame need to be interpreted with care."
+pre input,states.groupby('Region').max()
+table,"[['', 'Capital City', 'Population', 'Land Area', 'Party', 'Density'], ['Region', '', '', '', '', ''], ['Midwest', 'Topeka', '12812508', '81759', 'Republican', '288.77'], ['Northeast', 'Trenton', '20201249', '47126', 'Republican', '1263.12'], ['South', 'Tallahassee', '29145505', '261232', 'Republican', '636.37'], ['West', 'Santa Fe', '39538223', '570641', 'Republican', '253.81']]"
+pre input,12812508 / 81759 == 288.77
+pre output,False
+li,The column names don't make sense after grouping with the .count() aggregation method.
+pre input,states.groupby('Region').count()
+table,"[['', 'Capital City', 'Population', 'Land Area', 'Party', 'Density'], ['Region', '', '', '', '', ''], ['Midwest', '12', '12', '12', '12', '12'], ['Northeast', '9', '9', '9', '9', '9'], ['South', '16', '16', '16', '16', '16'], ['West', '13', '13', '13', '13', '13']]"
+h3,"Dropping, renaming, and reordering columns"
+p,Consider dropping unneeded columns and renaming columns as follows:
+li,Use .assign to create a new column containing the same values as the old column(s).
+li,"Use .drop(columns=list_of_column_labels) to drop the old column(s). 
+Alternatively, use .get(list_of_column_labels) to keep only the columns in the given list. The columns will appear in the order you specify, so this is also useful for reordering columns!"
+pre input,"states_by_region = states.groupby('Region').count()
+states_by_region = states_by_region.assign(
+                    States=states_by_region.get('Capital City')
+                    ).get(['States'])
+states_by_region"
+table,"[['', 'States'], ['Region', ''], ['Midwest', '12'], ['Northeast', '9'], ['South', '16'], ['West', '13']]"
+h2,Challenge problems: IMDb dataset 🎞️
+img,https://dsc-courses.github.io/dsc10-2024-sp/resources/lectures/lec05/images/imdb.png
+h3,Extra practice
+p,"We won't cover this section in class. Instead, it's here for you to practice with some harder examples."
+p,"The video below walks through the solutions (it's also linked here). You can also see the solutions by clicking the ""✅ Click here to see the answer."" button below each question."
+pre input,"from IPython.display import YouTubeVideo
+YouTubeVideo('xg7rnjWnZ48')"
+p,"Before watching the video or looking at the solutions, make sure to try these problems on your own – they're great prep for homeworks, projects, and exams! Feel free to ask about them in office hours or on Ed."
+pre input,"imdb = bpd.read_csv('data/imdb.csv').set_index('Title').sort_values(by='Rating')
+imdb"
+table,"[['', 'Votes', 'Rating', 'Year', 'Decade'], ['Title', '', '', '', ''], ['Akira', '91652', '8.0', '1988', '1980'], ['Per un pugno di dollari', '124671', '8.0', '1964', '1960'], ['Guardians of the Galaxy', '527349', '8.0', '2014', '2010'], ['...', '...', '...', '...', '...'], ['The Godfather: Part II', '692753', '9.0', '1974', '1970'], ['The Shawshank Redemption', '1498733', '9.2', '1994', '1990'], ['The Godfather', '1027398', '9.2', '1972', '1970']]"
+p,250 rows × 4 columns
+h3,Question: How many movies appear from each decade?
+pre input,imdb.groupby('Decade').count()
+table,"[['', 'Votes', 'Rating', 'Year'], ['Decade', '', '', ''], ['1920', '4', '4', '4'], ['1930', '7', '7', '7'], ['1940', '14', '14', '14'], ['...', '...', '...', '...'], ['1990', '42', '42', '42'], ['2000', '50', '50', '50'], ['2010', '29', '29', '29']]"
+p,10 rows × 3 columns
+pre input,"# We'll learn how to make plots like this in the next lecture!
+imdb.groupby('Decade').count().plot(y='Year');"
+img,"data:image/png;base64,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iIiIiEjEU7EREREREZGIp2IjIiIiIiIRT8VGREREREQins/rAKGwZs0aPvjgAzZs2MDu3bu54447OOWUU4KPp6Wl8dZbb7FixQqysrJo27YtgwYNon79+gBkZmYyefJkli9fzs6dO6lRowZdunThiiuuIC4uLvg8mZmZvP766yxZsgSAk08+mUGDBlGtWrXQfsHiqdKut4NZaxk7dizLli075Hm03mS/slpz69ev55133uHHH38kKiqKY489lnvuuYcqVaoAWnMSUBbrLS0tjUmTJrFixQpycnJo0KABffr04dRTTw0eo/UmACkpKSxevJjU1FSqVKlCq1atGDhwIA0aNAgeY61lypQpzJs3j8zMTFq2bMngwYNp3Lhx8Jj8/HwmTZrEl19+SV5eHu3bt+e6666jdu3awWO05iJfpdixyc3N5dhjj2XQoEGHPGatZdy4cWzbto0777yTRx55hLp16/LQQw+Rk5MDwK5du9i1axdXXnkljz76KMOGDWP58uU8//zzhZ7rqaee4pdffmH48OEMHz6cX375haeffjokX6OEj9Kut4PNnDkTY8xhP4/Wm+xXFmtu/fr1jB49mo4dOzJmzBjGjh3LhRdeWGj9ac0JlM16e/rpp9m8eTN33303jz76KKeccgrjx49nw4YNwWO03gQCRfqCCy5g9OjR3Hvvvbiuy6hRowqtpxkzZjBz5kwGDRrE2LFjSUxMZNSoUWRnZwePmTBhAosXL+bmm29m5MiR5OTk8J///AfXdYPHaM1VALaS6devn120aFHwdmpqqu3Xr5/duHFj8L6CggJ77bXX2rlz5x7xeb766iv7t7/9zfr9fmuttZs2bbL9+vWz69evDx6zbt06269fP5uamloOX4lEgtKstw0bNth//vOfdvfu3Yc8j9abHElJ19w999xj33nnnSM+r9acHE5J19vAgQPtZ599Vui5rr32Wjtv3jxrrdabHNmePXtsv3797OrVq6211rqua4cMGWJTUlKCx+Tl5dmrr77azpkzx1prbVZWlr3iiivsl19+GTxm586dNjk52X733XfWWq25iqJS7Ngcjd/vByh04SbHcfD5fKxdu/aIH7d3715iY2OJiooCAn/tjIuLo2XLlsFjWrVqRVxcHOvWrSun9BJpirrecnNzefLJJxk0aBCJiYmHPI/WmxRVUdbcnj17+OGHH0hISODee+9lyJAhPPDAA4XWpNacFEVRf8a1adOGr776iszMTFzX5csvvyQ/P5927doBWm9yZHv37gWgevXqAGzbto20tDQ6duwYPCY6Opp27doF18rPP/9MQUEBHTp0CB5Tq1YtmjRpwvr16wGtuYqi0hebBg0aULduXd5++20yMzPx+/28//77pKWlkZaWdtiPycjIYNq0afTo0SN4X1paGgkJCYccm5CQcMTnkcqnqOvtjTfeoHXr1nTp0uWwz6P1JkVVlDX3+++/AzBlyhTOPfdc7rnnHpo1a8bIkSPZsmULoDUnRVPUn3G33norBQUFDBo0iAEDBvDSSy9x5513kpSUBGi9yeFZa3njjTdo06YNTZo0AQiuhz+ul4SEBPbs2RM8xufzBcvQwcfs/3ituYqh0hcbn8/H7bffzpYtWxg0aBADBw5k9erVdOrUCcc59Nuzd+9e/vOf/9CoUSP69u37p89vrT3iaySk8inKeluyZAmrVq3immuuKfbza73JHxVlzVlrATjvvPM4++yzadasGddccw0NGjRg/vz5R31+rTk5WFH/n/ruu++SlZXFfffdx9ixY+nVqxePP/44GzduPOrza71Vbq+++iobN27k5ptvPuSxP66L/T/Xjqaox2jNRY5KMRXtzxx33HGMGzeOvXv34vf7iY+P55577uG4444rdFx2djZjxoyhatWq3HHHHfh8B759iYmJwb8MHCw9Pf2wfwGQyuvP1tuqVav4/fffDyk2jz32GG3btuXBBx/UepNi+bM1V7NmTQAaNWpU6OMaNmzIjh07AP2Mk6L7s/W2detWZs+ezWOPPRacWnXssceydu1aZs+ezT/+8Q+tNznEa6+9xrfffsuIESMKTTLbf7p2Wlpa8GcZFF4riYmJ+P1+MjMzC+3apKen07p16+AxWnORr9Lv2BwsLi6O+Ph4tmzZwk8//VToNKC9e/cyatQofD4fd911V3D86X6tWrVi7969/Pjjj8H7fvjhB/bu3Rv8RyNysCOtt0svvZRx48bxyCOPBN8Arr76aoYOHQpovUnJHGnN1a1bl5o1a7J58+ZCx2/ZsoU6deoAWnNSfEdab3l5ecChf2F3HCf4F3StN9nPWsurr77KokWLuP/++6lXr16hx+vVq0diYiIrVqwI3uf3+1mzZk1wrRx33HFERUUVOmb37t1s3LiRVq1aAVpzFUWl2LHJyclh69atwdvbtm3jl19+oXr16tSpU4evv/6a+Ph46tSpw8aNG5kwYQJdunQJvhAtOzub0aNHk5uby0033UR2dnZwhGB8fDyO49CoUSNOPPFEXnzxRYYMGQLASy+9xEknnVRo1rpUfKVdb4mJiYcdGFCnTp3gD3StNzlYadecMYa//vWvTJ48mWOPPZZjjz2WBQsWkJqaym233QZozckBpV1vDRo0ICkpiZdffpkrr7yS6tWr87///Y8VK1Zw9913A1pvcsCrr77KwoULueuuu4iNjQ2+3iUuLo4qVapgjKFnz56kpKRQv359kpKSSElJISYmhm7dugWPPeecc5g0aRI1atSgevXqTJo0iSZNmgQHCmjNVQzGFuUEwwi3evVqRowYccj93bt3Z9iwYcyaNYsPP/wwuI155pln0rdv3+CpZkf6eIBnnnkm+MtmZmZmcKsUoHPnzgwePFgXdqpkSrveDic5OfmwF+jUehMouzX3/vvv88knn5CZmUnTpk0ZOHAgbdq0CT6uNSdQNutty5YtvPXWW6xbt46cnBySkpK45JJLOPPMM4PHaL0JBP7/dzhDhw7lrLPOAg5coHPu3LlkZWXRokULBg8eHBwwAIGdwjfffJOFCxcWukDn/l1p0JqrCCpFsRERERERkYpNr7EREREREZGIp2IjIiIiIiIRT8VGREREREQinoqNiIiIiIhEPBUbERERERGJeCo2IiIiIiIS8VRsREREREQk4h35ioAiIiL7LFiwgOeeey54Ozo6mri4OBo1akSHDh0455xzSEhI8DDh0SUnJ9O3b98jXuxPREQin4qNiIgU2dChQ2nQoAEFBQXs2bOHtWvXMmPGDD788ENuueUWOnTo4HVEERGppHQqmoiIFFnjxo1p1aoVbdu25dRTT+Waa67h0UcfJSYmhscee4y0tDSvI4qISCWlHRsRESmVOnXqcNVVVzF+/Hjmzp1L3759Afjpp5+YOnUqa9euJS8vj4YNG3LppZdy+umnF/r4Xbt2MWXKFJYtW0ZaWhrx8fG0atWKwYMHk5iYSF5eHu+++y4rV65k27ZtOI5DgwYNuPTSS+nSpUuh59q7dy8TJ05k8eLF5Ofn06ZNG6699trD5t6yZQuTJ09m5cqV7N27l2OOOYYLLriACy+8sHy+USIiUq5UbEREpNQ6deqE4zh8//33AKxatYoxY8bQsmVLhgwZQlxcHF999RVPPPEEeXl5nHXWWUCg1Pz73//G7/fTp08fmjZtSkZGBsuXLycrK4vExET8fj+ZmZlccskl1KpVC7/fz8qVK3n00UcZOnQo3bt3B8Bay7hx41i/fj2XX345LVq0YO3atYwdO/aQvL/99hv33ntvsJQlJiaybNkyXn/9dTIyMujXr1/IvnciIlI2VGxERKTUqlatSo0aNdi1axcAr776Ko0bN+b+++8nKioKgBNPPJH09HTeeecdzjzzTBzH4b333iM9PZ1x48bRqFGj4PMdvKsTFxfH0KFDg7dd1+WEE04gKyuLWbNmBYvN8uXLWb16Nddccw09e/YEoEOHDvh8Pt59991Ced944w1iY2MZOXIkcXFxwWP9fj/vv/8+F110EdWrVy+H75SIiJQXFRsRESlTW7duJTU1lSuvvBKAgoKC4GMnnXQSS5cuZfPmzTRq1Ihly5bRvn37QqXmcL7++mtmzZrFL7/8Qm5ubvD+6Ojo4PurVq0C4Iwzzij0sd26dStUbPLy8li1ahU9evQgJiamUL5OnToxe/ZsfvjhBzp16lSCr15ERLyiYiMiIqWWk5NDRkYGTZo0CQ4QmDRpEpMmTTrs8RkZGQCkp6dTq1atoz73okWLGD9+PKeeeiqXXHIJiYmJREVFMWfOHObPnx88LjMzk6ioKGrUqFHo4xMTEwvdzszMpKCggNmzZzN79uyj5hMRkcihYiMiIqW2dOlSXNelXbt2xMfHA3DppZfStWvXwx7foEEDAOLj44Onrx3JF198Qb169bj11lsxxgTvz8/PL3Rc9erVKSgoICMjo1C5+eOktmrVquE4DmeeeSYXXHDBYT9nvXr1jppJRETCj4qNiIiUyo4dO5g0aRJxcXH06NGD+Ph46tevz6+//srf//73o37siSeeyOeff87mzZuDZedwfD5foVKTlpbGkiVLCh3Tvn17PvjgA7744ovga2wAFi5cWOi4mJgYjj/+eDZs2EDTpk3x+fS/QhGRikA/zUVEpMg2bdpEQUEBruuyZ88evv/+exYsWIDjONxxxx3B3ZohQ4YwduxYRo8eTffu3alVqxaZmZmkpqayYcMGbrvtNgD69+/PsmXLeOCBB+jTpw9NmjQhKyuLZcuW0atXLxo2bEjnzp1ZvHgxr7zyCqeeeio7duxg2rRp1KxZky1btgSzdejQgbZt2/LWW2+Rm5tL8+bNWbt2LV988cUhX8e1117Lfffdx/3338/5559P3bp1yc7OZuvWrXz77bc88MADofmGiohImTHWWut1CBERCW8LFizgueeeC972+XxUq1aNhg0b0rFjR84999xgqdnv119/Zfr06axZs4bMzExq1KhBo0aNOO200+jRo0fwuJ07dzJ58mS+++47MjIyiI+Pp02bNgwaNIiEhAQA3n//ff773/+SlpZGvXr16NWrFzt37mTq1KlMnjw5+Fx79+7ljTfeYPHixfj9flq3bs2gQYO45ZZb6Nu3L8nJycFjt23bxrRp01i+fDl79uyhWrVq1K9fn06dOnHZZZeV17dSRETKiYqNiIiIiIhEPMfrACIiIiIiIqWlYiMiIiIiIhFPxUZERERERCKeio2IiIiIiEQ8FRsREREREYl4KjYiIiIiIhLxVGxERERERCTiqdiIiIiIiEjEU7EREREREZGIp2IjIiIiIiIRT8VGREREREQinoqNiIiIiIhEvP8HjQ7TIoM/V6gAAAAASUVORK5CYII=
+"
+h3,Question: What was the highest rated movie of the 1990s?
+p,Let's try to do this two different ways.
+h4,Without grouping
+pre input,"imdb[imdb.get('Decade') == 1990].sort_values('Rating', ascending=False).index[0]"
+pre output,'The Shawshank Redemption'
+p,"Note: The command to extract the index of a DataFrame is .index - no parentheses! This is different than the way we extract columns, with .get(), because the index is not a column."
+h4,With grouping
+pre input,imdb.reset_index().groupby('Decade').max()
+table,"[['', 'Title', 'Votes', 'Rating', 'Year'], ['Decade', '', '', '', ''], ['1920', 'The Kid', '98794', '8.3', '1927'], ['1930', 'The Wizard of Oz', '259235', '8.5', '1939'], ['1940', 'The Treasure of the Sierra Madre', '350551', '8.6', '1949'], ['...', '...', '...', '...', '...'], ['1990', 'Unforgiven', '1498733', '9.2', '1999'], ['2000', 'Yip Man', '1473049', '8.9', '2009'], ['2010', 'X-Men: Days of Future Past', '1271949', '8.7', '2015']]"
+p,10 rows × 4 columns
+li,It turns out that this method does not yield the correct answer.
+li,"When we use an aggregation method (e.g. .max()), aggregation is done to each column individually."
+li,"While it's true that the highest rated movie from the 1990s has a rating of 9.2, that movie is not Unforgiven – instead, Unforgiven is the movie that's the latest in the alphabet among all movies from the 1990s."
+li,Taking the max is not helpful here.
+h3,Question: How many years have more than 3 movies rated above 8.5?
+pre input,
+pre input,"good_movies_per_year = imdb[imdb.get('Rating') > 8.5].groupby('Year').count()
+good_movies_per_year[good_movies_per_year.get('Votes') > 3].shape[0]"
+h4,Aside: Using .sum() on a boolean array
+li,Summing a boolean array gives a count of the number of True elements because Python treats True as 1 and False as 0.
+li,Can you use that fact here?
+pre input,
+h3,"Question: Out of the years with more than 3 movies, which had the highest average rating?"
+pre input,
+pre input,"# A Series of Trues and Falses; True when there were at least 3 movies on the list from that year
+more_than_3_ix = imdb.groupby('Year').count().get('Votes') > 3
+
+# The year with the highest average rating, among the years with more than 3 movies
+imdb.groupby('Year').mean()[more_than_3_ix].sort_values(by='Rating').index[-1]"
+h3,"Question: Which year had the longest movie titles, on average?"
+p,Hint: Use .str.len() on the column or index that contains the names of the movies.
+pre input,
+pre input,"(
+    imdb.assign(title_length=imdb.index.str.len())
+    .groupby('Year').mean()
+    .sort_values(by='title_length')
+    .index[-1]
+)"
+h3,Question: What is the average rating of movies from years that had at least 3 movies in the Top 250?
+pre input,
+pre input,"# A Series of Trues and Falses; True when there were at least 3 movies on the list from that year
+more_than_3_ix = imdb.groupby('Year').count().get('Votes') > 3
+
+# The sum of the ratings of movies from years that had at least 3 movies on the list
+total_rating = imdb.groupby('Year').sum()[more_than_3_ix].get('Rating').sum()
+
+# The total number of movies from years that had at least 3 movies on the list
+count = imdb.groupby('Year').count()[more_than_3_ix].get('Rating').sum()
+
+# The correct answer
+average_rating = total_rating / count
+
+# Close, but incorrect: 
+# Doesn't account for the fact that different years have different numbers of movies on the list
+close_but_wrong = imdb.groupby('Year').mean()[more_than_3_ix].get('Rating').mean()"
+h2,"Summary, next time"
+h3,Summary
+li,"To write queries that involve multiple conditions:
+Put parentheses around all conditions.
+Separate conditions using & if you require all to be true, or | if you require at least one to be true."
+li,"df.groupby(column_name).agg_method() aggregates all rows with the same value for column_name into a single row in the resulting DataFrame, using agg_method() to combine values.
+Common aggregation methods include .count(), .sum(), .mean(), .median(), .max(), and .min().
+Tip: look for keywords ""per,"" ""for each,"" and ""indexed by"" when solving problems."
+h3,Next time
+p,A picture is worth a 1000 words – it's time to visualize!

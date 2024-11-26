@@ -1,0 +1,335 @@
+tag,content
+pre input,"# Run this cell to set up packages for lecture.
+from lec01_imports import *"
+h1,Lecture 1 – Introduction
+h2,"DSC 10, Spring 2024"
+h3,Welcome to DSC 10! 👋
+li,"DSC 10 is a guided tour of data science.
+It was developed by UC Berkeley in 2015 and adapted by UCSD in 2017."
+li,"You'll learn just enough programming and statistics to do data science.
+We'll cover statistics without too much math – instead, we'll use simulation.
+This class lays the foundation for all other courses in the DSC major."
+h3,Agenda
+li,Course staff.
+li,What is data science?
+li,How will this course run?
+li,Fun demo.
+h2,Course staff
+h3,Instructor: Dr. Janine Tiefenbruck (call me Janine)
+li,"BS in Math and Computer Science at Loyola Maryland, PhD in Math (combinatorics) at UCSD 🔱."
+li,"Teaching at UCSD: Math ➡️ CSE ➡️ DSC.
+12th time teaching DSC 10!
+Also teach DSC 40A often."
+li,"Outside interests: crafting, board games, hiking, baking 🎂."
+table,"[['', '', '']]"
+img,https://dsc-courses.github.io/dsc10-2024-sp/resources/lectures/lec01/images/camping.jpg
+img,https://dsc-courses.github.io/dsc10-2024-sp/resources/lectures/lec01/images/desserts.jpg
+img,https://dsc-courses.github.io/dsc10-2024-sp/resources/lectures/lec01/images/kids.jpg
+h3,Course staff
+p,"In addition, we have many other course staff members who are here to support you in discussion, office hours, and online."
+li,Graduate TA: Arya Rahnama.
+li,"Undergraduate tutors: Daniel Budidharma, Oren Ciolli, Sophia Fang, Kate Feng, Charlie Gillet, Ashley Ho, Chia-Chan Ho, Raine Hoang, Michelle Hong, Jason Huynh, Norah Kerendian, Minchan Kim, Vivian Lin, Calvin Nguyen, Kathleen Nguyen, Athulith Paraselli, Pallavi Prabhu, Pranav Rajaram, Aaron Rasin, Keenan Serrao, Abel Seyoum, Yutian Shi, Sofia Tkachenko, Claire Wang, Sophie Wang, Cici Xu, Tiffany Yu, Ciro Zhang"
+li,Stuffed panda mascot: Baby Panda. 🐼
+p,"Learn more about them at dsc10.com/staff, and come say hi in office hours!"
+h2,"What is ""data science""? 🤔"
+img,https://dsc-courses.github.io/dsc10-2024-sp/resources/lectures/lec01/images/data-science.png
+h3,"What is ""data science""?"
+p,"Data science is about drawing useful conclusions from data using computation. Throughout the quarter, we'll touch on several aspects of data science:"
+li,"First 4 weeks: use Python to explore data.
+Lots of visualization 📈📊 and ""data manipulation"", using industry-standard tools."
+li,"Next 4 weeks: use data to infer about a population, given just a sample.
+Rely heavily on simulation, rather than formulas."
+li,"Last 2 weeks: use data from the past to predict what may happen in the future.
+A taste of machine learning 🤖."
+h3,Data science is relevant 🤧
+p,We spent years looking at graphs like this:
+img,https://dsc-courses.github.io/dsc10-2024-sp/resources/lectures/lec01/images/covid.png
+h3,"It can be fun, too!"
+p,The site The Pudding is home to several interactive data-rich articles.
+img,https://dsc-courses.github.io/dsc10-2024-sp/resources/lectures/lec01/images/vocab.png
+h2,Course logistics
+h3,Course website
+p,The course website is your one-stop-shop for all things related to the course.
+h3,dsc10.com
+p,"This is where lectures, homeworks, labs, discussions, and all other content will be posted. Check it often, and read the syllabus!"
+h3,Getting set up
+li,"Ed: Q&A forum. All announcements will be made here. You should have gotten email invitation; if not, join here."
+li,"Gradescope: Where you will submit all assignments, and where all of your grades will live. You will be automatically added to Gradescope within 24 hours of enrolling in the course."
+li,DataHub: Where you will access and run all code in this class. Access at datahub.ucsd.edu. Learn how to use it in today's discussion section!
+li,We will not be using Canvas for anything!
+h3,First tasks
+li,Fill out the required Welcome Survey as soon as possible.
+li,"Take the pretest, which will help you gauge your preparedness, brush up on prerequisite knowledge, and learn test-taking skills. Solutions will be posted on Wednesday."
+h3,Lecture
+li,"Lectures will be in-person and recorded for viewing afterwards.
+You can attend any lecture section, as long as there is space for the students officially enrolled in that section.
+Recordings can be found at podcast.ucsd.edu a few hours later."
+li,"Slides/code from lecture will be linked on the course website, both in a ""runnable"" code format and as an HTML file (✏️), which you can save as a PDF and annotate on your tablet."
+li,"We will try to make lectures engaging. Bring your laptop or tablet, if you have one."
+h3,Concept Check ✅ – Answer at cc.dsc10.com
+p,Is it acceptable to recline your seat on an airplane?
+img,https://dsc-courses.github.io/dsc10-2024-sp/resources/lectures/lec01/images/reclining.jpeg
+p,"A. Yes, you paid for the seat!"
+p,B. Only if the person in front of you reclined their seat first.
+p,C. Only if you ask the person behind you and they're fine with it.
+p,"D. No, it's rude."
+p,"(We are always going to use the same link for Concept Checks, so you should bookmark it.)"
+h3,Discussion
+li,"The first discussion section is Wednesday. Our TA, Arya, will help you get set up with Jupyter notebooks, the programming environment we'll be using all quarter."
+li,"In future discussions, you will practice with the conceptual ideas in the course and prepare for quizzes and exams by working through past quiz and exam problems (see practice.dsc10.com). 
+Problem sets are posted online, so bring a computer or tablet to access them. But like quizzes and exams, you will answer the problems on paper.
+Problem sets aren't submitted anywhere.
+No podcasting; you need to be an active participant in these sessions to benefit."
+li,"You can attend any section that works with your schedule, subject to availability of seats.
+Section A: Wednesday 2-2:50PM in Center 109
+Section B: Wednesday 3-3:50PM in Center 109
+Section C: Wednesday 4-4:50PM in Center 109"
+h3,Labs
+li,"Labs refer to lab assignments, which are a required part of the course and help you develop fluency in Python and working with data."
+li,"While working on labs, you'll be able to run autograder tests which tell you if your answers are correct.
+For labs, if you pass all autograder tests, you will get 100\%!"
+li,"You must submit labs individually, but you can discuss ideas with others (no sharing code)."
+li,"All assignments, including labs will be due at 11:59PM on the due date and submitted to Gradescope."
+li,The first lab will have submission instructions.
+h3,Homeworks and projects
+li,Weekly homework assignments build off of skills you develop in labs.
+li,"A key difference between homeworks and labs is that passing autograder tests does not guarantee a perfect score!
+In homeworks, we have ""hidden tests"" that are only run after you submit the assignment.
+The tests that are available to you within the assignment itself only verify that your answer is reasonable/on the right track."
+li,"Again, you must work on homeworks yourself, but you can discuss ideas with other students (no sharing code)."
+li,"In the Midterm Project and Final Project, you will do a deep dive into a dataset! Projects are longer than homeworks, so we give you more time to work on them. They're also very rewarding!
+You can work on projects with partners, following these project partner guidelines. Both of you should actively contribute to all parts of the project."
+h3,Quizzes
+li,"There will be five quizzes throughout the quarter, meant to help prepare you for exams and encourage you to review material regularly."
+li,Only your three best quiz scores will count. This is intended to give you room to fail and learn from your mistakes.
+li,It also helps if you need to miss a quiz. There are no makeup quizzes.
+li,"We will offer five sessions for quizzes. Let us know your preferences on the Welcome Survey. We will confirm your assigned quiz time by email before Monday of Week 2.
+Quiz Session 1: Friday 2-2:20PM in Center 109
+Quiz Session 2: Friday 2:30-2:50PM in Center 109
+Quiz Session 3: Friday 3-3:20PM in Center 109
+Quiz Session 4: Friday 3:30-3:50PM in Center 109
+Quiz Session 5: Friday 4-4:20PM in Center 109"
+h3,Exams
+p,We will have two exams this quarter.
+li,"Midterm Exam: Friday, May 3, during your enrolled lecture slot"
+li,"Final Exam: Saturday, June 8, 7-10PM, location TBD"
+p,Both exams will be conducted in person and on paper. Let us know of any conflicts on the Welcome Survey.
+h3,Readings and resources
+li,"We will draw readings from two sources. Readings for each lecture will be posted on the course homepage.
+Computational and Inferential Thinking (CIT), the textbook created for Berkeley's version of this course.
+babypandas notes, written specifically for the first part of DSC 10."
+li,"The Resources tab of the course website contains links to helpful resources that you'll want to use throughout the course (e.g. DSC 10 Reference Sheet, programming tutorials, supplemental videos)."
+li,The Debugging tab of the course website has answers to many common technical issues.
+h3,Rough weekly schedule
+table,"[['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], ['', 'Lecture', '', 'Lecture', '', 'Lecture', ''], ['', '', '', 'Discussion', '', 'Quizzes', ''], ['', '', 'HW due', '', 'Lab due', '']]"
+p,Always refer to the course website for the current schedule.
+h3,First assignment
+li,"Lab 0 is due Saturday, April 6 at 11:59PM.
+To access it, click the link on the homepage of dsc10.com at the end of Week 1."
+h4,Getting help
+p,"This is a tough, fast-paced course, but we're here to help you – here's how:"
+li,"Office Hours (OH).
+Not held in an office – rather, held in a large open study space (HDSI 155).
+Come with questions, or just to work!
+See the schedule and instructions on the 📆 Calendar."
+li,"Ed.
+Post here with any logistical or conceptual questions; please don't email.
+No code or solutions in public posts. Such posts should be private to course staff.
+Otherwise, post publicly (anonymously, if you'd like)."
+li,🚨 Important: Use these to your advantage!
+h3,Advice from previous students
+p,"At the end of each quarter, we ask DSC 10 students to give advice to future students in the course. Here are some responses from last quarter's students:"
+p,Start the assignments (especially the midterm/final projects) early! It became so manageable with more time to split up sections and think things through without a crazy overbearing time pressure.
+p,"Be prepared to spend a lot of time in this class, regardless of whether you have any prior knowledge in programming or statistics. Everything is doable, but you will need to put in a significant amount of effort to succeed and sometimes you'll have to think outside of the box to come up with solutions."
+p,"Go to office hours!! It is the best resource available. The tutors are more than willing to help you out. The tutors made my time at DSC 10 not only manageable but also enjoyable. Also, prepare for the quizzes at least one day in advance so that you can retain the material better."
+p,"Practice is the most important thing you can do to succeed in this course. Also, grab a friend - two (or more) heads are better than one! And don't be afraid to ask for help when needed."
+h3,Academic Integrity policies
+h4,Collaboration
+li,"Discuss all questions with each other (except, of course, on quizzes and exams)."
+li,"Projects are submitted in pairs or individually. Both partners should contribute to all parts of the project, not split it up."
+li,Labs and homeworks are submitted individually.
+li,"No other person should complete your work for you or write any of the code you submit in this course, with the exception of the work you do with a project partner."
+li,Don't give someone else your code or look at someone else's code.
+h4,Generative Artificial Intelligence (GenAI)
+li,"The syllabus includes a discussion of these tools and how you may use them in this class. Please read this carefully, ask questions about it, and proceed with care!"
+h3,We're here for you!
+p,"Regardless of your background, you can succeed in this course. No prior programming or statistics experience will be assumed!"
+p,Watch on YouTube: We’re All Data Scientists | Rebecca Nugent | TEDxCMU.
+h2,Demo
+h3,Little Women (1868)
+li,"Little Women, by Louisa May Alcott, is a novel that follows the life of four sisters – Meg, Jo, Beth, and Amy.
+A movie based on the novel was released in 2019, starring Emma Watson (Meg) and Timothée Chalamet (Laurie)."
+li,"Using tools from this class, we'll learn (a bit) about the plot of the book, without reading it."
+li,Do not worry about any of this code – we'll cover the necessary pieces in the weeks to come. Sit back and relax!
+pre input,"# Read in 'lw.txt' to a variable called little_women_text.
+little_women_text = open('data/lw.txt').read()"
+pre input,"# See the first three thousand characters.
+little_women_text[:3000]"
+pre output,"'The Project Gutenberg EBook of Little Women, by Louisa May Alcott\n\nThis eBook is for the use of anyone anywhere at no cost and with\nalmost no restrictions whatsoever.  You may copy it, give it away or\nre-use it under the terms of the Project Gutenberg License included\nwith this eBook or online at www.gutenberg.net\n\n\nTitle: Little Women\n\nAuthor: Louisa May Alcott\n\nPosting Date: September 13, 2008 [EBook #514]\nRelease Date: May, 1996\n[This file last updated on August 19, 2010]\n\nLanguage: English\n\n\n*** START OF THIS PROJECT GUTENBERG EBOOK LITTLE WOMEN ***\n\n\n\n\nLITTLE WOMEN\n\n\nby\n\nLouisa May Alcott\n\n\n\n\nCONTENTS\n\n\nPART 1\n\n          ONE  PLAYING PILGRIMS\n          TWO  A MERRY CHRISTMAS\n        THREE  THE LAURENCE BOY\n         FOUR  BURDENS\n         FIVE  BEING NEIGHBORLY\n          SIX  BETH FINDS THE PALACE BEAUTIFUL\n        SEVEN  AMY\'S VALLEY OF HUMILIATION\n        EIGHT  JO MEETS APOLLYON\n         NINE  MEG GOES TO VANITY FAIR\n          TEN  THE P.C. AND P.O.\n       ELEVEN  EXPERIMENTS\n       TWELVE  CAMP LAURENCE\n     THIRTEEN  CASTLES IN THE AIR\n     FOURTEEN  SECRETS\n      FIFTEEN  A TELEGRAM\n      SIXTEEN  LETTERS\n    SEVENTEEN  LITTLE FAITHFUL\n     EIGHTEEN  DARK DAYS\n     NINETEEN  AMY\'S WILL\n       TWENTY  CONFIDENTIAL\n   TWENTY-ONE  LAURIE MAKES MISCHIEF, AND JO MAKES PEACE\n   TWENTY-TWO  PLEASANT MEADOWS\n TWENTY-THREE  AUNT MARCH SETTLES THE QUESTION\n\n\nPART 2\n\n  TWENTY-FOUR  GOSSIP\n  TWENTY-FIVE  THE FIRST WEDDING\n   TWENTY-SIX  ARTISTIC ATTEMPTS\n TWENTY-SEVEN  LITERARY LESSONS\n TWENTY-EIGHT  DOMESTIC EXPERIENCES\n  TWENTY-NINE  CALLS\n       THIRTY  CONSEQUENCES\n   THIRTY-ONE  OUR FOREIGN CORRESPONDENT\n   THIRTY-TWO  TENDER TROUBLES\n THIRTY-THREE  JO\'S JOURNAL\n  THIRTY-FOUR  FRIEND\n  THIRTY-FIVE  HEARTACHE\n   THIRTY-SIX  BETH\'S SECRET\n THIRTY-SEVEN  NEW IMPRESSIONS\n THIRTY-EIGHT  ON THE SHELF\n  THIRTY-NINE  LAZY LAURENCE\n        FORTY  THE VALLEY OF THE SHADOW\n    FORTY-ONE  LEARNING TO FORGET\n    FORTY-TWO  ALL ALONE\n  FORTY-THREE  SURPRISES\n   FORTY-FOUR  MY LORD AND LADY\n   FORTY-FIVE  DAISY AND DEMI\n    FORTY-SIX  UNDER THE UMBRELLA\n  FORTY-SEVEN  HARVEST TIME\n\n\n\nCHAPTER ONE\n\nPLAYING PILGRIMS\n\n""Christmas won\'t be Christmas without any presents,"" grumbled Jo, lying\non the rug.\n\n""It\'s so dreadful to be poor!"" sighed Meg, looking down at her old\ndress.\n\n""I don\'t think it\'s fair for some girls to have plenty of pretty\nthings, and other girls nothing at all,"" added little Amy, with an\ninjured sniff.\n\n""We\'ve got Father and Mother, and each other,"" said Beth contentedly\nfrom her corner.\n\nThe four young faces on which the firelight shone brightened at the\ncheerful words, but darkened again as Jo said sadly, ""We haven\'t got\nFather, and shall not have him for a long time."" She didn\'t say\n""perhaps never,"" but each silently added it, thinking of Father far\naway, where the fighting was.\n\nNobody spoke for a minute; then Meg said in an altered tone, ""You know\nthe reason Mother proposed not having any presents this Christmas was\nbecause it is going to b'"
+pre input,"# Print the first three thousand characters.
+print(little_women_text[:3000])"
+pre output,"The Project Gutenberg EBook of Little Women, by Louisa May Alcott
+
+This eBook is for the use of anyone anywhere at no cost and with
+almost no restrictions whatsoever.  You may copy it, give it away or
+re-use it under the terms of the Project Gutenberg License included
+with this eBook or online at www.gutenberg.net
+
+
+Title: Little Women
+
+Author: Louisa May Alcott
+
+Posting Date: September 13, 2008 [EBook #514]
+Release Date: May, 1996
+[This file last updated on August 19, 2010]
+
+Language: English
+
+
+*** START OF THIS PROJECT GUTENBERG EBOOK LITTLE WOMEN ***
+
+
+
+
+LITTLE WOMEN
+
+
+by
+
+Louisa May Alcott
+
+
+
+
+CONTENTS
+
+
+PART 1
+
+          ONE  PLAYING PILGRIMS
+          TWO  A MERRY CHRISTMAS
+        THREE  THE LAURENCE BOY
+         FOUR  BURDENS
+         FIVE  BEING NEIGHBORLY
+          SIX  BETH FINDS THE PALACE BEAUTIFUL
+        SEVEN  AMY'S VALLEY OF HUMILIATION
+        EIGHT  JO MEETS APOLLYON
+         NINE  MEG GOES TO VANITY FAIR
+          TEN  THE P.C. AND P.O.
+       ELEVEN  EXPERIMENTS
+       TWELVE  CAMP LAURENCE
+     THIRTEEN  CASTLES IN THE AIR
+     FOURTEEN  SECRETS
+      FIFTEEN  A TELEGRAM
+      SIXTEEN  LETTERS
+    SEVENTEEN  LITTLE FAITHFUL
+     EIGHTEEN  DARK DAYS
+     NINETEEN  AMY'S WILL
+       TWENTY  CONFIDENTIAL
+   TWENTY-ONE  LAURIE MAKES MISCHIEF, AND JO MAKES PEACE
+   TWENTY-TWO  PLEASANT MEADOWS
+ TWENTY-THREE  AUNT MARCH SETTLES THE QUESTION
+
+
+PART 2
+
+  TWENTY-FOUR  GOSSIP
+  TWENTY-FIVE  THE FIRST WEDDING
+   TWENTY-SIX  ARTISTIC ATTEMPTS
+ TWENTY-SEVEN  LITERARY LESSONS
+ TWENTY-EIGHT  DOMESTIC EXPERIENCES
+  TWENTY-NINE  CALLS
+       THIRTY  CONSEQUENCES
+   THIRTY-ONE  OUR FOREIGN CORRESPONDENT
+   THIRTY-TWO  TENDER TROUBLES
+ THIRTY-THREE  JO'S JOURNAL
+  THIRTY-FOUR  FRIEND
+  THIRTY-FIVE  HEARTACHE
+   THIRTY-SIX  BETH'S SECRET
+ THIRTY-SEVEN  NEW IMPRESSIONS
+ THIRTY-EIGHT  ON THE SHELF
+  THIRTY-NINE  LAZY LAURENCE
+        FORTY  THE VALLEY OF THE SHADOW
+    FORTY-ONE  LEARNING TO FORGET
+    FORTY-TWO  ALL ALONE
+  FORTY-THREE  SURPRISES
+   FORTY-FOUR  MY LORD AND LADY
+   FORTY-FIVE  DAISY AND DEMI
+    FORTY-SIX  UNDER THE UMBRELLA
+  FORTY-SEVEN  HARVEST TIME
+
+
+
+CHAPTER ONE
+
+PLAYING PILGRIMS
+
+""Christmas won't be Christmas without any presents,"" grumbled Jo, lying
+on the rug.
+
+""It's so dreadful to be poor!"" sighed Meg, looking down at her old
+dress.
+
+""I don't think it's fair for some girls to have plenty of pretty
+things, and other girls nothing at all,"" added little Amy, with an
+injured sniff.
+
+""We've got Father and Mother, and each other,"" said Beth contentedly
+from her corner.
+
+The four young faces on which the firelight shone brightened at the
+cheerful words, but darkened again as Jo said sadly, ""We haven't got
+Father, and shall not have him for a long time."" She didn't say
+""perhaps never,"" but each silently added it, thinking of Father far
+away, where the fighting was.
+
+Nobody spoke for a minute; then Meg said in an altered tone, ""You know
+the reason Mother proposed not having any presents this Christmas was
+because it is going to b"
+pre input,"# Create a variable ""chapters"" by splitting the text on 'CHAPTER '.
+chapters = little_women_text.split('CHAPTER ') 
+
+# Create a DataFrame with one column - the text of each chapters.
+bpd.DataFrame().assign(chapters=chapters)"
+table,"[['', 'chapters'], ['0', 'The Project Gutenberg EBook of Little Women, b...'], ['1', 'ONE\\n\\nPLAYING PILGRIMS\\n\\n""Christmas won\'t be...'], ['2', 'TWO\\n\\nA MERRY CHRISTMAS\\n\\nJo was the first t...'], ['3', 'THREE\\n\\nTHE LAURENCE BOY\\n\\n""Jo!  Jo!  Where ...'], ['4', 'FOUR\\n\\nBURDENS\\n\\n""Oh, dear, how hard it does...'], ['...', '...'], ['43', 'FORTY-THREE\\n\\nSURPRISES\\n\\nJo was alone in th...'], ['44', 'FORTY-FOUR\\n\\nMY LORD AND LADY\\n\\n""Please, Mad...'], ['45', 'FORTY-FIVE\\n\\nDAISY AND DEMI\\n\\nI cannot feel ...'], ['46', 'FORTY-SIX\\n\\nUNDER THE UMBRELLA\\n\\nWhile Lauri...'], ['47', 'FORTY-SEVEN\\n\\nHARVEST TIME\\n\\nFor a year Jo a...']]"
+p,48 rows × 1 columns
+pre input,"# Number of occurrences of each name in each chapter.
+
+counts = bpd.DataFrame().assign(
+    Amy=np.char.count(chapters, 'Amy'),
+    Beth=np.char.count(chapters, 'Beth'),
+    Jo=np.char.count(chapters, 'Jo'),
+    Meg=np.char.count(chapters, 'Meg'),
+    Laurie=np.char.count(chapters, 'Laurie'),
+)
+counts"
+table,"[['', 'Amy', 'Beth', 'Jo', 'Meg', 'Laurie'], ['0', '0', '0', '0', '0', '0'], ['1', '23', '26', '44', '26', '0'], ['2', '13', '12', '21', '20', '0'], ['3', '2', '2', '62', '36', '16'], ['4', '14', '18', '34', '17', '0'], ['...', '...', '...', '...', '...', '...'], ['43', '31', '8', '61', '3', '29'], ['44', '13', '0', '9', '0', '10'], ['45', '1', '2', '6', '2', '0'], ['46', '2', '1', '56', '4', '2'], ['47', '10', '3', '37', '6', '13']]"
+p,48 rows × 5 columns
+pre input,"# Cumulative number of times each name appears.
+
+cumulative_counts = bpd.DataFrame().assign(
+    Amy=np.cumsum(counts.get('Amy')),
+    Beth=np.cumsum(counts.get('Beth')),
+    Jo=np.cumsum(counts.get('Jo')),
+    Meg=np.cumsum(counts.get('Meg')),
+    Laurie=np.cumsum(counts.get('Laurie')),
+    Chapter=np.arange(1, 49, 1)
+)
+
+cumulative_counts"
+table,"[['', 'Amy', 'Beth', 'Jo', 'Meg', 'Laurie', 'Chapter'], ['0', '0', '0', '0', '0', '0', '1'], ['1', '23', '26', '44', '26', '0', '2'], ['2', '36', '38', '65', '46', '0', '3'], ['3', '38', '40', '127', '82', '16', '4'], ['4', '52', '58', '161', '99', '16', '5'], ['...', '...', '...', '...', '...', '...', '...'], ['43', '619', '459', '1435', '673', '571', '44'], ['44', '632', '459', '1444', '673', '581', '45'], ['45', '633', '461', '1450', '675', '581', '46'], ['46', '635', '462', '1506', '679', '583', '47'], ['47', '645', '465', '1543', '685', '596', '48']]"
+p,48 rows × 6 columns
+pre input,"# Putting it all together, we get a helpful visualization.
+cumulative_counts_df = cumulative_counts.drop(columns=['Chapter']).to_df().melt().rename(columns={'variable': 'name', 'value': 'Count'})
+cumulative_counts_df = cumulative_counts_df.assign(Chapter=list(range(1, 49)) * 5)
+px.line(cumulative_counts_df, x='Chapter', y='Count', color='name', width=900, height=600, title='Cumulative Number of Times Each Name Appears', template='ggplot2')"
+li,"In Chapter 32, Jo moves to New York alone. Her relationship with which sister suffers the most from this faraway move?"
+li,Laurie is a man who marries one of the sisters at the end. Which one?
+h3,Next time
+p,We'll start programming in Python 🐍. Remember to bring a laptop or tablet if you have one.
+h3,Reminders
+li,Fill out the required Welcome Survey as soon as possible.
+li,Take the pretest to brush up on background knowledge and test-taking skills.
+li,Attend discussion section on Wednesday.
+li,"Start working on Lab 0, due Saturday."
