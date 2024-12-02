@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+    <meta charset="utf-8">
+    <title>Lecture 1 Content</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+        img {
+            max-width: 70%;
+            height: auto;
+            display: block;
+            margin: 10px 0;
+        }
+        ul, ol {
+            padding-left: 20px;
+            margin-bottom: 1em;
+        }
+        ul ul, ol ol {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 0.5em;
+        }
+        .section {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        /* Styling for Jupyter Notebook-style code cells */
+        pre.code {
+            background-color: #f7f7f7;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 10px;
+            color: #333;
+            white-space: pre-wrap;
+        }
+        /* Styling for Jupyter Notebook-style output cells */
+        pre.output {
+            font-size: 10px;
+            color: #555;
+            white-space: pre-wrap;
+        }
+        /* Styling for tables */
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+    </head>
+    <body>
+    <pre class='code'>import numpy as np
+import babypandas as bpd
+import pandas as pd</pre>
+<div class="section">
+<h1>Lecture 28 – Review, Conclusion</h1>
+</div>
+<div class="section">
+<h2>DSC 10, Spring 2024</h2>
+</div>
+<div class="section">
+<h3>Announcements</h3>
+<ul>
+<li>The Final Exam is tomorrow, June 8th, from 7-10PM in Solis 104 and Solis 107. See this post on Ed for more details.
+<ul>
+<li>Check your email for an assigned seat.</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>If at least 75% of the class fills out both SETs and the internal End-of-Quarter Survey by tomorrow at 8AM, then the entire class will have 1% of extra credit added to their overall grade.</li></ul>
+</div>
+<div class="section">
+<h3>Agenda</h3>
+<ul>
+<li>More review of old exam problems.</li></ul>
+<ul>
+<li>Working on personal projects.</li></ul>
+<ul>
+<li>Demo: Gapminder 🌎.</li></ul>
+<ul>
+<li>Some parting thoughts.</li></ul>
+</div>
+<div class="section">
+<h2>More review</h2>
+</div>
+<div class="section">
+<h3>Selected problems</h3>
+<p>We&#x27;re going to work on as many of the following problems as we can in class. There&#x27;s a PDF template linked on the course website that you can write on; we&#x27;ll post annotated slides after class.</p>
+<ul>
+<li>Winter 2023 Final Exam, Problem 16 (CLT and hypothesis testing).</li></ul>
+<ul>
+<li>Winter 2024 Final Exam, Problem 9 (merge).</li></ul>
+<ul>
+<li>Winter 2024 Final Exam, Problem 11 (TVD).</li></ul>
+</div>
+<div class="section">
+<h2>Personal projects</h2>
+</div>
+<div class="section">
+<h3>Using Jupyter Notebooks after DSC 10</h3>
+<ul>
+<li>You may be interested in working on data science projects of your own.</li></ul>
+<ul>
+<li>In this video, we show you how to make blank notebooks and upload datasets of your own to DataHub.</li></ul>
+<ul>
+<li>After this quarter, depending on the classes you&#x27;re enrolled in, you may not have access to DataHub. Eventually, you&#x27;ll want to install Jupyter Notebooks on your computer.
+<ul>
+<li>Anaconda is a great way to do that, as it also installs many commonly used packages.</li>
+<li>You may want to download your work from DataHub so you can refer to it after the course ends (though you can look at it on Gradescope too).</li>
+<li>Remember, all babypandas code is regular pandas code, too!</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section">
+<h3>Finding data</h3>
+<p>These sites allow you to search for datasets (in CSV format) from a variety of different domains. Some may require you to sign up for an account; these are generally reputable sources.</p>
+<p>Note that all of these links are also available at rampure.org/find-datasets.</p>
+<ul>
+<li>Data is Plural</li></ul>
+<ul>
+<li>FiveThirtyEight.</li></ul>
+<ul>
+<li>CORGIS.</li></ul>
+<ul>
+<li>Kaggle Datasets.</li></ul>
+<ul>
+<li>Google’s dataset search.</li></ul>
+<ul>
+<li>DataHub.io.</li></ul>
+<ul>
+<li>Data.world.</li></ul>
+<ul>
+<li>R datasets.</li></ul>
+<ul>
+<li>Wikipedia. (Use this site to extract and download tables as CSVs.)</li></ul>
+<ul>
+<li>Awesome Public Datasets GitHub repo.</li></ul>
+<ul>
+<li>Links to even more sources.</li></ul>
+</div>
+<div class="section">
+<h3>Domain-specific sources of data</h3>
+<ul>
+<li>Sports: Basketball Reference, Baseball Reference, etc.</li></ul>
+<ul>
+<li>US Government Sources: census.gov, data.gov, data.ca.gov, data.sfgov.org, FBI’s Crime Data Explorer, Centers for Disease Control and Prevention.</li></ul>
+<ul>
+<li>Global Development: data.worldbank.org, databank.worldbank.org, WHO.</li></ul>
+<ul>
+<li>Transportation: New York Taxi trips, Bureau of Transportation Statistics, SFO Air Traffic Statistics.</li></ul>
+<ul>
+<li>Music: Spotify Charts.</li></ul>
+<ul>
+<li>COVID: Johns Hopkins.</li></ul>
+<ul>
+<li>Any Google Forms survey you’ve administered! (Go to the results spreadsheet, then go to “File &gt; Download &gt; Comma-separated values”.)</li></ul>
+<p>Tip: if a site only allows you to download a file as an Excel file, not a CSV file, you can download it, open it in a spreadsheet viewer (Excel, Numbers, Google Sheets), and export it to a CSV.</p>
+</div>
+<div class="section">
+<h2>Demo: Gapminder 🌎</h2>
+</div>
+<div class="section">
+<h3>plotly</h3>
+<ul>
+<li>All of the visualizations (scatter plots, histograms, etc.) in this course were created using a library called matplotlib.
+<ul>
+<li>This library was called under-the-hood everytime we wrote df.plot.</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>plotly is a different visualization library that allows us to create interactive visualizations.</li></ul>
+<ul>
+<li>You may learn about it in a future course, but we&#x27;ll briefly show you some cool visualizations you can make with it.</li></ul>
+<pre class='code'>import plotly.express as px</pre>
+</div>
+<div class="section">
+<h3>Gapminder dataset</h3>
+<p>Gapminder Foundation is a non-profit venture registered in Stockholm, Sweden, that promotes sustainable global development and achievement of the United Nations Millennium Development Goals by increased use and understanding of statistics and other information about social, economic and environmental development at local, national and global levels. - Gapminder Wikipedia</p>
+<pre class='code'>gapminder = px.data.gapminder()
+gapminder</pre>
+<table>
+<tr>
+<th></th>
+<th>country</th>
+<th>continent</th>
+<th>year</th>
+<th>lifeExp</th>
+<th>pop</th>
+<th>gdpPercap</th>
+<th>iso_alpha</th>
+<th>iso_num</th>
+</tr>
+<tr>
+<td>0</td>
+<td>Afghanistan</td>
+<td>Asia</td>
+<td>1952</td>
+<td>28.801</td>
+<td>8425333</td>
+<td>779.445314</td>
+<td>AFG</td>
+<td>4</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Afghanistan</td>
+<td>Asia</td>
+<td>1957</td>
+<td>30.332</td>
+<td>9240934</td>
+<td>820.853030</td>
+<td>AFG</td>
+<td>4</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Afghanistan</td>
+<td>Asia</td>
+<td>1962</td>
+<td>31.997</td>
+<td>10267083</td>
+<td>853.100710</td>
+<td>AFG</td>
+<td>4</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Afghanistan</td>
+<td>Asia</td>
+<td>1967</td>
+<td>34.020</td>
+<td>11537966</td>
+<td>836.197138</td>
+<td>AFG</td>
+<td>4</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Afghanistan</td>
+<td>Asia</td>
+<td>1972</td>
+<td>36.088</td>
+<td>13079460</td>
+<td>739.981106</td>
+<td>AFG</td>
+<td>4</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr>
+<td>1699</td>
+<td>Zimbabwe</td>
+<td>Africa</td>
+<td>1987</td>
+<td>62.351</td>
+<td>9216418</td>
+<td>706.157306</td>
+<td>ZWE</td>
+<td>716</td>
+</tr>
+<tr>
+<td>1700</td>
+<td>Zimbabwe</td>
+<td>Africa</td>
+<td>1992</td>
+<td>60.377</td>
+<td>10704340</td>
+<td>693.420786</td>
+<td>ZWE</td>
+<td>716</td>
+</tr>
+<tr>
+<td>1701</td>
+<td>Zimbabwe</td>
+<td>Africa</td>
+<td>1997</td>
+<td>46.809</td>
+<td>11404948</td>
+<td>792.449960</td>
+<td>ZWE</td>
+<td>716</td>
+</tr>
+<tr>
+<td>1702</td>
+<td>Zimbabwe</td>
+<td>Africa</td>
+<td>2002</td>
+<td>39.989</td>
+<td>11926563</td>
+<td>672.038623</td>
+<td>ZWE</td>
+<td>716</td>
+</tr>
+<tr>
+<td>1703</td>
+<td>Zimbabwe</td>
+<td>Africa</td>
+<td>2007</td>
+<td>43.487</td>
+<td>12311143</td>
+<td>469.709298</td>
+<td>ZWE</td>
+<td>716</td>
+</tr>
+</table>
+<p>1704 rows × 8 columns</p>
+<p>The dataset contains information for each country for several different years.</p>
+<pre class='code'>gapminder.get(&#x27;year&#x27;).unique()</pre>
+<pre class='output'>array([1952, 1957, 1962, 1967, 1972, 1977, 1982, 1987, 1992, 1997, 2002,
+       2007])</pre>
+<p>Let&#x27;s start by just looking at 2007 data (the most recent year in the dataset).</p>
+<pre class='code'>gapminder_2007 = gapminder[gapminder.get(&#x27;year&#x27;) == 2007]
+gapminder_2007</pre>
+<table>
+<tr>
+<th></th>
+<th>country</th>
+<th>continent</th>
+<th>year</th>
+<th>lifeExp</th>
+<th>pop</th>
+<th>gdpPercap</th>
+<th>iso_alpha</th>
+<th>iso_num</th>
+</tr>
+<tr>
+<td>11</td>
+<td>Afghanistan</td>
+<td>Asia</td>
+<td>2007</td>
+<td>43.828</td>
+<td>31889923</td>
+<td>974.580338</td>
+<td>AFG</td>
+<td>4</td>
+</tr>
+<tr>
+<td>23</td>
+<td>Albania</td>
+<td>Europe</td>
+<td>2007</td>
+<td>76.423</td>
+<td>3600523</td>
+<td>5937.029526</td>
+<td>ALB</td>
+<td>8</td>
+</tr>
+<tr>
+<td>35</td>
+<td>Algeria</td>
+<td>Africa</td>
+<td>2007</td>
+<td>72.301</td>
+<td>33333216</td>
+<td>6223.367465</td>
+<td>DZA</td>
+<td>12</td>
+</tr>
+<tr>
+<td>47</td>
+<td>Angola</td>
+<td>Africa</td>
+<td>2007</td>
+<td>42.731</td>
+<td>12420476</td>
+<td>4797.231267</td>
+<td>AGO</td>
+<td>24</td>
+</tr>
+<tr>
+<td>59</td>
+<td>Argentina</td>
+<td>Americas</td>
+<td>2007</td>
+<td>75.320</td>
+<td>40301927</td>
+<td>12779.379640</td>
+<td>ARG</td>
+<td>32</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr>
+<td>1655</td>
+<td>Vietnam</td>
+<td>Asia</td>
+<td>2007</td>
+<td>74.249</td>
+<td>85262356</td>
+<td>2441.576404</td>
+<td>VNM</td>
+<td>704</td>
+</tr>
+<tr>
+<td>1667</td>
+<td>West Bank and Gaza</td>
+<td>Asia</td>
+<td>2007</td>
+<td>73.422</td>
+<td>4018332</td>
+<td>3025.349798</td>
+<td>PSE</td>
+<td>275</td>
+</tr>
+<tr>
+<td>1679</td>
+<td>Yemen, Rep.</td>
+<td>Asia</td>
+<td>2007</td>
+<td>62.698</td>
+<td>22211743</td>
+<td>2280.769906</td>
+<td>YEM</td>
+<td>887</td>
+</tr>
+<tr>
+<td>1691</td>
+<td>Zambia</td>
+<td>Africa</td>
+<td>2007</td>
+<td>42.384</td>
+<td>11746035</td>
+<td>1271.211593</td>
+<td>ZMB</td>
+<td>894</td>
+</tr>
+<tr>
+<td>1703</td>
+<td>Zimbabwe</td>
+<td>Africa</td>
+<td>2007</td>
+<td>43.487</td>
+<td>12311143</td>
+<td>469.709298</td>
+<td>ZWE</td>
+<td>716</td>
+</tr>
+</table>
+<p>142 rows × 8 columns</p>
+</div>
+<div class="section">
+<h3>Scatter plot</h3>
+<p>We can plot life expectancy vs. GDP per capita. If you hover over a point, you will see the name of the country.</p>
+<pre class='code'>px.scatter(gapminder_2007, x=&#x27;gdpPercap&#x27;, y=&#x27;lifeExp&#x27;, hover_name=&#x27;country&#x27;)</pre>
+<p>In future courses, you&#x27;ll learn about transformations. Here, we&#x27;ll apply a log transformation to the x-axis to make the plot look a little more linear.</p>
+<pre class='code'>px.scatter(gapminder_2007, x=&#x27;gdpPercap&#x27;, y=&#x27;lifeExp&#x27;, log_x=True, hover_name=&#x27;country&#x27;)</pre>
+</div>
+<div class="section">
+<h3>Animated scatter plot</h3>
+<p>We can take things one step further.</p>
+<pre class='code'>px.scatter(gapminder,
+           x = &#x27;gdpPercap&#x27;,
+           y = &#x27;lifeExp&#x27;, 
+           hover_name = &#x27;country&#x27;,
+           color = &#x27;continent&#x27;,
+           size = &#x27;pop&#x27;,
+           size_max = 60,
+           log_x = True,
+           range_y = [30, 90],
+           animation_frame = &#x27;year&#x27;,
+           title = &#x27;Life Expectancy, GDP Per Capita, and Population over Time&#x27;
+          )</pre>
+<p>Watch this video if you want to see an even-more-animated version of this plot.</p>
+</div>
+<div class="section">
+<h3>Animated histogram</h3>
+<pre class='code'>px.histogram(gapminder,
+            x = &#x27;lifeExp&#x27;,
+            animation_frame = &#x27;year&#x27;,
+            range_x = [20, 90],
+            range_y = [0, 50],
+            title = &#x27;Distribution of Life Expectancy over Time&#x27;)</pre>
+</div>
+<div class="section">
+<h3>Choropleth</h3>
+<pre class='code'>px.choropleth(gapminder,
+              locations = &#x27;iso_alpha&#x27;,
+              color = &#x27;lifeExp&#x27;,
+              hover_name = &#x27;country&#x27;,
+              hover_data = {&#x27;iso_alpha&#x27;: False},
+              title = &#x27;Life Expectancy Per Country&#x27;,
+              color_continuous_scale = px.colors.sequential.tempo
+)</pre>
+</div>
+<div class="section">
+<h2>Parting thoughts</h2>
+</div>
+<div class="section">
+<h3>From Lecture 1: What is &quot;data science&quot;?</h3>
+<p>Data science is about drawing useful conclusions from data using computation. Throughout the quarter, we touched on several aspects of data science:</p>
+<ul>
+<li>In the first 4 weeks, we used Python to explore data.
+<ul>
+<li>Lots of visualization 📈📊 and &quot;data manipulation&quot;, using industry-standard tools.</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>In the next 4 weeks, we used data to infer about a population, given just a sample.
+<ul>
+<li>Rely heavily on simulation, rather than formulas.</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>In the last 2 weeks, we used data from the past to predict what may happen in the future.
+<ul>
+<li>A taste of machine learning 🤖.</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>In future DSC courses – including DSC 20 and 40A – you&#x27;ll revisit all three of these aspects of data science.</li></ul>
+</div>
+<div class="section">
+<h3>Thank you!</h3>
+<p>This course would not have been possible without...</p>
+<ul>
+<li>Graduate TA: Arya Rahnama.</li></ul>
+<ul>
+<li>Undergraduate tutors: Daniel Budidharma, Oren Ciolli, Sophia Fang, Kate Feng, Charlie Gillet, Ashley Ho, Chia-Chan Ho, Raine Hoang, Michelle Hong, Jason Huynh, Norah Kerendian, Minchan Kim, Vivian Lin, Calvin Nguyen, Kathleen Nguyen, Athulith Paraselli, Pallavi Prabhu, Pranav Rajaram, Aaron Rasin, Keenan Serrao, Abel Seyoum, Yutian Shi, Sofia Tkachenko, Claire Wang, Sophie Wang, Cici Xu, Tiffany Yu, Ciro Zhang.</li></ul>
+<ul>
+<li>Learn more about tutoring – it&#x27;s fun, and you can be a tutor as early as your 3rd quarter at UCSD!</li></ul>
+<ul>
+<li>Keep in touch! dsc10.com/staff
+<ul>
+<li>After grades are released, we&#x27;ll make a post on Ed where you can ask course staff for advice on courses and UCSD more generally.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section">
+<h2>Good luck on your finals...</h2>
+</div>
+<div class="section">
+<h3>...and see you tomorrow at 7PM 😊.</h3>
+</div>
+</body>
+</html>

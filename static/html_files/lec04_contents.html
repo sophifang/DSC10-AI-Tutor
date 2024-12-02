@@ -1,0 +1,2706 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+    <meta charset="utf-8">
+    <title>Lecture 1 Content</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+        img {
+            max-width: 70%;
+            height: auto;
+            display: block;
+            margin: 10px 0;
+        }
+        ul, ol {
+            padding-left: 20px;
+            margin-bottom: 1em;
+        }
+        ul ul, ol ol {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 0.5em;
+        }
+        .section {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        /* Styling for Jupyter Notebook-style code cells */
+        pre.code {
+            background-color: #f7f7f7;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 10px;
+            color: #333;
+            white-space: pre-wrap;
+        }
+        /* Styling for Jupyter Notebook-style output cells */
+        pre.output {
+            font-size: 10px;
+            color: #555;
+            white-space: pre-wrap;
+        }
+        /* Styling for tables */
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+    </head>
+    <body>
+    <pre class='code'># Run this cell to set up packages for lecture.
+from lec04_imports import *</pre>
+<div class="section">
+<h1>Lecture 4 –  Arrays and DataFrames</h1>
+</div>
+<div class="section">
+<h2>DSC 10, Spring 2024</h2>
+</div>
+<div class="section">
+<h3>Announcements</h3>
+<ul>
+<li>Lab 1 is due tomorrow at 11:59PM.
+<ul>
+<li>Submit early and avoid submission errors.</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>Quiz 1 is coming up on Friday in your assigned quiz session.
+<ul>
+<li>You should have been assigned a quiz time in an email with subject &quot;DSC 10 Quiz Time&quot;.</li>
+<li>This will be a 20 minute paper-based quiz consisting of short answer and multiple choice questions.</li>
+<li>No aids are allowed (no notes, no calculators, no computers, no reference sheet). Questions are designed with this in mind.</li>
+<li>The quiz covers Lectures 1 through 4, or BPD 1-9 in the babypandas notes.</li>
+<li>Review both of these materials to study.</li>
+<li>Attend discussion section on Wednesday to work on practice problems.</li>
+<li>Homework 1 is due next week, but working on the homework is excellent preparation for the quiz.</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>Come to office hours (see the schedule here) and post on Ed for help!</li></ul>
+</div>
+<div class="section">
+<h3>Agenda</h3>
+<ul>
+<li>Arrays.</li></ul>
+<ul>
+<li>Ranges.</li></ul>
+<ul>
+<li>DataFrames.</li></ul>
+<h4>Note:</h4>
+<ul>
+<li>Remember to check the resources tab of the course website for programming resources.</li></ul>
+<ul>
+<li>Some key links moving forward:
+<ul>
+<li>DSC 10 reference sheet.</li>
+<li>babypandas notes.</li>
+<li>babypandas documentation.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section">
+<h2>Arrays</h2>
+</div>
+<div class="section">
+<h3>Recap: arrays</h3>
+<ul>
+<li>Arrays are provided by a module called numpy that we need to import to use.</li></ul>
+<pre class='code'>import numpy as np</pre>
+<ul>
+<li>Arrays store sequences of values of the same data type.</li></ul>
+<ul>
+<li>To create an array, we pass a list as input to the np.array function.</li></ul>
+<pre class='code'>temperature_array = np.array([68, 73, 70, 74, 76, 72, 74])
+temperature_array</pre>
+<pre class='output'>array([68, 73, 70, 74, 76, 72, 74])</pre>
+<ul>
+<li>Use square brackets with the position number to access an array element. The first element is in position 0.</li></ul>
+<pre class='code'>temperature_array</pre>
+<pre class='output'>array([68, 73, 70, 74, 76, 72, 74])</pre>
+<pre class='code'>temperature_array[1]</pre>
+<pre class='output'>73</pre>
+</div>
+<div class="section">
+<h3>Array-number arithmetic</h3>
+<p>Arrays make it easy to perform the same operation to every element. This behavior is formally known as &quot;broadcasting&quot;.</p>
+<img src="https://dsc-courses.github.io/dsc10-2024-sp/resources/lectures/lec04/images/broadcasting.jpg" alt="Image">
+<pre class='code'>temperature_array</pre>
+<pre class='output'>array([68, 73, 70, 74, 76, 72, 74])</pre>
+<pre class='code'># Convert all temperatures to Celsius.
+(5 / 9) * (temperature_array - 32)</pre>
+<pre class='output'>array([20.  , 22.78, 21.11, 23.33, 24.44, 22.22, 23.33])</pre>
+</div>
+<div class="section">
+<h3>Element-wise arithmetic</h3>
+<ul>
+<li>We can apply arithmetic operations to multiple arrays, provided they have the same length.</li></ul>
+<ul>
+<li>The result is computed element-wise, which means that the arithmetic operation is applied to one pair of elements from each array at a time.</li></ul>
+<img src="https://dsc-courses.github.io/dsc10-2024-sp/resources/lectures/lec04/images/elementwise.jpg" alt="Image">
+<pre class='code'>a = np.array([4, 5, -1])
+b = np.array([2, 3, 2])</pre>
+<pre class='code'>a ** 2 + b ** 2</pre>
+<pre class='output'>array([20, 34,  5])</pre>
+</div>
+<div class="section">
+<h3>Array methods</h3>
+<ul>
+<li>Arrays work with a variety of methods, which are functions designed to operate specifically on arrays.</li></ul>
+<p>Arrays work with a variety of methods, which are functions designed to operate specifically on arrays.</p>
+<ul>
+<li>Call these methods using dot notation, e.g. array_name.method().</li></ul>
+<p>Call these methods using dot notation, e.g. array_name.method().</p>
+<img src="https://dsc-courses.github.io/dsc10-2024-sp/resources/lectures/lec04/images/methods.jpg" alt="Image">
+<pre class='code'>temperature_array.max()</pre>
+<pre class='output'>76</pre>
+<pre class='code'>temperature_array.mean()</pre>
+<pre class='output'>72.42857142857143</pre>
+</div>
+<div class="section">
+<h2>Ranges</h2>
+</div>
+<div class="section">
+<h3>Motivation</h3>
+<p>We often find ourselves needing to make arrays like this:</p>
+<pre class='code'>day_of_month = np.array([
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 
+    13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 
+    23, 24, 25, 26, 27, 28, 29, 30, 31
+])</pre>
+<p>There needs to be an easier way to do this!</p>
+</div>
+<div class="section">
+<h3>Ranges</h3>
+<ul>
+<li>A range is an array of evenly spaced numbers. We create ranges using np.arange.</li></ul>
+<ul>
+<li>The most general way to create a range is np.arange(start, end, step). This returns an array such that:
+<ul>
+<li>The first number is start. By default, start is 0.</li>
+<li>All subsequent numbers are spaced out by step, until (but excluding) end. By default, step is 1.</li>
+</ul>
+</li>
+</ul>
+<pre class='code'># Start at 0, end before 8, step by 1.
+# This will be our most common use-case!
+np.arange(8)</pre>
+<pre class='output'>array([0, 1, 2, 3, 4, 5, 6, 7])</pre>
+<pre class='code'># Start at 5, end before 10, step by 1.
+np.arange(5, 10)</pre>
+<pre class='output'>array([5, 6, 7, 8, 9])</pre>
+<pre class='code'># Start at 3, end before 32, step by 5.
+np.arange(3, 32, 5)</pre>
+<pre class='output'>array([ 3,  8, 13, 18, 23, 28])</pre>
+<pre class='code'>np.arange(-3, 2, 0.5)
+
+np.arange(1, -10, -3)</pre>
+</div>
+<div class="section">
+<h3>Extra practice</h3>
+<p>The step size in np.arange can be fractional, or even negative. Predict what arrays will be produced by each line of code below. Then copy each line into a code cell and run it to see if you&#x27;re right.</p>
+<pre class='code'>...</pre>
+<pre class='output'>Ellipsis</pre>
+<pre class='code'>...</pre>
+<pre class='output'>Ellipsis</pre>
+</div>
+<div class="section">
+<h3>Challenge</h3>
+<p>🎉 Congrats! 🎉 You won the lottery 💰. Here&#x27;s how your payout works: on the first day of September, you are paid \$0.01. Every day thereafter, your pay doubles, so on the second day you&#x27;re paid \\$0.02, on the third day you&#x27;re paid \$0.04, on the fourth day you&#x27;re paid \\$0.08, and so on.</p>
+<p>September has 30 days.</p>
+<p>Write a one-line expression that uses the numbers 2 and 30, along with the function np.arange and the method .sum(), that computes the total amount in dollars you will be paid in September.</p>
+<pre class='code'>...</pre>
+<pre class='output'>Ellipsis</pre>
+<p>After trying the challenge problem on your own, watch this walkthrough 🎥 video.</p>
+</div>
+<div class="section">
+<h2>DataFrames</h2>
+</div>
+<div class="section">
+<h3>pandas</h3>
+<ul>
+<li>pandas is a Python package that allows us to work with tabular data – that is, data in the form of a table that we might otherwise work with as a spreadsheet (in Excel or Google Sheets).</li></ul>
+<ul>
+<li>pandas is the tool for doing data science in Python.</li></ul>
+<img src="https://dsc-courses.github.io/dsc10-2024-sp/resources/lectures/lec04/images/pandas.png" alt="Image">
+</div>
+<div class="section">
+<h3>But pandas is not so cute...</h3>
+<img src="https://dsc-courses.github.io/dsc10-2024-sp/resources/lectures/lec04/images/angrypanda.jpg" alt="Image">
+</div>
+<div class="section">
+<h3>Enter babypandas!</h3>
+<ul>
+<li>We at UCSD have created a smaller, nicer version of pandas called babypandas.</li></ul>
+<ul>
+<li>It keeps the important stuff and has much better error messages.</li></ul>
+<ul>
+<li>It&#x27;s easier to learn, but is still valid pandas code. You are learning pandas!
+<ul>
+<li>Think of it like learning how to build LEGOs with many, but not all, of the possible Lego blocks. You&#x27;re still learning how to build LEGOs, and you can still build cool things!</li>
+</ul>
+</li>
+</ul>
+<img src="https://dsc-courses.github.io/dsc10-2024-sp/resources/lectures/lec04/images/babypanda.jpg" alt="Image">
+</div>
+<div class="section">
+<h3>DataFrames in babypandas 🐼</h3>
+<ul>
+<li>Tables in babypandas (and pandas) are called &quot;DataFrames.&quot;</li></ul>
+<ul>
+<li>To use DataFrames, we&#x27;ll need to import babypandas.</li></ul>
+<pre class='code'>import babypandas as bpd</pre>
+</div>
+<div class="section">
+<h3>Reading data from a file 📖</h3>
+<ul>
+<li>We&#x27;ll usually work with data stored in the CSV format. CSV stands for &quot;comma-separated values.&quot;</li></ul>
+<p>We&#x27;ll usually work with data stored in the CSV format. CSV stands for &quot;comma-separated values.&quot;</p>
+<ul>
+<li>We can read in a CSV using bpd.read_csv(...). Replace the ... with a path to the CSV file relative to your notebook; if the file is in the same folder as your notebook, this is just the name of the file.</li></ul>
+<p>We can read in a CSV using bpd.read_csv(...). Replace the ... with a path to the CSV file relative to your notebook; if the file is in the same folder as your notebook, this is just the name of the file.</p>
+<pre class='code'># Our CSV file is stored not in the same folder as our notebook, 
+# but within a folder called data.
+states = bpd.read_csv(&#x27;data/states.csv&#x27;)
+states</pre>
+<table>
+<tr>
+<th></th>
+<th>State</th>
+<th>Region</th>
+<th>Capital City</th>
+<th>Population</th>
+<th>Land Area</th>
+<th>Party</th>
+</tr>
+<tr>
+<td>0</td>
+<td>Alabama</td>
+<td>South</td>
+<td>Montgomery</td>
+<td>5024279</td>
+<td>50645</td>
+<td>Republican</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Alaska</td>
+<td>West</td>
+<td>Juneau</td>
+<td>733391</td>
+<td>570641</td>
+<td>Republican</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Arizona</td>
+<td>West</td>
+<td>Phoenix</td>
+<td>7151502</td>
+<td>113594</td>
+<td>Republican</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Arkansas</td>
+<td>South</td>
+<td>Little Rock</td>
+<td>3011524</td>
+<td>52035</td>
+<td>Republican</td>
+</tr>
+<tr>
+<td>4</td>
+<td>California</td>
+<td>West</td>
+<td>Sacramento</td>
+<td>39538223</td>
+<td>155779</td>
+<td>Democratic</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr>
+<td>45</td>
+<td>Virginia</td>
+<td>South</td>
+<td>Richmond</td>
+<td>8631393</td>
+<td>39490</td>
+<td>Democratic</td>
+</tr>
+<tr>
+<td>46</td>
+<td>Washington</td>
+<td>West</td>
+<td>Olympia</td>
+<td>7705281</td>
+<td>66456</td>
+<td>Democratic</td>
+</tr>
+<tr>
+<td>47</td>
+<td>West Virginia</td>
+<td>South</td>
+<td>Charleston</td>
+<td>1793716</td>
+<td>24038</td>
+<td>Republican</td>
+</tr>
+<tr>
+<td>48</td>
+<td>Wisconsin</td>
+<td>Midwest</td>
+<td>Madison</td>
+<td>5893718</td>
+<td>54158</td>
+<td>Republican</td>
+</tr>
+<tr>
+<td>49</td>
+<td>Wyoming</td>
+<td>West</td>
+<td>Cheyenne</td>
+<td>576851</td>
+<td>97093</td>
+<td>Republican</td>
+</tr>
+</table>
+<p>50 rows × 6 columns</p>
+</div>
+<div class="section">
+<h3>About the data 🗽</h3>
+<p>Most of the data is self-explanatory, but there are a few things to note:</p>
+<ul>
+<li>&#x27;Population&#x27; figures come from the 2020 census.</li></ul>
+<ul>
+<li>&#x27;Land Area&#x27; is measured in square miles.</li></ul>
+<ul>
+<li>The &#x27;Region&#x27; column places each state in one of four regions, as determined by the US Census Bureau.</li></ul>
+<img src="https://dsc-courses.github.io/dsc10-2024-sp/resources/lectures/lec04/images/regions.png" alt="Image">
+<ul>
+<li>The &#x27;Party&#x27; column classifies each state as &#x27;Democratic&#x27; or &#x27;Republican&#x27; based on a political science measurement called the Cook Partisan Voter Index.</li></ul>
+<img src="https://dsc-courses.github.io/dsc10-2024-sp/resources/lectures/lec04/images/party.png" alt="Image">
+</div>
+<div class="section">
+<h3>Structure of a DataFrame</h3>
+<ul>
+<li>DataFrames have columns and rows.
+<ul>
+<li>Think of each column as an array. Columns contain data of the same type.</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>Each column has a label, e.g. &#x27;Capital City&#x27; and &#x27;Land Area&#x27;.
+<ul>
+<li>Column labels are stored as strings.</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>Each row has a label too – these are shown in bold at the start of the row.
+<ul>
+<li>Right now, the row labels are 0, 1, 2, and so on.</li>
+<li>Together, the row labels are called the index. The index is not a column!</li>
+</ul>
+</li>
+</ul>
+<pre class='code'># This DataFrame has 50 rows and 6 columns.
+states</pre>
+<table>
+<tr>
+<th></th>
+<th>State</th>
+<th>Region</th>
+<th>Capital City</th>
+<th>Population</th>
+<th>Land Area</th>
+<th>Party</th>
+</tr>
+<tr>
+<td>0</td>
+<td>Alabama</td>
+<td>South</td>
+<td>Montgomery</td>
+<td>5024279</td>
+<td>50645</td>
+<td>Republican</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Alaska</td>
+<td>West</td>
+<td>Juneau</td>
+<td>733391</td>
+<td>570641</td>
+<td>Republican</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Arizona</td>
+<td>West</td>
+<td>Phoenix</td>
+<td>7151502</td>
+<td>113594</td>
+<td>Republican</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Arkansas</td>
+<td>South</td>
+<td>Little Rock</td>
+<td>3011524</td>
+<td>52035</td>
+<td>Republican</td>
+</tr>
+<tr>
+<td>4</td>
+<td>California</td>
+<td>West</td>
+<td>Sacramento</td>
+<td>39538223</td>
+<td>155779</td>
+<td>Democratic</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr>
+<td>45</td>
+<td>Virginia</td>
+<td>South</td>
+<td>Richmond</td>
+<td>8631393</td>
+<td>39490</td>
+<td>Democratic</td>
+</tr>
+<tr>
+<td>46</td>
+<td>Washington</td>
+<td>West</td>
+<td>Olympia</td>
+<td>7705281</td>
+<td>66456</td>
+<td>Democratic</td>
+</tr>
+<tr>
+<td>47</td>
+<td>West Virginia</td>
+<td>South</td>
+<td>Charleston</td>
+<td>1793716</td>
+<td>24038</td>
+<td>Republican</td>
+</tr>
+<tr>
+<td>48</td>
+<td>Wisconsin</td>
+<td>Midwest</td>
+<td>Madison</td>
+<td>5893718</td>
+<td>54158</td>
+<td>Republican</td>
+</tr>
+<tr>
+<td>49</td>
+<td>Wyoming</td>
+<td>West</td>
+<td>Cheyenne</td>
+<td>576851</td>
+<td>97093</td>
+<td>Republican</td>
+</tr>
+</table>
+<p>50 rows × 6 columns</p>
+</div>
+<div class="section">
+<h2>Example 1: Population density</h2>
+<p>Key concepts: Accessing columns, performing calculations with them, and adding new columns.</p>
+</div>
+<div class="section">
+<h3>Finding population density</h3>
+<p>Question: What is the population density of each state, in people per square mile?</p>
+<pre class='code'>states</pre>
+<table>
+<tr>
+<th></th>
+<th>State</th>
+<th>Region</th>
+<th>Capital City</th>
+<th>Population</th>
+<th>Land Area</th>
+<th>Party</th>
+</tr>
+<tr>
+<td>0</td>
+<td>Alabama</td>
+<td>South</td>
+<td>Montgomery</td>
+<td>5024279</td>
+<td>50645</td>
+<td>Republican</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Alaska</td>
+<td>West</td>
+<td>Juneau</td>
+<td>733391</td>
+<td>570641</td>
+<td>Republican</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Arizona</td>
+<td>West</td>
+<td>Phoenix</td>
+<td>7151502</td>
+<td>113594</td>
+<td>Republican</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Arkansas</td>
+<td>South</td>
+<td>Little Rock</td>
+<td>3011524</td>
+<td>52035</td>
+<td>Republican</td>
+</tr>
+<tr>
+<td>4</td>
+<td>California</td>
+<td>West</td>
+<td>Sacramento</td>
+<td>39538223</td>
+<td>155779</td>
+<td>Democratic</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr>
+<td>45</td>
+<td>Virginia</td>
+<td>South</td>
+<td>Richmond</td>
+<td>8631393</td>
+<td>39490</td>
+<td>Democratic</td>
+</tr>
+<tr>
+<td>46</td>
+<td>Washington</td>
+<td>West</td>
+<td>Olympia</td>
+<td>7705281</td>
+<td>66456</td>
+<td>Democratic</td>
+</tr>
+<tr>
+<td>47</td>
+<td>West Virginia</td>
+<td>South</td>
+<td>Charleston</td>
+<td>1793716</td>
+<td>24038</td>
+<td>Republican</td>
+</tr>
+<tr>
+<td>48</td>
+<td>Wisconsin</td>
+<td>Midwest</td>
+<td>Madison</td>
+<td>5893718</td>
+<td>54158</td>
+<td>Republican</td>
+</tr>
+<tr>
+<td>49</td>
+<td>Wyoming</td>
+<td>West</td>
+<td>Cheyenne</td>
+<td>576851</td>
+<td>97093</td>
+<td>Republican</td>
+</tr>
+</table>
+<p>50 rows × 6 columns</p>
+<ul>
+<li>We have, separately, the population and land area of each state.</li></ul>
+<ul>
+<li>Steps:
+<ul>
+<li>Get the &#x27;Population&#x27; column.</li>
+<li>Get the &#x27;Land Area&#x27; column.</li>
+<li>Divide these columns element-wise.</li>
+<li>Add a new column to the DataFrame with these results.</li>
+</ul>
+</li>
+</ul>
+<h4>Step 1 – Getting the &#x27;Population&#x27; column</h4>
+<ul>
+<li>We can get a column from a DataFrame using .get(column_name).</li></ul>
+<ul>
+<li>🚨 Column names are case sensitive!</li></ul>
+<ul>
+<li>Column names are strings, so we need to use quotes.</li></ul>
+<ul>
+<li>The result looks like a 1-column DataFrame, but is actually a Series.</li></ul>
+<pre class='code'>states</pre>
+<table>
+<tr>
+<th></th>
+<th>State</th>
+<th>Region</th>
+<th>Capital City</th>
+<th>Population</th>
+<th>Land Area</th>
+<th>Party</th>
+</tr>
+<tr>
+<td>0</td>
+<td>Alabama</td>
+<td>South</td>
+<td>Montgomery</td>
+<td>5024279</td>
+<td>50645</td>
+<td>Republican</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Alaska</td>
+<td>West</td>
+<td>Juneau</td>
+<td>733391</td>
+<td>570641</td>
+<td>Republican</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Arizona</td>
+<td>West</td>
+<td>Phoenix</td>
+<td>7151502</td>
+<td>113594</td>
+<td>Republican</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Arkansas</td>
+<td>South</td>
+<td>Little Rock</td>
+<td>3011524</td>
+<td>52035</td>
+<td>Republican</td>
+</tr>
+<tr>
+<td>4</td>
+<td>California</td>
+<td>West</td>
+<td>Sacramento</td>
+<td>39538223</td>
+<td>155779</td>
+<td>Democratic</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr>
+<td>45</td>
+<td>Virginia</td>
+<td>South</td>
+<td>Richmond</td>
+<td>8631393</td>
+<td>39490</td>
+<td>Democratic</td>
+</tr>
+<tr>
+<td>46</td>
+<td>Washington</td>
+<td>West</td>
+<td>Olympia</td>
+<td>7705281</td>
+<td>66456</td>
+<td>Democratic</td>
+</tr>
+<tr>
+<td>47</td>
+<td>West Virginia</td>
+<td>South</td>
+<td>Charleston</td>
+<td>1793716</td>
+<td>24038</td>
+<td>Republican</td>
+</tr>
+<tr>
+<td>48</td>
+<td>Wisconsin</td>
+<td>Midwest</td>
+<td>Madison</td>
+<td>5893718</td>
+<td>54158</td>
+<td>Republican</td>
+</tr>
+<tr>
+<td>49</td>
+<td>Wyoming</td>
+<td>West</td>
+<td>Cheyenne</td>
+<td>576851</td>
+<td>97093</td>
+<td>Republican</td>
+</tr>
+</table>
+<p>50 rows × 6 columns</p>
+<pre class='code'>states.get(&#x27;Population&#x27;)</pre>
+<pre class='output'>0      5024279
+1       733391
+2      7151502
+3      3011524
+4     39538223
+        ...   
+45     8631393
+46     7705281
+47     1793716
+48     5893718
+49      576851
+Name: Population, Length: 50, dtype: int64</pre>
+</div>
+<div class="section">
+<h3>Digression: Series</h3>
+<ul>
+<li>A Series is like an array, but with an index.</li></ul>
+<ul>
+<li>In particular, Series support arithmetic, just like arrays.</li></ul>
+<pre class='code'>states.get(&#x27;Population&#x27;)</pre>
+<pre class='output'>0      5024279
+1       733391
+2      7151502
+3      3011524
+4     39538223
+        ...   
+45     8631393
+46     7705281
+47     1793716
+48     5893718
+49      576851
+Name: Population, Length: 50, dtype: int64</pre>
+<pre class='code'>type(states.get(&#x27;Population&#x27;))</pre>
+<pre class='output'>babypandas.bpd.Series</pre>
+<h4>Steps 2 and 3 – Getting the &#x27;Land Area&#x27; column and dividing element-wise</h4>
+<pre class='code'>states.get(&#x27;Land Area&#x27;)</pre>
+<pre class='output'>0      50645
+1     570641
+2     113594
+3      52035
+4     155779
+       ...  
+45     39490
+46     66456
+47     24038
+48     54158
+49     97093
+Name: Land Area, Length: 50, dtype: int64</pre>
+<ul>
+<li>Just like with arrays, we can perform arithmetic operations with two Series, as long as they have the same length and same index.</li></ul>
+<ul>
+<li>Operations happen element-wise (by matching up corresponding index values), and the result is also a Series.</li></ul>
+<pre class='code'>states.get(&#x27;Population&#x27;) / states.get(&#x27;Land Area&#x27;)</pre>
+<pre class='output'>0      99.21
+1       1.29
+2      62.96
+3      57.87
+4     253.81
+       ...  
+45    218.57
+46    115.95
+47     74.62
+48    108.82
+49      5.94
+Length: 50, dtype: float64</pre>
+<h4>Step 4 – Adding the densities to the DataFrame as a new column</h4>
+<ul>
+<li>Use .assign(name_of_column=data_in_series) to assign a Series (or array, or list) to a DataFrame.</li></ul>
+<ul>
+<li>🚨 Don&#x27;t put quotes around name_of_column.</li></ul>
+<ul>
+<li>This creates a new DataFrame, which we must save to a variable if we want to keep using it.</li></ul>
+<pre class='code'>states.assign(
+    Density=states.get(&#x27;Population&#x27;) / states.get(&#x27;Land Area&#x27;)
+)</pre>
+<table>
+<tr>
+<th></th>
+<th>State</th>
+<th>Region</th>
+<th>Capital City</th>
+<th>Population</th>
+<th>Land Area</th>
+<th>Party</th>
+<th>Density</th>
+</tr>
+<tr>
+<td>0</td>
+<td>Alabama</td>
+<td>South</td>
+<td>Montgomery</td>
+<td>5024279</td>
+<td>50645</td>
+<td>Republican</td>
+<td>99.21</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Alaska</td>
+<td>West</td>
+<td>Juneau</td>
+<td>733391</td>
+<td>570641</td>
+<td>Republican</td>
+<td>1.29</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Arizona</td>
+<td>West</td>
+<td>Phoenix</td>
+<td>7151502</td>
+<td>113594</td>
+<td>Republican</td>
+<td>62.96</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Arkansas</td>
+<td>South</td>
+<td>Little Rock</td>
+<td>3011524</td>
+<td>52035</td>
+<td>Republican</td>
+<td>57.87</td>
+</tr>
+<tr>
+<td>4</td>
+<td>California</td>
+<td>West</td>
+<td>Sacramento</td>
+<td>39538223</td>
+<td>155779</td>
+<td>Democratic</td>
+<td>253.81</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr>
+<td>45</td>
+<td>Virginia</td>
+<td>South</td>
+<td>Richmond</td>
+<td>8631393</td>
+<td>39490</td>
+<td>Democratic</td>
+<td>218.57</td>
+</tr>
+<tr>
+<td>46</td>
+<td>Washington</td>
+<td>West</td>
+<td>Olympia</td>
+<td>7705281</td>
+<td>66456</td>
+<td>Democratic</td>
+<td>115.95</td>
+</tr>
+<tr>
+<td>47</td>
+<td>West Virginia</td>
+<td>South</td>
+<td>Charleston</td>
+<td>1793716</td>
+<td>24038</td>
+<td>Republican</td>
+<td>74.62</td>
+</tr>
+<tr>
+<td>48</td>
+<td>Wisconsin</td>
+<td>Midwest</td>
+<td>Madison</td>
+<td>5893718</td>
+<td>54158</td>
+<td>Republican</td>
+<td>108.82</td>
+</tr>
+<tr>
+<td>49</td>
+<td>Wyoming</td>
+<td>West</td>
+<td>Cheyenne</td>
+<td>576851</td>
+<td>97093</td>
+<td>Republican</td>
+<td>5.94</td>
+</tr>
+</table>
+<p>50 rows × 7 columns</p>
+<pre class='code'>states</pre>
+<table>
+<tr>
+<th></th>
+<th>State</th>
+<th>Region</th>
+<th>Capital City</th>
+<th>Population</th>
+<th>Land Area</th>
+<th>Party</th>
+</tr>
+<tr>
+<td>0</td>
+<td>Alabama</td>
+<td>South</td>
+<td>Montgomery</td>
+<td>5024279</td>
+<td>50645</td>
+<td>Republican</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Alaska</td>
+<td>West</td>
+<td>Juneau</td>
+<td>733391</td>
+<td>570641</td>
+<td>Republican</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Arizona</td>
+<td>West</td>
+<td>Phoenix</td>
+<td>7151502</td>
+<td>113594</td>
+<td>Republican</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Arkansas</td>
+<td>South</td>
+<td>Little Rock</td>
+<td>3011524</td>
+<td>52035</td>
+<td>Republican</td>
+</tr>
+<tr>
+<td>4</td>
+<td>California</td>
+<td>West</td>
+<td>Sacramento</td>
+<td>39538223</td>
+<td>155779</td>
+<td>Democratic</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr>
+<td>45</td>
+<td>Virginia</td>
+<td>South</td>
+<td>Richmond</td>
+<td>8631393</td>
+<td>39490</td>
+<td>Democratic</td>
+</tr>
+<tr>
+<td>46</td>
+<td>Washington</td>
+<td>West</td>
+<td>Olympia</td>
+<td>7705281</td>
+<td>66456</td>
+<td>Democratic</td>
+</tr>
+<tr>
+<td>47</td>
+<td>West Virginia</td>
+<td>South</td>
+<td>Charleston</td>
+<td>1793716</td>
+<td>24038</td>
+<td>Republican</td>
+</tr>
+<tr>
+<td>48</td>
+<td>Wisconsin</td>
+<td>Midwest</td>
+<td>Madison</td>
+<td>5893718</td>
+<td>54158</td>
+<td>Republican</td>
+</tr>
+<tr>
+<td>49</td>
+<td>Wyoming</td>
+<td>West</td>
+<td>Cheyenne</td>
+<td>576851</td>
+<td>97093</td>
+<td>Republican</td>
+</tr>
+</table>
+<p>50 rows × 6 columns</p>
+<pre class='code'>states = states.assign(
+    Density=states.get(&#x27;Population&#x27;) / states.get(&#x27;Land Area&#x27;)
+)
+states</pre>
+<table>
+<tr>
+<th></th>
+<th>State</th>
+<th>Region</th>
+<th>Capital City</th>
+<th>Population</th>
+<th>Land Area</th>
+<th>Party</th>
+<th>Density</th>
+</tr>
+<tr>
+<td>0</td>
+<td>Alabama</td>
+<td>South</td>
+<td>Montgomery</td>
+<td>5024279</td>
+<td>50645</td>
+<td>Republican</td>
+<td>99.21</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Alaska</td>
+<td>West</td>
+<td>Juneau</td>
+<td>733391</td>
+<td>570641</td>
+<td>Republican</td>
+<td>1.29</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Arizona</td>
+<td>West</td>
+<td>Phoenix</td>
+<td>7151502</td>
+<td>113594</td>
+<td>Republican</td>
+<td>62.96</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Arkansas</td>
+<td>South</td>
+<td>Little Rock</td>
+<td>3011524</td>
+<td>52035</td>
+<td>Republican</td>
+<td>57.87</td>
+</tr>
+<tr>
+<td>4</td>
+<td>California</td>
+<td>West</td>
+<td>Sacramento</td>
+<td>39538223</td>
+<td>155779</td>
+<td>Democratic</td>
+<td>253.81</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr>
+<td>45</td>
+<td>Virginia</td>
+<td>South</td>
+<td>Richmond</td>
+<td>8631393</td>
+<td>39490</td>
+<td>Democratic</td>
+<td>218.57</td>
+</tr>
+<tr>
+<td>46</td>
+<td>Washington</td>
+<td>West</td>
+<td>Olympia</td>
+<td>7705281</td>
+<td>66456</td>
+<td>Democratic</td>
+<td>115.95</td>
+</tr>
+<tr>
+<td>47</td>
+<td>West Virginia</td>
+<td>South</td>
+<td>Charleston</td>
+<td>1793716</td>
+<td>24038</td>
+<td>Republican</td>
+<td>74.62</td>
+</tr>
+<tr>
+<td>48</td>
+<td>Wisconsin</td>
+<td>Midwest</td>
+<td>Madison</td>
+<td>5893718</td>
+<td>54158</td>
+<td>Republican</td>
+<td>108.82</td>
+</tr>
+<tr>
+<td>49</td>
+<td>Wyoming</td>
+<td>West</td>
+<td>Cheyenne</td>
+<td>576851</td>
+<td>97093</td>
+<td>Republican</td>
+<td>5.94</td>
+</tr>
+</table>
+<p>50 rows × 7 columns</p>
+</div>
+<div class="section">
+<h2>Example 2: Exploring population density</h2>
+<p>Key concept: Computing statistics of columns using Series methods.</p>
+</div>
+<div class="section">
+<h3>Questions</h3>
+<ul>
+<li>What is the highest population density of any one state?</li></ul>
+<ul>
+<li>What is the average population density across all states?</li></ul>
+<p>Series, like arrays, have helpful methods, including .min(), .max(), and .mean().</p>
+<pre class='code'>states.get(&#x27;Density&#x27;).max()</pre>
+<pre class='output'>1263.1212945335872</pre>
+<p>What state does this correspond to? We&#x27;ll see how to find out shortly!</p>
+<p>Other statistics:</p>
+<pre class='code'>states.get(&#x27;Density&#x27;).min()</pre>
+<pre class='output'>1.2852055845969708</pre>
+<pre class='code'>states.get(&#x27;Density&#x27;).mean()</pre>
+<pre class='output'>206.54513507096465</pre>
+<pre class='code'>states.get(&#x27;Density&#x27;).median()</pre>
+<pre class='output'>108.31649013462203</pre>
+<pre class='code'># Lots of information at once!
+states.get(&#x27;Density&#x27;).describe()</pre>
+<pre class='output'>count      50.00
+mean      206.55
+std       274.93
+min         1.29
+25%        47.06
+50%       108.32
+75%       224.57
+max      1263.12
+Name: Density, dtype: float64</pre>
+</div>
+<div class="section">
+<h2>Example 3: Which state has the highest population density?</h2>
+<p>Key concepts: Sorting. Accessing using integer positions.</p>
+<h4>Step 1  – Sorting the DataFrame</h4>
+<ul>
+<li>Use the .sort_values(by=column_name) method to sort.
+<ul>
+<li>The by= can be omitted, but helps with readability.</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>Like most DataFrame methods, this returns a new DataFrame.</li></ul>
+<pre class='code'>states.sort_values(by=&#x27;Density&#x27;)</pre>
+<table>
+<tr>
+<th></th>
+<th>State</th>
+<th>Region</th>
+<th>Capital City</th>
+<th>Population</th>
+<th>Land Area</th>
+<th>Party</th>
+<th>Density</th>
+</tr>
+<tr>
+<td>1</td>
+<td>Alaska</td>
+<td>West</td>
+<td>Juneau</td>
+<td>733391</td>
+<td>570641</td>
+<td>Republican</td>
+<td>1.29</td>
+</tr>
+<tr>
+<td>49</td>
+<td>Wyoming</td>
+<td>West</td>
+<td>Cheyenne</td>
+<td>576851</td>
+<td>97093</td>
+<td>Republican</td>
+<td>5.94</td>
+</tr>
+<tr>
+<td>25</td>
+<td>Montana</td>
+<td>West</td>
+<td>Helena</td>
+<td>1084225</td>
+<td>145546</td>
+<td>Republican</td>
+<td>7.45</td>
+</tr>
+<tr>
+<td>33</td>
+<td>North Dakota</td>
+<td>Midwest</td>
+<td>Bismarck</td>
+<td>779094</td>
+<td>69001</td>
+<td>Republican</td>
+<td>11.29</td>
+</tr>
+<tr>
+<td>40</td>
+<td>South Dakota</td>
+<td>Midwest</td>
+<td>Pierre</td>
+<td>886667</td>
+<td>75811</td>
+<td>Republican</td>
+<td>11.70</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr>
+<td>19</td>
+<td>Maryland</td>
+<td>South</td>
+<td>Annapolis</td>
+<td>6177224</td>
+<td>9707</td>
+<td>Democratic</td>
+<td>636.37</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Connecticut</td>
+<td>Northeast</td>
+<td>Hartford</td>
+<td>3605944</td>
+<td>4842</td>
+<td>Democratic</td>
+<td>744.72</td>
+</tr>
+<tr>
+<td>20</td>
+<td>Massachusetts</td>
+<td>Northeast</td>
+<td>Boston</td>
+<td>7029917</td>
+<td>7800</td>
+<td>Democratic</td>
+<td>901.27</td>
+</tr>
+<tr>
+<td>38</td>
+<td>Rhode Island</td>
+<td>Northeast</td>
+<td>Providence</td>
+<td>1097379</td>
+<td>1034</td>
+<td>Democratic</td>
+<td>1061.29</td>
+</tr>
+<tr>
+<td>29</td>
+<td>New Jersey</td>
+<td>Northeast</td>
+<td>Trenton</td>
+<td>9288994</td>
+<td>7354</td>
+<td>Democratic</td>
+<td>1263.12</td>
+</tr>
+</table>
+<p>50 rows × 7 columns</p>
+<p>This sorts, but in ascending order (small to large). The opposite would be nice!</p>
+<h4>Step 1 – Sorting the DataFrame in descending order</h4>
+<ul>
+<li>Use .sort_values(by=column_name, ascending=False) to sort in descending order.</li></ul>
+<ul>
+<li>ascending is an optional argument. If omitted, it will be set to True by default.
+<ul>
+<li>This is an example of a keyword argument, or a named argument.</li>
+<li>If we want to specify the sorting order, we must use the keyword ascending=.</li>
+</ul>
+</li>
+</ul>
+<pre class='code'>ordered_states = states.sort_values(by=&#x27;Density&#x27;, ascending=False)
+ordered_states</pre>
+<table>
+<tr>
+<th></th>
+<th>State</th>
+<th>Region</th>
+<th>Capital City</th>
+<th>Population</th>
+<th>Land Area</th>
+<th>Party</th>
+<th>Density</th>
+</tr>
+<tr>
+<td>29</td>
+<td>New Jersey</td>
+<td>Northeast</td>
+<td>Trenton</td>
+<td>9288994</td>
+<td>7354</td>
+<td>Democratic</td>
+<td>1263.12</td>
+</tr>
+<tr>
+<td>38</td>
+<td>Rhode Island</td>
+<td>Northeast</td>
+<td>Providence</td>
+<td>1097379</td>
+<td>1034</td>
+<td>Democratic</td>
+<td>1061.29</td>
+</tr>
+<tr>
+<td>20</td>
+<td>Massachusetts</td>
+<td>Northeast</td>
+<td>Boston</td>
+<td>7029917</td>
+<td>7800</td>
+<td>Democratic</td>
+<td>901.27</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Connecticut</td>
+<td>Northeast</td>
+<td>Hartford</td>
+<td>3605944</td>
+<td>4842</td>
+<td>Democratic</td>
+<td>744.72</td>
+</tr>
+<tr>
+<td>19</td>
+<td>Maryland</td>
+<td>South</td>
+<td>Annapolis</td>
+<td>6177224</td>
+<td>9707</td>
+<td>Democratic</td>
+<td>636.37</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr>
+<td>40</td>
+<td>South Dakota</td>
+<td>Midwest</td>
+<td>Pierre</td>
+<td>886667</td>
+<td>75811</td>
+<td>Republican</td>
+<td>11.70</td>
+</tr>
+<tr>
+<td>33</td>
+<td>North Dakota</td>
+<td>Midwest</td>
+<td>Bismarck</td>
+<td>779094</td>
+<td>69001</td>
+<td>Republican</td>
+<td>11.29</td>
+</tr>
+<tr>
+<td>25</td>
+<td>Montana</td>
+<td>West</td>
+<td>Helena</td>
+<td>1084225</td>
+<td>145546</td>
+<td>Republican</td>
+<td>7.45</td>
+</tr>
+<tr>
+<td>49</td>
+<td>Wyoming</td>
+<td>West</td>
+<td>Cheyenne</td>
+<td>576851</td>
+<td>97093</td>
+<td>Republican</td>
+<td>5.94</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Alaska</td>
+<td>West</td>
+<td>Juneau</td>
+<td>733391</td>
+<td>570641</td>
+<td>Republican</td>
+<td>1.29</td>
+</tr>
+</table>
+<p>50 rows × 7 columns</p>
+<pre class='code'># We must specify the role of False by using ascending=, 
+# otherwise Python does not know how to interpret this.
+states.sort_values(by=&#x27;Density&#x27;, False)</pre>
+<pre class='output'>File &quot;/var/folders/28/vs8cp38n1r1520g8bhzr4v5h0000gn/T/ipykernel_17650/2563070448.py&quot;, line 3
+    states.sort_values(by=&#x27;Density&#x27;, False)
+                                          ^
+SyntaxError: positional argument follows keyword argument</pre>
+<h4>Step 2 – Extracting the state name</h4>
+<ul>
+<li>We saw that the most densely populated state is New Jersey, but how do we extract that information using code?</li></ul>
+<ul>
+<li>First, grab an entire column as a Series.</li></ul>
+<ul>
+<li>Navigate to a particular entry of the Series using .iloc[integer_position].
+<ul>
+<li>iloc stands for &quot;integer location&quot; and is used to count the rows, starting at 0.</li>
+</ul>
+</li>
+</ul>
+<pre class='code'>ordered_states</pre>
+<table>
+<tr>
+<th></th>
+<th>State</th>
+<th>Region</th>
+<th>Capital City</th>
+<th>Population</th>
+<th>Land Area</th>
+<th>Party</th>
+<th>Density</th>
+</tr>
+<tr>
+<td>29</td>
+<td>New Jersey</td>
+<td>Northeast</td>
+<td>Trenton</td>
+<td>9288994</td>
+<td>7354</td>
+<td>Democratic</td>
+<td>1263.12</td>
+</tr>
+<tr>
+<td>38</td>
+<td>Rhode Island</td>
+<td>Northeast</td>
+<td>Providence</td>
+<td>1097379</td>
+<td>1034</td>
+<td>Democratic</td>
+<td>1061.29</td>
+</tr>
+<tr>
+<td>20</td>
+<td>Massachusetts</td>
+<td>Northeast</td>
+<td>Boston</td>
+<td>7029917</td>
+<td>7800</td>
+<td>Democratic</td>
+<td>901.27</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Connecticut</td>
+<td>Northeast</td>
+<td>Hartford</td>
+<td>3605944</td>
+<td>4842</td>
+<td>Democratic</td>
+<td>744.72</td>
+</tr>
+<tr>
+<td>19</td>
+<td>Maryland</td>
+<td>South</td>
+<td>Annapolis</td>
+<td>6177224</td>
+<td>9707</td>
+<td>Democratic</td>
+<td>636.37</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr>
+<td>40</td>
+<td>South Dakota</td>
+<td>Midwest</td>
+<td>Pierre</td>
+<td>886667</td>
+<td>75811</td>
+<td>Republican</td>
+<td>11.70</td>
+</tr>
+<tr>
+<td>33</td>
+<td>North Dakota</td>
+<td>Midwest</td>
+<td>Bismarck</td>
+<td>779094</td>
+<td>69001</td>
+<td>Republican</td>
+<td>11.29</td>
+</tr>
+<tr>
+<td>25</td>
+<td>Montana</td>
+<td>West</td>
+<td>Helena</td>
+<td>1084225</td>
+<td>145546</td>
+<td>Republican</td>
+<td>7.45</td>
+</tr>
+<tr>
+<td>49</td>
+<td>Wyoming</td>
+<td>West</td>
+<td>Cheyenne</td>
+<td>576851</td>
+<td>97093</td>
+<td>Republican</td>
+<td>5.94</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Alaska</td>
+<td>West</td>
+<td>Juneau</td>
+<td>733391</td>
+<td>570641</td>
+<td>Republican</td>
+<td>1.29</td>
+</tr>
+</table>
+<p>50 rows × 7 columns</p>
+<pre class='code'>ordered_states.get(&#x27;State&#x27;)</pre>
+<pre class='output'>29       New Jersey
+38     Rhode Island
+20    Massachusetts
+6       Connecticut
+19         Maryland
+          ...      
+40     South Dakota
+33     North Dakota
+25          Montana
+49          Wyoming
+1            Alaska
+Name: State, Length: 50, dtype: object</pre>
+<pre class='code'># We want the first entry of the Series, which is at &quot;integer location&quot; 0.
+ordered_states.get(&#x27;State&#x27;).iloc[0]</pre>
+<pre class='output'>&#x27;New Jersey&#x27;</pre>
+<ul>
+<li>The row label that goes with New Jersey is 29, because our original data was alphabetized by state and New Jersey is the 30th state alphabetically. But we don&#x27;t use the row label when accessing with iloc; we use the integer position counting from the top.</li></ul>
+<ul>
+<li>If we try to use the row label (29) with iloc, we get the state with the 30th highest population density, which is not New Jersey.</li></ul>
+<pre class='code'>ordered_states.get(&#x27;State&#x27;).iloc[29]</pre>
+<pre class='output'>&#x27;Minnesota&#x27;</pre>
+</div>
+<div class="section">
+<h2>Example 4: What is the population density of Pennsylvania?</h2>
+<p>Key concept: Accessing using row labels.</p>
+</div>
+<div class="section">
+<h3>Population density of Pennsylvania</h3>
+<p>We know how to get the &#x27;Density&#x27; of all states. How do we find the one that corresponds to Pennsylvania?</p>
+<pre class='code'>states</pre>
+<table>
+<tr>
+<th></th>
+<th>State</th>
+<th>Region</th>
+<th>Capital City</th>
+<th>Population</th>
+<th>Land Area</th>
+<th>Party</th>
+<th>Density</th>
+</tr>
+<tr>
+<td>0</td>
+<td>Alabama</td>
+<td>South</td>
+<td>Montgomery</td>
+<td>5024279</td>
+<td>50645</td>
+<td>Republican</td>
+<td>99.21</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Alaska</td>
+<td>West</td>
+<td>Juneau</td>
+<td>733391</td>
+<td>570641</td>
+<td>Republican</td>
+<td>1.29</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Arizona</td>
+<td>West</td>
+<td>Phoenix</td>
+<td>7151502</td>
+<td>113594</td>
+<td>Republican</td>
+<td>62.96</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Arkansas</td>
+<td>South</td>
+<td>Little Rock</td>
+<td>3011524</td>
+<td>52035</td>
+<td>Republican</td>
+<td>57.87</td>
+</tr>
+<tr>
+<td>4</td>
+<td>California</td>
+<td>West</td>
+<td>Sacramento</td>
+<td>39538223</td>
+<td>155779</td>
+<td>Democratic</td>
+<td>253.81</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr>
+<td>45</td>
+<td>Virginia</td>
+<td>South</td>
+<td>Richmond</td>
+<td>8631393</td>
+<td>39490</td>
+<td>Democratic</td>
+<td>218.57</td>
+</tr>
+<tr>
+<td>46</td>
+<td>Washington</td>
+<td>West</td>
+<td>Olympia</td>
+<td>7705281</td>
+<td>66456</td>
+<td>Democratic</td>
+<td>115.95</td>
+</tr>
+<tr>
+<td>47</td>
+<td>West Virginia</td>
+<td>South</td>
+<td>Charleston</td>
+<td>1793716</td>
+<td>24038</td>
+<td>Republican</td>
+<td>74.62</td>
+</tr>
+<tr>
+<td>48</td>
+<td>Wisconsin</td>
+<td>Midwest</td>
+<td>Madison</td>
+<td>5893718</td>
+<td>54158</td>
+<td>Republican</td>
+<td>108.82</td>
+</tr>
+<tr>
+<td>49</td>
+<td>Wyoming</td>
+<td>West</td>
+<td>Cheyenne</td>
+<td>576851</td>
+<td>97093</td>
+<td>Republican</td>
+<td>5.94</td>
+</tr>
+</table>
+<p>50 rows × 7 columns</p>
+<pre class='code'># Which one is Pennsylvania?
+states.get(&#x27;Density&#x27;)</pre>
+<pre class='output'>0      99.21
+1       1.29
+2      62.96
+3      57.87
+4     253.81
+       ...  
+45    218.57
+46    115.95
+47     74.62
+48    108.82
+49      5.94
+Name: Density, Length: 50, dtype: float64</pre>
+</div>
+<div class="section">
+<h3>Utilizing the index</h3>
+<ul>
+<li>When we load in a DataFrame from a CSV, columns have meaningful names, but rows do not.</li></ul>
+<pre class='code'>bpd.read_csv(&#x27;data/states.csv&#x27;)</pre>
+<table>
+<tr>
+<th></th>
+<th>State</th>
+<th>Region</th>
+<th>Capital City</th>
+<th>Population</th>
+<th>Land Area</th>
+<th>Party</th>
+</tr>
+<tr>
+<td>0</td>
+<td>Alabama</td>
+<td>South</td>
+<td>Montgomery</td>
+<td>5024279</td>
+<td>50645</td>
+<td>Republican</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Alaska</td>
+<td>West</td>
+<td>Juneau</td>
+<td>733391</td>
+<td>570641</td>
+<td>Republican</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Arizona</td>
+<td>West</td>
+<td>Phoenix</td>
+<td>7151502</td>
+<td>113594</td>
+<td>Republican</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Arkansas</td>
+<td>South</td>
+<td>Little Rock</td>
+<td>3011524</td>
+<td>52035</td>
+<td>Republican</td>
+</tr>
+<tr>
+<td>4</td>
+<td>California</td>
+<td>West</td>
+<td>Sacramento</td>
+<td>39538223</td>
+<td>155779</td>
+<td>Democratic</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr>
+<td>45</td>
+<td>Virginia</td>
+<td>South</td>
+<td>Richmond</td>
+<td>8631393</td>
+<td>39490</td>
+<td>Democratic</td>
+</tr>
+<tr>
+<td>46</td>
+<td>Washington</td>
+<td>West</td>
+<td>Olympia</td>
+<td>7705281</td>
+<td>66456</td>
+<td>Democratic</td>
+</tr>
+<tr>
+<td>47</td>
+<td>West Virginia</td>
+<td>South</td>
+<td>Charleston</td>
+<td>1793716</td>
+<td>24038</td>
+<td>Republican</td>
+</tr>
+<tr>
+<td>48</td>
+<td>Wisconsin</td>
+<td>Midwest</td>
+<td>Madison</td>
+<td>5893718</td>
+<td>54158</td>
+<td>Republican</td>
+</tr>
+<tr>
+<td>49</td>
+<td>Wyoming</td>
+<td>West</td>
+<td>Cheyenne</td>
+<td>576851</td>
+<td>97093</td>
+<td>Republican</td>
+</tr>
+</table>
+<p>50 rows × 6 columns</p>
+<ul>
+<li>The row labels (or the index) are how we refer to specific rows. Instead of using numbers, let&#x27;s refer to these rows by the names of the states they correspond to.</li></ul>
+<ul>
+<li>This way, we can easily identify, for example, which row corresponds to Pennsylvania.</li></ul>
+</div>
+<div class="section">
+<h3>Setting the index</h3>
+<ul>
+<li>To change the index, use .set_index(column_name).</li></ul>
+<ul>
+<li>Row labels should be unique identifiers.
+<ul>
+<li>Each row should have a different, descriptive name that corresponds to the contents of that row&#x27;s data.</li>
+</ul>
+</li>
+</ul>
+<pre class='code'>states</pre>
+<table>
+<tr>
+<th></th>
+<th>State</th>
+<th>Region</th>
+<th>Capital City</th>
+<th>Population</th>
+<th>Land Area</th>
+<th>Party</th>
+<th>Density</th>
+</tr>
+<tr>
+<td>0</td>
+<td>Alabama</td>
+<td>South</td>
+<td>Montgomery</td>
+<td>5024279</td>
+<td>50645</td>
+<td>Republican</td>
+<td>99.21</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Alaska</td>
+<td>West</td>
+<td>Juneau</td>
+<td>733391</td>
+<td>570641</td>
+<td>Republican</td>
+<td>1.29</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Arizona</td>
+<td>West</td>
+<td>Phoenix</td>
+<td>7151502</td>
+<td>113594</td>
+<td>Republican</td>
+<td>62.96</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Arkansas</td>
+<td>South</td>
+<td>Little Rock</td>
+<td>3011524</td>
+<td>52035</td>
+<td>Republican</td>
+<td>57.87</td>
+</tr>
+<tr>
+<td>4</td>
+<td>California</td>
+<td>West</td>
+<td>Sacramento</td>
+<td>39538223</td>
+<td>155779</td>
+<td>Democratic</td>
+<td>253.81</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr>
+<td>45</td>
+<td>Virginia</td>
+<td>South</td>
+<td>Richmond</td>
+<td>8631393</td>
+<td>39490</td>
+<td>Democratic</td>
+<td>218.57</td>
+</tr>
+<tr>
+<td>46</td>
+<td>Washington</td>
+<td>West</td>
+<td>Olympia</td>
+<td>7705281</td>
+<td>66456</td>
+<td>Democratic</td>
+<td>115.95</td>
+</tr>
+<tr>
+<td>47</td>
+<td>West Virginia</td>
+<td>South</td>
+<td>Charleston</td>
+<td>1793716</td>
+<td>24038</td>
+<td>Republican</td>
+<td>74.62</td>
+</tr>
+<tr>
+<td>48</td>
+<td>Wisconsin</td>
+<td>Midwest</td>
+<td>Madison</td>
+<td>5893718</td>
+<td>54158</td>
+<td>Republican</td>
+<td>108.82</td>
+</tr>
+<tr>
+<td>49</td>
+<td>Wyoming</td>
+<td>West</td>
+<td>Cheyenne</td>
+<td>576851</td>
+<td>97093</td>
+<td>Republican</td>
+<td>5.94</td>
+</tr>
+</table>
+<p>50 rows × 7 columns</p>
+<pre class='code'>states.set_index(&#x27;State&#x27;)</pre>
+<table>
+<tr>
+<th></th>
+<th>Region</th>
+<th>Capital City</th>
+<th>Population</th>
+<th>Land Area</th>
+<th>Party</th>
+<th>Density</th>
+</tr>
+<tr>
+<td>State</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Alabama</td>
+<td>South</td>
+<td>Montgomery</td>
+<td>5024279</td>
+<td>50645</td>
+<td>Republican</td>
+<td>99.21</td>
+</tr>
+<tr>
+<td>Alaska</td>
+<td>West</td>
+<td>Juneau</td>
+<td>733391</td>
+<td>570641</td>
+<td>Republican</td>
+<td>1.29</td>
+</tr>
+<tr>
+<td>Arizona</td>
+<td>West</td>
+<td>Phoenix</td>
+<td>7151502</td>
+<td>113594</td>
+<td>Republican</td>
+<td>62.96</td>
+</tr>
+<tr>
+<td>Arkansas</td>
+<td>South</td>
+<td>Little Rock</td>
+<td>3011524</td>
+<td>52035</td>
+<td>Republican</td>
+<td>57.87</td>
+</tr>
+<tr>
+<td>California</td>
+<td>West</td>
+<td>Sacramento</td>
+<td>39538223</td>
+<td>155779</td>
+<td>Democratic</td>
+<td>253.81</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr>
+<td>Virginia</td>
+<td>South</td>
+<td>Richmond</td>
+<td>8631393</td>
+<td>39490</td>
+<td>Democratic</td>
+<td>218.57</td>
+</tr>
+<tr>
+<td>Washington</td>
+<td>West</td>
+<td>Olympia</td>
+<td>7705281</td>
+<td>66456</td>
+<td>Democratic</td>
+<td>115.95</td>
+</tr>
+<tr>
+<td>West Virginia</td>
+<td>South</td>
+<td>Charleston</td>
+<td>1793716</td>
+<td>24038</td>
+<td>Republican</td>
+<td>74.62</td>
+</tr>
+<tr>
+<td>Wisconsin</td>
+<td>Midwest</td>
+<td>Madison</td>
+<td>5893718</td>
+<td>54158</td>
+<td>Republican</td>
+<td>108.82</td>
+</tr>
+<tr>
+<td>Wyoming</td>
+<td>West</td>
+<td>Cheyenne</td>
+<td>576851</td>
+<td>97093</td>
+<td>Republican</td>
+<td>5.94</td>
+</tr>
+</table>
+<p>50 rows × 6 columns</p>
+<ul>
+<li>Now there is one fewer column. When you set the index, a column becomes the index, and the old index disappears.</li></ul>
+<ul>
+<li>🚨 Like most DataFrame methods, .set_index returns a new DataFrame; it does not modify the original DataFrame.</li></ul>
+<pre class='code'>states</pre>
+<table>
+<tr>
+<th></th>
+<th>State</th>
+<th>Region</th>
+<th>Capital City</th>
+<th>Population</th>
+<th>Land Area</th>
+<th>Party</th>
+<th>Density</th>
+</tr>
+<tr>
+<td>0</td>
+<td>Alabama</td>
+<td>South</td>
+<td>Montgomery</td>
+<td>5024279</td>
+<td>50645</td>
+<td>Republican</td>
+<td>99.21</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Alaska</td>
+<td>West</td>
+<td>Juneau</td>
+<td>733391</td>
+<td>570641</td>
+<td>Republican</td>
+<td>1.29</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Arizona</td>
+<td>West</td>
+<td>Phoenix</td>
+<td>7151502</td>
+<td>113594</td>
+<td>Republican</td>
+<td>62.96</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Arkansas</td>
+<td>South</td>
+<td>Little Rock</td>
+<td>3011524</td>
+<td>52035</td>
+<td>Republican</td>
+<td>57.87</td>
+</tr>
+<tr>
+<td>4</td>
+<td>California</td>
+<td>West</td>
+<td>Sacramento</td>
+<td>39538223</td>
+<td>155779</td>
+<td>Democratic</td>
+<td>253.81</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr>
+<td>45</td>
+<td>Virginia</td>
+<td>South</td>
+<td>Richmond</td>
+<td>8631393</td>
+<td>39490</td>
+<td>Democratic</td>
+<td>218.57</td>
+</tr>
+<tr>
+<td>46</td>
+<td>Washington</td>
+<td>West</td>
+<td>Olympia</td>
+<td>7705281</td>
+<td>66456</td>
+<td>Democratic</td>
+<td>115.95</td>
+</tr>
+<tr>
+<td>47</td>
+<td>West Virginia</td>
+<td>South</td>
+<td>Charleston</td>
+<td>1793716</td>
+<td>24038</td>
+<td>Republican</td>
+<td>74.62</td>
+</tr>
+<tr>
+<td>48</td>
+<td>Wisconsin</td>
+<td>Midwest</td>
+<td>Madison</td>
+<td>5893718</td>
+<td>54158</td>
+<td>Republican</td>
+<td>108.82</td>
+</tr>
+<tr>
+<td>49</td>
+<td>Wyoming</td>
+<td>West</td>
+<td>Cheyenne</td>
+<td>576851</td>
+<td>97093</td>
+<td>Republican</td>
+<td>5.94</td>
+</tr>
+</table>
+<p>50 rows × 7 columns</p>
+<pre class='code'>states = states.set_index(&#x27;State&#x27;)
+states</pre>
+<table>
+<tr>
+<th></th>
+<th>Region</th>
+<th>Capital City</th>
+<th>Population</th>
+<th>Land Area</th>
+<th>Party</th>
+<th>Density</th>
+</tr>
+<tr>
+<td>State</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Alabama</td>
+<td>South</td>
+<td>Montgomery</td>
+<td>5024279</td>
+<td>50645</td>
+<td>Republican</td>
+<td>99.21</td>
+</tr>
+<tr>
+<td>Alaska</td>
+<td>West</td>
+<td>Juneau</td>
+<td>733391</td>
+<td>570641</td>
+<td>Republican</td>
+<td>1.29</td>
+</tr>
+<tr>
+<td>Arizona</td>
+<td>West</td>
+<td>Phoenix</td>
+<td>7151502</td>
+<td>113594</td>
+<td>Republican</td>
+<td>62.96</td>
+</tr>
+<tr>
+<td>Arkansas</td>
+<td>South</td>
+<td>Little Rock</td>
+<td>3011524</td>
+<td>52035</td>
+<td>Republican</td>
+<td>57.87</td>
+</tr>
+<tr>
+<td>California</td>
+<td>West</td>
+<td>Sacramento</td>
+<td>39538223</td>
+<td>155779</td>
+<td>Democratic</td>
+<td>253.81</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr>
+<td>Virginia</td>
+<td>South</td>
+<td>Richmond</td>
+<td>8631393</td>
+<td>39490</td>
+<td>Democratic</td>
+<td>218.57</td>
+</tr>
+<tr>
+<td>Washington</td>
+<td>West</td>
+<td>Olympia</td>
+<td>7705281</td>
+<td>66456</td>
+<td>Democratic</td>
+<td>115.95</td>
+</tr>
+<tr>
+<td>West Virginia</td>
+<td>South</td>
+<td>Charleston</td>
+<td>1793716</td>
+<td>24038</td>
+<td>Republican</td>
+<td>74.62</td>
+</tr>
+<tr>
+<td>Wisconsin</td>
+<td>Midwest</td>
+<td>Madison</td>
+<td>5893718</td>
+<td>54158</td>
+<td>Republican</td>
+<td>108.82</td>
+</tr>
+<tr>
+<td>Wyoming</td>
+<td>West</td>
+<td>Cheyenne</td>
+<td>576851</td>
+<td>97093</td>
+<td>Republican</td>
+<td>5.94</td>
+</tr>
+</table>
+<p>50 rows × 6 columns</p>
+<pre class='code'># Which one is Pennsylvania? The one whose row label is &quot;Pennsylvania&quot;!
+states.get(&#x27;Density&#x27;)</pre>
+<pre class='output'>State
+Alabama           99.21
+Alaska             1.29
+Arizona           62.96
+Arkansas          57.87
+California       253.81
+                  ...  
+Virginia         218.57
+Washington       115.95
+West Virginia     74.62
+Wisconsin        108.82
+Wyoming            5.94
+Name: Density, Length: 50, dtype: float64</pre>
+</div>
+<div class="section">
+<h3>Accessing using the row label</h3>
+<p>To pull out one particular entry of a DataFrame corresponding to a row and column with certain labels:</p>
+<ul>
+<li>Use .get(column_name) to extract the entire column as a Series.</li></ul>
+<ul>
+<li>Use .loc[] to access the element of a Series with a particular row label.</li></ul>
+<p>In this class, we&#x27;ll always first access a column, then a row (but row, then column is also possible).</p>
+<pre class='code'>states.get(&#x27;Density&#x27;)</pre>
+<pre class='output'>State
+Alabama           99.21
+Alaska             1.29
+Arizona           62.96
+Arkansas          57.87
+California       253.81
+                  ...  
+Virginia         218.57
+Washington       115.95
+West Virginia     74.62
+Wisconsin        108.82
+Wyoming            5.94
+Name: Density, Length: 50, dtype: float64</pre>
+<pre class='code'>states.get(&#x27;Density&#x27;).loc[&#x27;Pennsylvania&#x27;]</pre>
+<pre class='output'>290.60858681804973</pre>
+</div>
+<div class="section">
+<h3>Summary: Accessing elements of a DataFrame</h3>
+<ul>
+<li>First, .get the appropriate column as a Series.</li></ul>
+<ul>
+<li>Then, use one of two ways to access an element of a Series:
+<ul>
+<li>.iloc[] uses the integer position.</li>
+<li>.loc[] uses the row label.</li>
+<li>Each is best for different scenarios.</li>
+</ul>
+</li>
+</ul>
+<pre class='code'>states.get(&#x27;Density&#x27;)</pre>
+<pre class='output'>State
+Alabama           99.21
+Alaska             1.29
+Arizona           62.96
+Arkansas          57.87
+California       253.81
+                  ...  
+Virginia         218.57
+Washington       115.95
+West Virginia     74.62
+Wisconsin        108.82
+Wyoming            5.94
+Name: Density, Length: 50, dtype: float64</pre>
+<pre class='code'>states.get(&#x27;Density&#x27;).iloc[4]</pre>
+<pre class='output'>253.80971119342146</pre>
+<pre class='code'>states.get(&#x27;Density&#x27;).loc[&#x27;California&#x27;]</pre>
+<pre class='output'>253.80971119342146</pre>
+</div>
+<div class="section">
+<h3>Note</h3>
+<ul>
+<li>Sometimes the integer position and row label are the same.</li></ul>
+<ul>
+<li>This happens by default with bpd.read_csv.</li></ul>
+<pre class='code'>bpd.read_csv(&#x27;data/states.csv&#x27;)</pre>
+<table>
+<tr>
+<th></th>
+<th>State</th>
+<th>Region</th>
+<th>Capital City</th>
+<th>Population</th>
+<th>Land Area</th>
+<th>Party</th>
+</tr>
+<tr>
+<td>0</td>
+<td>Alabama</td>
+<td>South</td>
+<td>Montgomery</td>
+<td>5024279</td>
+<td>50645</td>
+<td>Republican</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Alaska</td>
+<td>West</td>
+<td>Juneau</td>
+<td>733391</td>
+<td>570641</td>
+<td>Republican</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Arizona</td>
+<td>West</td>
+<td>Phoenix</td>
+<td>7151502</td>
+<td>113594</td>
+<td>Republican</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Arkansas</td>
+<td>South</td>
+<td>Little Rock</td>
+<td>3011524</td>
+<td>52035</td>
+<td>Republican</td>
+</tr>
+<tr>
+<td>4</td>
+<td>California</td>
+<td>West</td>
+<td>Sacramento</td>
+<td>39538223</td>
+<td>155779</td>
+<td>Democratic</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr>
+<td>45</td>
+<td>Virginia</td>
+<td>South</td>
+<td>Richmond</td>
+<td>8631393</td>
+<td>39490</td>
+<td>Democratic</td>
+</tr>
+<tr>
+<td>46</td>
+<td>Washington</td>
+<td>West</td>
+<td>Olympia</td>
+<td>7705281</td>
+<td>66456</td>
+<td>Democratic</td>
+</tr>
+<tr>
+<td>47</td>
+<td>West Virginia</td>
+<td>South</td>
+<td>Charleston</td>
+<td>1793716</td>
+<td>24038</td>
+<td>Republican</td>
+</tr>
+<tr>
+<td>48</td>
+<td>Wisconsin</td>
+<td>Midwest</td>
+<td>Madison</td>
+<td>5893718</td>
+<td>54158</td>
+<td>Republican</td>
+</tr>
+<tr>
+<td>49</td>
+<td>Wyoming</td>
+<td>West</td>
+<td>Cheyenne</td>
+<td>576851</td>
+<td>97093</td>
+<td>Republican</td>
+</tr>
+</table>
+<p>50 rows × 6 columns</p>
+<pre class='code'>bpd.read_csv(&#x27;data/states.csv&#x27;).get(&#x27;Capital City&#x27;).loc[35]</pre>
+<pre class='output'>&#x27;Oklahoma City&#x27;</pre>
+<pre class='code'>bpd.read_csv(&#x27;data/states.csv&#x27;).get(&#x27;Capital City&#x27;).iloc[35]</pre>
+<pre class='output'>&#x27;Oklahoma City&#x27;</pre>
+</div>
+<div class="section">
+<h2>Summary, next time</h2>
+</div>
+<div class="section">
+<h3>Summary</h3>
+<ul>
+<li>Arrays make it easy to perform arithmetic operations on all elements of an array and to perform element-wise operations on multiple arrays.</li></ul>
+<ul>
+<li>Ranges are arrays of equally-spaced numbers.</li></ul>
+<ul>
+<li>We learned many DataFrame methods and techniques. Don&#x27;t feel the need to memorize them all right away.</li></ul>
+<ul>
+<li>Instead, refer to this lecture, the DSC 10 reference sheet, the babypandas notes, and the babypandas documentation when working on assignments.</li></ul>
+<ul>
+<li>Over time, these techniques will become more and more familiar. Lab 1 will walk you through many of them.</li></ul>
+<ul>
+<li>Practice! Frame your own questions using this dataset and try to answer them.</li></ul>
+</div>
+<div class="section">
+<h3>Next time</h3>
+<p>We&#x27;ll frame more questions and learn more DataFrame manipulation techniques to answer them. In particular, we&#x27;ll learn about querying and grouping.</p>
+</div>
+</body>
+</html>

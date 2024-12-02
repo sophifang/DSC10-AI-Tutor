@@ -1,0 +1,398 @@
+tag,content
+pre input,"# Run this cell to set up packages for lecture.
+from lec10_imports import *"
+h1,Lecture 10 – Conditional Statements and Iteration
+h2,"DSC 10, Spring 2024"
+h3,Announcements
+li,Homework 2 is due tomorrow at 11:59PM.
+li,Lab 3 is due Thursday at 11:59PM.
+h2,"Midterm Project released,  due Tuesday, May 7th at 11:59PM"
+li,"In the project, you'll explore a dataset of top songs on Spotify from 2021-2022, and answer questions such as:""What musical qualities distinguish the biggest hits from the rest?"""
+p,"""What musical qualities distinguish the biggest hits from the rest?"""
+p,Here's a sneak peek:
+img,https://dsc-courses.github.io/dsc10-2024-sp/resources/lectures/lec10/images/preview.jpg
+li,Start early! Projects are substantially more involved than homeworks.
+h3,Agenda
+li,Booleans.
+li,Conditional statements (i.e. if-statements).
+li,Iteration (i.e. for-loops).
+p,Note:
+li,We've finished introducing new DataFrame manipulation techniques.
+li,"Today we'll cover some foundational programming tools, which will be very relevant as we start to cover more ideas in statistics in the second half of the class."
+h2,Booleans
+h3,Recap: Booleans
+li,"bool is a data type in Python, just like int, float, and str. 
+It stands for ""Boolean"", named after George Boole, an early mathematician."
+li,"There are only two possible Boolean values: True or False.
+Yes or no.
+On or off.
+1 or 0."
+li,Comparisons result in Boolean values.
+pre input,"dept = 'DSC'
+course = 10"
+pre input,course < 20
+pre output,True
+pre input,type(course < 20)
+pre output,bool
+h3,The in operator
+p,"Sometimes, we'll want to check if a particular element is in a list/array, or a particular substring is in a string. The in operator can do this for us, and it also results in a Boolean value."
+pre input,"course in [10, 20, 30]"
+pre output,True
+pre input,'DS' in dept
+pre output,True
+pre input,'DS' in 'Data Science'
+pre output,False
+h3,Boolean operators; not
+p,"There are three operators that allow us to perform arithmetic with Booleans – not, and, and or."
+p,not flips True ↔️ False.
+pre input,dept == 'DSC'
+pre output,True
+pre input,not dept == 'DSC'
+pre output,False
+h3,The and operator
+p,"The and operator is placed between two bools. It is True if both are True; otherwise, it's False."
+pre input,80 < 30 and course < 20
+pre output,False
+pre input,80 > 30 and course < 20
+pre output,True
+h3,The or operator
+p,"The or operator is placed between two bools. It is True if at least one is True; otherwise, it's False."
+pre input,"course in [10, 20, 30, 80] or type(course) == str"
+pre output,True
+pre input,"# Both are True!
+course in [10, 20, 30, 80] or type(course) == int"
+pre output,True
+pre input,"# Both are False!
+course == 80 or type(course) == str"
+pre output,False
+h3,Order of operations
+li,"By default, the order of operations is not, and, or. See the precedence of all operators in Python here."
+li,"As usual, use (parentheses) to make expressions more clear."
+pre input,course == 10 or (dept == 'DSC' and dept == 'CSE')
+pre output,True
+pre input,"# Different meaning!
+(course == 10 or dept == 'DSC') and dept == 'CSE'"
+pre output,False
+pre input,"# With no parentheses, ""and"" has precedence.
+course == 10 or dept == 'DSC' and dept == 'CSE'"
+pre output,True
+h3,Note: & and | vs. and and or
+li,"Use the & and | operators between two Series. Arithmetic will be done element-wise (separately for each row).
+This is relevant when writing DataFrame queries, e.g. courses[(courses.get('dept') == 'DSC') & (courses.get('course') == 10)]."
+li,"Use the and and or operators between two individual Booleans.
+e.g. dept == 'DSC' and course == 10."
+h2,Conditionals
+pre input,"if <condition>:
+    <body>"
+h3,if-statements
+li,"Often, we'll want to run a block of code only if a particular conditional expression is True."
+li,The syntax for this is as follows (don't forget the colon!):
+li,Indentation matters!
+pre input,"capstone = 'finished'
+capstone"
+pre output,'finished'
+pre input,"if capstone == 'finished':
+    print('Looks like you are ready to graduate!')"
+pre output,Looks like you are ready to graduate!
+h3,else
+p,"If you want to do something else if the specified condition is False, use the else keyword."
+pre input,"capstone = 'finished'
+capstone"
+pre output,'finished'
+pre input,"if capstone == 'finished':
+    print('Looks like you are ready to graduate!')
+else:
+    print('Before you graduate, you need to finish your capstone project.')"
+pre output,Looks like you are ready to graduate!
+h3,elif
+li,What if we want to check more than one condition? Use elif.
+li,"elif: if the specified condition is False, check the next condition."
+li,"If that condition is False, check the next condition, and so on, until we see a True condition.
+After seeing a True condition, it evaluates the indented code and stops."
+li,"If none of the conditions are True, the else body is run."
+pre input,"capstone = 'in progress'
+units = 123
+
+if capstone == 'finished' and units >= 180:
+    print('Looks like you are ready to graduate!')
+elif capstone != 'finished' and units < 180:
+    print('Before you graduate, you need to finish your capstone project and take', 
+          180 - units, 'more units.')
+elif units >= 180:
+    print('Before you graduate, you need to finish your capstone project.')
+else:
+    print('Before you graduate, you need to take', 180 - units, 'more units.')"
+pre output,"Before you graduate, you need to finish your capstone project and take 57 more units."
+p,What if we use if instead of elif?
+pre input,"if capstone == 'finished' and units >= 180:
+    print('Looks like you are ready to graduate!')
+if capstone != 'finished' and units < 180:
+    print('Before you graduate, you need to finish your capstone project and take',
+          180 - units, 'more units.')
+if units >= 180:
+    print('Before you graduate, you need to finish your capstone project.')
+else:
+    print('Before you graduate, you need to take', 180 - units, 'more units.')"
+pre output,"Before you graduate, you need to finish your capstone project and take 57 more units.
+Before you graduate, you need to take 57 more units."
+pre input,">>> grade_converter(84)
+'B'
+
+>>> grade_converter(60)
+'D'"
+h3,Example: Percentage to letter grade
+p,"Below, complete the implementation of the function, grade_converter, which takes in a percentage grade (grade) and returns the corresponding letter grade, according to this table:"
+table,"[['Letter', 'Range'], ['A', '[90, 100]'], ['B', '[80, 90)'], ['C', '[70, 80)'], ['D', '[60, 70)'], ['F', '[0, 60)']]"
+p,Your function should work on these examples:
+p,
+pre input,"def grade_converter(grade):
+    ..."
+pre input,grade_converter(84)
+pre input,grade_converter(60)
+pre input,"def mystery(a, b):
+    if (a + b > 4) and (b > 0):
+        return 'bear'
+    elif (a * b >= 4) or (b < 0):
+        return 'triton'
+    else:
+        return 'bruin'"
+h3,Extra Practice
+p,Without running code:
+li,"What does mystery(2, 2) return?"
+li,Find inputs so that calling mystery will produce 'bruin'.
+pre input,"def mystery(a, b):
+    if (a + b > 4) and (b > 0):
+        return 'bear'
+    elif (a * b >= 4) or (b < 0):
+        return 'triton'
+    else:
+        return 'bruin'"
+pre input,
+pre input,
+h2,Iteration
+img,https://dsc-courses.github.io/dsc10-2024-sp/resources/lectures/lec10/images/iteration.png
+h3,for-loops
+pre input,"import time
+
+print('Launching in...')
+
+for x in [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]:
+    print('t-minus', x)
+    time.sleep(0.5) # Pauses for half a second.
+    
+print('Blast off! 🚀')"
+pre output,"Launching in...
+t-minus 10
+t-minus 9
+t-minus 8
+t-minus 7
+t-minus 6
+t-minus 5
+t-minus 4
+t-minus 3
+t-minus 2
+t-minus 1
+Blast off! 🚀"
+pre input,"for <element> in <sequence>:
+  <for body>"
+h3,for-loops
+li,Loops allow us to repeat the execution of code. There are two types of loops in Python; the for-loop is one of them.
+li,"The syntax of a for-loop is as follows:for <element> in <sequence>:
+  <for body>"
+li,"Like with if-statements, indentation matters!"
+h3,Example: Squares
+pre input,"num = 4
+print(num, 'squared is', num ** 2)
+
+num = 2
+print(num, 'squared is', num ** 2)
+
+num = 1
+print(num, 'squared is', num ** 2)
+
+num = 3
+print(num, 'squared is', num ** 2)"
+pre output,"4 squared is 16
+2 squared is 4
+1 squared is 1
+3 squared is 9"
+pre input,"# The loop variable can be anything!
+
+list_of_numbers = [4, 2, 1, 3]
+
+for num in list_of_numbers:
+    print(num, 'squared is', num ** 2)"
+pre output,"4 squared is 16
+2 squared is 4
+1 squared is 1
+3 squared is 9"
+p,"The line print(num, 'squared is', num ** 2) is run four times:"
+li,"On the first iteration, num is 4."
+li,"On the second iteration, num is 2."
+li,"On the third iteration, num is 1."
+li,"On the fourth iteration, num is 3."
+p,"This happens, even though there is no num = anywhere."
+pre input,"Revelle College
+John Muir College
+Thurgood Marshall College
+Earl Warren College
+Eleanor Roosevelt College
+Sixth College
+Seventh College
+Eighth College"
+h3,Activity
+p,"Using the array colleges, write a for-loop that prints:"
+p,
+pre input,"colleges = np.array(['Revelle', 'John Muir', 'Thurgood Marshall', 
+            'Earl Warren', 'Eleanor Roosevelt', 'Sixth', 'Seventh', 'Eighth'])"
+pre input,...
+pre output,Ellipsis
+h3,Ranges
+li,"Recall, each element of a list/array has a numerical position.
+The position of the first element is 0, the position of the second element is 1, etc."
+li,We can write a for-loop that accesses each element in an array by using its position.
+li,np.arange will come in handy.
+pre input,"actions = np.array(['ate', 'slept', 'ran'])
+feelings = np.array(['content 🙂', 'energized 😃', 'exhausted 😓'])"
+pre input,len(actions)
+pre output,3
+pre input,"for i in np.arange(len(actions)):
+    print(i)"
+pre output,"0
+1
+2"
+pre input,"for i in np.arange(len(actions)):
+    print('I', actions[i], 'and I felt', feelings[i])"
+pre output,"I ate and I felt content 🙂
+I slept and I felt energized 😃
+I ran and I felt exhausted 😓"
+h3,Example: Goldilocks and the Three Bears
+p,We don't have to use the loop variable!
+pre input,"for i in np.arange(3):
+    print('🐻')
+print('👧🏼')"
+pre output,"🐻
+🐻
+🐻
+👧🏼"
+h3,Randomization and iteration
+li,"In the next few lectures, we'll learn how to simulate random events, like flipping a coin."
+li,"Often, we will:
+Run an experiment, e.g. ""flip 10 coins.""
+Compute some statistic, e.g. ""number of heads,"" and write it down somewhere.
+Repeat steps 1 and 2 many, many times using a for-loop."
+img,https://dsc-courses.github.io/dsc10-2024-sp/resources/lectures/lec10/images/append.jpg
+pre input,"name_of_array = np.append(name_of_array, element_to_add)"
+h3,np.append
+li,"This function takes two inputs:
+An array.
+An element to add on to the end of the array."
+li,It returns a new array. It does not modify the input array.
+li,We typically use it like this to extend an array by one element:
+li,⚠️ Remember to store the result!
+pre input,some_array = np.array([])
+pre input,"np.append(some_array, 'hello')"
+pre output,"array(['hello'], dtype='<U32')"
+pre input,some_array
+pre output,"array([], dtype=float64)"
+pre input,"# Need to save the new array!
+some_array = np.append(some_array, 'hello')
+some_array"
+pre output,"array(['hello'], dtype='<U32')"
+pre input,"some_array = np.append(some_array, 'there')
+some_array"
+pre output,"array(['hello', 'there'], dtype='<U32')"
+h3,Example: Coin flipping
+p,The function flip(n) flips n fair coins and returns the number of heads it saw. (Don't worry about how it works for now.)
+pre input,"def flip(n):
+    '''Returns the number of heads in n simulated coin flips, using randomness.'''
+    return np.random.multinomial(n, [0.5, 0.5])[0]"
+pre input,"# Run this cell a few times – you'll see different results!
+flip(10)"
+pre output,6
+p,"Let's repeat the act of flipping 10 coins, 10000 times."
+li,"Each time, we'll use the flip function to flip 10 coins and compute the number of heads we saw."
+li,"We'll store these numbers in an array, heads_array."
+li,"Every time we use our flip function to flip 10 coins, we'll add an element to the end of heads_array."
+pre input,"# heads_array starts empty – before the simulation, we haven't flipped any coins!
+heads_array = np.array([])
+
+for i in np.arange(10000):
+    
+    # Flip 10 coins and count the number of heads.
+    num_heads = flip(10)
+    
+    # Add the number of heads seen to heads_array.
+    heads_array = np.append(heads_array, num_heads)"
+p,"Now, heads_array contains 10000 numbers, each corresponding to the number of heads in 10 simulated coin flips."
+pre input,heads_array
+pre output,"array([5., 7., 6., ..., 2., 5., 6.])"
+pre input,len(heads_array)
+pre output,10000
+pre input,"(bpd.DataFrame().assign(num_heads=heads_array)
+ .plot(kind='hist', density=True, bins=np.arange(0, 12), ec='w', legend=False, 
+       title = 'Distribution of the number of heads in 10 coin flips')
+);"
+img,"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAkkAAAG0CAYAAAAmZLNuAAAAOXRFWHRTb2Z0d2FyZQBNYXRwbG90bGliIHZlcnNpb24zLjUuMiwgaHR0cHM6Ly9tYXRwbG90bGliLm9yZy8qNh9FAAAACXBIWXMAAA9hAAAPYQGoP6dpAABIRUlEQVR4nO3deVyU9f7//+ewCiqLooKCCiqoFW6lhqbmkrmLLabWCc02zbS+bZ5z+qidk0ZW2nE51ScTPWaalktq4V6RubWIHncRy3JDGdAUBeb6/dGP+TjNBbIMDuTjfrt1S67rPe/rdb3nmuHJdb3nGothGIYAAADgwMPdBQAAAFREhCQAAAAThCQAAAAThCQAAAAThCQAAAAThCQAAAAThCQAAAAThCQAAAAThCQAAAAThKQy6tKliywWi9u2n5CQIIvFovT0dPuy9PR0WSwWJSQkuK0uyf1j4yqHDx/WPffco7CwMHl4eCgoKKhM/W3evFkWi0UTJ050SX03ArPjvLI7deqUhg8froiICHl6espischqtRb5GIvFoi5dulyX+lyhPI/1yjYWFcn1eg8q7L1z4sSJslgs2rx5s0P7ivicerm7gIrgj7/IfXx8FBAQoPr166t169a677771L17d3l4uD5TNmzYUJIq5Zt/QkKC5s2bp6NHj9r348/GZrMpPj5eBw8e1EMPPaTw8HBVqVKlyMekp6crMjJSDz/8sJKSkq5Poah0hg8fri+++EJDhgxR48aNZbFYrnls4frJzc3V7Nmz9eOPP+qHH37Q3r17lZubq//93//VyJEji3zsvHnzNGvWLO3du1eenp5q1aqVnnvuOfXt2/c6Ve9+pXnvrIgISVeZMGGCJCk/P19Wq1X//e9/NX/+fL3//vtq27atPvzwQzVu3NjhMfPnz9fFixfdUa4kacqUKXrppZdUr149t9VQGHePjSukpaVpz549evTRR/Xee++5uxz8SVy5ckXJycnq3r27PvzwQ3eXUynt27dP/v7+5db/b7/9pnHjxkmS6tSpo9DQUP3888/XfNxzzz2nN998U+Hh4Xr00Ud15coVLVq0SP369dOMGTP01FNPlVvNxdW2bVvt27dPISEh5baN0rx3lvdzWhqEpKuYnXo8deqUxowZoyVLlqh79+7auXOnw4FVv37961ihs7CwMIWFhbm1hsK4e2xc4ddff5Uk1a1b182V4M/k5MmTstlsHFdl0LRp03Lt39/fX2vWrFHLli0VFhamiRMnatKkSUU+ZsuWLXrzzTfVqFEj7dixQ8HBwZKk559/Xm3atLGfTXL3mXd/f/9yH7/SvHeWd02lwZyka6hTp44WLVqkLl266NixY5o8ebLDerN5N4Zh6IMPPtDtt9+uWrVqqUqVKqpbt666d++uRYsWSfq/a8LHjh3TsWPHZLFY7P9dPZeo4Brtr7/+quHDhyssLEyenp72yzjXmquxf/9+DRw4UDVq1FDVqlXVsWNHrV271qldYdeIJfM5ThaLRfPmzZMkRUZG2mu/+sVf2Jwkm82m2bNn67bbblO1atVUtWpV3XrrrZo9e7ZsNptT+4IxyMjI0GOPPaawsDD5+vrqpptu0pw5c0z3uyg7d+7UoEGDVLt2bfn6+qpBgwZ68skn7S/qq7fbuXNnSdKkSZPs+1jUdfyJEycqMjJS0u+n3K9+Xs0uvf3444/q06ePgoKC5O/vr06dOumbb74x7TsvL0+zZ89W+/btFRAQIH9/f7Vq1UozZ840HbfCFDwveXl5mjx5spo0aSJfX19FRETo+eef1+XLlx3aX2uOm9nzfPWch507d+ruu+9WUFCQgoKCdM8999j/Ij906JDuv/9+1apVS35+frrzzjuVmppaaO02m01vvfWWmjZtqipVqig8PFzPPPOMsrOzTdsfP35cTz31lKKiouTr66uaNWuqf//+2rFjh1Pbq18D8+fP12233aaqVasW+xdawWWFunXrysfHR3Xr1tVDDz2kgwcPOrRr2LChGjRoIMnxGCnJHMKSvhaSk5PVu3dvhYSEyNfXV40aNdLzzz9vOgdq06ZNeuyxx9S8eXMFBATIz89PN910kyZMmKBLly6Z9n/q1Ck98sgjqlOnjvz8/NSyZcsiLzUfPnxYI0eOVKNGjVSlShUFBwerWbNmevzxx3X27NlijYHZ/JWrn8OlS5eqbdu28vf3V40aNTR48GAdP368WH1Lv0+76NWrV4n+CP33v/8tSfr73/9uD0jS78/56NGjdfnyZX3wwQfF7i8/P1/vvPOOOnTooMDAQPn5+alx48YaOXKkDh065NDWarXqpZdeUnR0tH1M77rrLq1bt86p38LmJJX0vaEwpXnvLHhcUc/pvHnz1KpVK/n5+al27doaMWKETp486dSPK46vApxJKgYPDw/9/e9/1+bNm/Xhhx/qrbfeKrL9Sy+9pNdff12RkZG6//77FRgYqBMnTmjHjh1aunSpHnjgATVs2FATJkzQ9OnTJcl+WleSWrZs6dDf2bNndfvtt6t69eq69957ZRiGateufc26jx49qttvv10333yzHn/8cZ04cUKLFy9Wr169tHDhQg0ePLikQ2E3YcIELV++XLt27dLYsWPtE/KKM6l56NChWrx4serXr6+RI0fKYrFo2bJlGj16tL766it7kLya1WpVhw4d5OPjo3vvvVc5OTlaunSpRo4cKQ8PDw0fPrxYda9YsUL33XefLBaL7r33XtWvX187d+7UO++8oxUrViglJUVRUVH2fUxPT9e8efPUuXNn+4u3qImFXbp0kdVq1dtvv60WLVpo4MCB9nV/fF537typ119/XbfffrtGjhypn376SZ988om6deumH374Qc2aNbO3zc3NVb9+/ZScnKymTZtq6NChqlKlijZt2qQxY8Zo69atWrBgQbHGoMDQoUP19ddfq1evXgoICNCaNWv0xhtv6PTp0/YAXFY7duxQYmKiOnfurJEjR2r37t369NNPtWfPHi1btkwdO3ZU8+bN9Ze//MW+/927d1daWpqqVavm1N8zzzyjr776Svfff78GDBig5ORkTZ8+XV9//bVSUlIc5jx8//33uuuuu3Tu3Dn17NlTgwYNUkZGhpYvX66OHTtq2bJl6t27t9M23njjDa1fv179+vVT165drzmZWpK2bdumHj166MKFCxowYICaNWumffv26cMPP9SKFSu0bt06tWvXTtLvr/X09HSnY+SPx0dhSvpaeOWVVzRhwgTVrFlTffr0Ue3atZWamqo33nhDa9as0ZYtWxQYGGhvn5iYqP379ysuLk59+vTRpUuX9M033+iVV17Rpk2btHHjRnl5/d+vjrNnzyouLk5paWnq2LGjOnbsqBMnTujJJ59Ujx49nOr/9ddf1bZtW50/f169e/e278PRo0e1YMECjRkzRjVr1izWWBRm9uzZWrlypfr376/OnTtr27Zt+vjjj/Xjjz8qNTVVvr6+Zeq/MJs2bZIk3X333U7revXqpX/84x/2Ntdy5coV9enTR+vXr1dERISGDRum6tWrKz093f7aadKkiSQpMzNTcXFx2r9/v9q2bWs/1j/++GP17NlTM2fO1KhR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4HANX/r98kHBX3NXf0y5Zs2aOnPmjHJyclxee1ZWll555RWHZTt37tSHH36owMBAxcfH25cXzMOYO3euwxmDn3/+2amPq2svaFNcI0aMkCSNHz/e4W7cFy9etE/ifeSRR4rdX0kU3C/qo48+0tatWx3WTZ8+XWlpaerevXuZb4IZHBwsi8VSonEpipeXl8aMGaMTJ07o6aefNr1XzYkTJ7R3716XbO+PqlevrmbNmumbb75x2EZ+fr6effbZQu+dUx7efvtth4n1NptNzz//vGw2m8NfhwMGDFCjRo00a9YsrVmzxrSvb7/91iV3hO/QoYNiYmKUkpJiP7VfYOnSpfrqq68UHR3tNIH8enjmmWck/T5p+Y/3AZN+n3909Wuh4J5Qf/yYelpaml588UWnx3t7e2vYsGE6f/6809yvgveaP9q+fbvpWYGCZZXxqysKPPHEE5KkV1991SGwpKena9asWfL19S3WWQxPT0+NGjVKly5d0qhRo3TlyhWH9QVzyaTfP9gzbNgwXbhwwemDOkeOHNG//vUveXt766GHHirr7rnVf/7zH/v8vwITJ05UVlaWhgwZYp/c7urji8ttVyl4kdtsNvvXkqSkpOjKlSv2ryW51qfTLl26pO7du6thw4Zq166dGjRooJycHK1bt0779u1T37591bx5c3v7bt26aceOHerVq5fuuOMO+fj4qEWLFurXr1+Z96dTp056//33tW3bNnXo0MF+nySbzaZ3333X4bJW27Zt1aVLF23evFlt27ZV165dderUKX322Wfq2bOn6S/8bt26aerUqXr00Ud1zz33qFq1agoKCirymu/QoUO1YsUKffzxx7rppps0cOBAWSwWLV++XEePHtX9999v+okYV6hWrZo++OAD3XfffercubPuu+8+1a9fX999953Wrl2r0NBQvfvuuy7ZTrt27fTVV1/pwQcfVJMmTeTp6an+/fsrNja2VH2+/PLL2rVrl9555x199tln6tq1q+rVq6fTp0/r0KFD+uabb/Tqq686HFuu9OKLLyohIUEdOnTQfffdZ79HU25urlq0aKFdu3aVy3b/qGPHjmrZsqUGDx6swMBAJScna9euXWrTpo1eeOEFeztvb299+umn6tmzp/r06aO4uDi1bNlS/v7++vnnn7Vjxw6lpaXpxIkTZf4ahIIbq/bo0UODBw/WgAED1LRpUx04cEDLly9X9erVNX/+/HL57sdr6datm1577TWNHz9eTZo0Ue/evRUZGakLFy7o2LFj+vLLL9WxY0f7mY9+/fqpcePGmjZtmvbs2aNWrVrpp59+0qpVq9SnTx/99NNPTtuYPHmyNmzYoOnTp2vnzp32+yQtXrxYvXv31sqVKx3aL1y4ULNmzVLnzp3VuHFjBQcH68iRI/rss8/k6+ursWPHXpexKY7XXnvN/oGIgk9czp07137WuWPHjg7f4xYXF6dnn31Wb731lmJjY3XvvffqypUrWrx4sc6dO6cZM2YU++akEyZM0LZt27R8+XJFR0erT58+ql69un7++WetXbtWU6dOtd+A9LXXXtPXX3+tmTNnaseOHbrzzjvt90k6f/68Zs6cec1pIhVd79691aFDB91///0KCwtTSkqKUlJS1LBhQ/sno6VyOL5KdMOAPyn9//ceKfjPx8fHqFmzptG6dWtj5MiRxueff+5wj5Or/fEeMVeuXDESExONu+++24iIiDB8fX2NkJAQo127dsa///1v4/Llyw6Pv3DhgvHEE08Y9erVMzw9PZ3unSKT+0Zcraj7JD388MPGvn37jP79+xtBQUGGn5+fERcXZ3zxxRemfVmtVuOxxx4zatWqZfj4+Bg33XST8e677xZ5T5c333zTaNq0qeHj42NIcrjnk9n9cwzj9/vKzJo1y2jTpo3h5+dn+Pn5Ga1btzZmzpxpOs5FjcG17tVkZvv27cbAgQONkJAQw9vb24iIiDCeeOIJ45dffnFqW5r7JBmGYRw6dMjo27evUaNGDcNisRiSjLlz5xarz8LunWWz2Yz58+cbXbt2NYKDgw1vb2+jbt26RocOHYxXX33V+Omnn4pVW2HPi2H8371zCmq92gcffGA0b97c8PHxMerUqWM89thjRkZGRpH3STLbx2vdI8js+S54no8cOWK88cYbRkxMjOHr62vUrVvXGDt2rMM9v6526tQp48UXXzRuuukmw8/Pz6hatarRuHFj45577jH+85//ONx7rKh7hRXH/v37jQcffNAIDQ01vLy8jNDQUGPYsGHG/v37SzwGhSnta+Hrr7827rvvPiMsLMzw9vY2QkJCjBYtWhjPPPOMsWPHDoe2P/30kzF06FCjbt26RpUqVYzmzZsbiYmJRm5ubqHbP3HihDF8+HAjJCTEqFKlitGiRQtj7ty5psfB1q1bjSeeeMKIjY01goODjSpVqhiNGjUyEhISjN27d5dpLEpzv7eiFBzbhf1XWF9JSUnGrbfeavj7+xvVqlUzOnXqZHz22WfF3m6B3NxcY8aMGcZtt91mVK1a1fD39zcaN25sPProo8ahQ4cc2mZmZhovvPCC0bhxY8PHx8cIDAw0unfvbiQnJzv1e637JJkp6r3BjKvvk7Rp0yYjKSnJaNGihVGlShUjJCTESEhIcLpvk6uOrwKW/78wAACACqXgO/M2bdpUpjt2lxZzkgAAAEwQkgAAAEwQkgAAAEwwJwkAAMAEZ5IAAABMEJIAAABMEJIAAABMEJIAAABM8LUk15CZmVnot5+XRa1atezfvYPSYxxdg3F0DcbRNRhH17hRx9HLy8v+xdxl7sslvfyJ5eXlufyb1y0Wi71vPlxYeoyjazCOrsE4ugbj6BqMo2twuQ0AAMAEIQkAAMAEIQkAAMAEIQkAAMAEIQkAAMAEIQkAAMBEhbgFQHJyslauXCmr1arw8HAlJCSoWbNmpm23bdumtWvXKj09XXl5eQoPD9d9992nli1b2tts3rxZs2fPdnrsggUL5OPjU167AQAA/kTcHpK2bNmipKQkjRw5UjExMVq/fr0mT56sadOmKSQkxKn9vn37FBsbqyFDhqhq1aratGmTEhMTNXnyZEVGRtrb+fn56e2333Z4LAEJAAAUl9tD0qpVq9S1a1d169ZNkpSQkKBdu3Zp7dq1Gjp0qFP7hIQEh5+HDh2qnTt36rvvvnMISRaLRUFBQeVZOgAA+BNza0jKy8tTWlqaBg4c6LA8NjZWBw4cKFYfNptNly5dUrVq1RyW5+TkaNSoUbLZbGrYsKEGDx7sEKL+KDc31+HO2haLRX5+fvZ/u1JBf67u90bDOLoG4+gajKNrMI6uwTi6hltDUnZ2tmw2mwIDAx2WBwYGymq1FquPVatW6fLly7r99tvty+rWratRo0apfv36unTpktasWaOXX35ZU6dOVVhYmGk/y5Yt09KlS+0/R0ZGKjExUbVq1Sr5jhVTaGhoufV9I2EcXYNxdA3G0TUYR9dgHMvG7ZfbJPOkW5z0m5KSoiVLluj55593CFrR0dGKjo62/xwTE6MXX3xRn3/+uUaMGGHaV3x8vPr27eu0/TNnzrj8C24tFotCQ0N18uRJvlOnDBhH12AcXYNxdA3G0TVu5HH08vJy2QkOt4akgIAAeXh4OJ01ysrKcjq79EdbtmzRO++8o2effVaxsbFFtvXw8FCjRo108uTJQtt4e3vL29vbdF15HWCGYdxwB295YBxdg3F0DcbRNRhH12Acy8at90ny8vJSVFSUUlNTHZanpqYqJiam0MelpKRo1qxZevrpp9W6detrbscwDB07doyJ3AAAoNjcfrmtb9++mjFjhqKiohQdHa3169crIyNDPXr0kCQtXLhQ586d01NPPSXp/wJSQkKCoqOj7WehfHx85O/vL0lasmSJmjRporCwMPucpPT0dD3yyCNu2UcAZRfkIVlyLrq7jCJYlJ951t1FAHAht4ekuLg4nT9/Xp988okyMzMVERGh8ePH268nZmZmKiMjw95+/fr1ys/P15w5czRnzhz78s6dO2v06NGSpN9++03vvfeerFar/P39FRkZqUmTJqlx48bXd+cAuIwl56IyRj/g7jKKFPruUsnT191lAHARi8HFyiKdOXPG4dYArmCxWBQWFqYTJ05wrbgMGEfXqCzjGHylcoSkDE/fCj2OFV1lOR4ruht5HL29vV02cZvvbgMAADBBSAIAADBBSAIAADBBSAIAADBBSAIAADBBSAIAADBBSAIAADBBSAIAADBBSAIAADBBSAIAADBBSAIAADBBSAIAADBBSAIAADBBSAIAADBBSAIAADBBSAIAADBBSAIAADBBSAIAADBBSAIAADBBSAIAADBBSAIAADBBSAIAADBBSAIAADBBSAIAADBBSAIAADBBSAIAADBBSAIAADBBSAIAADBBSAIAADBBSAIAADBBSAIAADBBSAIAADBBSAIAADBBSAIAADBBSAIAADBBSAIAADBBSAIAADBBSAIAADBBSAIAADBBSAIAADBBSAIAADBBSAIAADBBSAIAADBBSAIAADBBSAIAADBBSAIAADBBSAIAADDh5e4CAOBPw9NLQZcvSjLcXUmhjCr+strcXQVQORCSAMBFjMuXlDF6iLvLKFLIrEWSj7+7ywAqBS63AQAAmCAkAQAAmCAkAQAAmCAkAQAAmCAkAQAAmCAkAQAAmCAkAQAAmCAkAQAAmCAkAQAAmCAkAQAAmCAkAQAAmKgQ392WnJyslStXymq1Kjw8XAkJCWrWrJlp223btmnt2rVKT09XXl6ewsPDdd9996lly5YO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bNigjRs36vjx40pKSlJGRoZ69OghSVq4cKFmzpxpb3/XXXcpIyPDfp+kjRs3auPGjerXr5+9zZIlS/Tjjz/q1KlTSk9P17///W+lp6c73EsJAACgKG6fkxQXF6fz58/rk08+UWZmpiIiIjR+/Hj79cTMzExlZGTY29euXVvjx4/XvHnzlJycrODgYA0fPtzhHkm//fab3nvvPVmtVvn7+ysyMlKTJk1S48aNr/v+AQCAysntIUmSevbsqZ49e5quGz16tNOy5s2bKzExsdD+EhISlJCQ4KryAADADcjtl9sAAAAqIkISAACAiQpxuQ0AADtPLwVdvqiKfPsMo4q/rDZ3V4HyRkhCpZafebbCv5lyuhYoGePyJWWMHuLuMooUMmuR5OPv7jJQzghJqNRsv51XxujB7i6jSLVnfuTuEgAApcAfuQAAACYISQAAACYISQAAACYISQAAACYISQAAACYISQAAACYISQAAACYISQAAACYISQAAACYISQAAACYISQAAACYISQAAACYISQAAACYISQAAACYISQAAACYISQAAACYISQAAACYISQAAACYISQAAACYISQAAACYISQAAACYISQAAACYISQAAACYISQAAACYISQAAACYISQAAACYISQAAACYISQAAACYISQAAACYISQAAACYISQAAACYISQAAACYISQAAACYISQAAACYISQAAACYISQAAACYISQAAACYISQAAACYISQAAACYISQAAACYISQAAACYISQAAACYISQAAACYISQAAACa83F0AKq4gD8mSc9HdZRTBIsPi7hoAAH9WhCQUypJzURmjH3B3GUWqM+sjd5cAAPiTIiQBAFBCnj6+Cr5Ssc+052eedXcRlR4hCQCAEjIu5yjjqSHuLqNIoe8ulTx93V1GpcbEbQAAABOEJAAAABOEJAAAABOEJAAAABOEJAAAABOEJAAAABOEJAAAABMV4j5JycnJWrlypaxWq8LDw5WQkKBmzZoV2n7v3r2aN2+ejh8/ruDgYPXv31933XWXQ5utW7dq8eLFOnXqlOrUqaMhQ4aobdu25b0rAADgT8LtZ5K2bNmipKQkDRo0SImJiWrWrJkmT56sjIwM0/anT5/WlClT1KxZMyUmJio+Pl5z587V1q1b7W0OHjyo6dOnq1OnTpo6dao6deqkadOm6dChQ9drtwAAQCXn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
+"
+img,https://dsc-courses.github.io/dsc10-2024-sp/resources/lectures/lec10/images/accumulate.jpg
+h3,The accumulator pattern
+li,"To store our results, we'll typically use an int or an array."
+li,"If using an int, we define an int variable (usually to 0) before the loop, then use + to add to it inside the loop.
+Think of this like using a tally."
+li,"If using an array, we create an array (usually empty) before the loop, then use np.append to add to it inside the loop.
+Think of this like writing the results on a piece of paper."
+li,This pattern – of repeatedly adding to an int or an array – is called the accumulator pattern.
+h3,for-loops in DSC 10
+li,Almost every for-loop in DSC 10 will use the accumulator pattern.
+li,"Do not use for-loops to perform mathematical operations on every element of an array or Series.
+
+Instead use DataFrame manipulations and built-in array or Series methods."
+li,Helpful video 🎥: For Loops (and when not to use them) in DSC 10.
+p,Helpful video 🎥: For Loops (and when not to use them) in DSC 10.
+h3,Working with strings
+p,"String are sequences, so we can iterate over them, too!"
+pre input,"for letter in 'uc san diego':
+    print(letter.upper())"
+pre output,"U
+C
+ 
+S
+A
+N
+ 
+D
+I
+E
+G
+O"
+pre input,'california'.count('a')
+pre output,2
+pre input,">>> vowel_count('king triton')
+3
+
+>>> vowel_count('i go to uc san diego')
+8"
+h3,Example: Vowel count
+p,"Below, complete the implementation of the function vowel_count, which returns the number of vowels in the input string s (including repeats). Example behavior is shown below."
+pre input,"def vowel_count(s):
+    # We need to keep track of the number of vowels seen so far. Before we start, we've seen zero vowels.
+    number = 0
+    
+    # For each of the 5 vowels:
+       
+        # Count the number of occurrences of this vowel in s.
+        
+        # Add this count to the variable number.
+    
+    # Once we've gotten through all 5 vowels, return the answer."
+pre input,vowel_count('king triton')
+pre input,vowel_count('i go to uc san diego')
+h2,"Summary, next time"
+h3,Summary
+li,if-statements allow us to run pieces of code depending on whether certain conditions are True.
+li,"for-loops are used to repeat the execution of code for every element of a sequence.
+Lists, arrays, and strings are examples of sequences."
+h3,Next time
+li,Probability.
+li,A math lesson – no code!

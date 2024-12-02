@@ -1,0 +1,343 @@
+tag,content
+h1,"Lecture 3 – Strings, Lists, and Arrays"
+h2,"DSC 10, Spring 2024"
+h3,Announcements
+li,Lab 0 is due tomorrow at 11:59PM.
+li,"Lab 1 is due Tuesday at 11:59PM. 
+Work ahead so assignments don't pile up!"
+li,The solutions to the pretest are now posted. See how you did and watch the 🎥 video at the end to learn more about important test-taking skills.
+li,"The first quiz is Friday of next week. There is no course meeting this afternoon!
+Fill out the Welcome Survey with your time preferences. We'll let you know your assigned time by Monday."
+h3,Resources 🤝
+li,"We're covering a lot of content very quickly. If you're overwhelmed, just know that we're here to support you! 
+Ed and office hours are your friends!"
+li,Check the Resources tab of the course website for programming resources.
+h3,Agenda
+li,Data types.
+li,Strings. 🧶
+li,Means and medians.
+li,Lists.
+li,Arrays.
+h2,Data types
+h3,int and float
+li,Every value in Python has a type.
+li,Use the type function to check a value's type.
+li,"There are two numeric data types:
+int: An integer of any size.
+float: A number with a decimal point."
+pre input,"# int.
+6 + 4"
+pre output,10
+pre input,"# float.
+20 / 2"
+pre output,10.0
+h3,int
+li,"If you add (+), subtract (-), multiply (*), or exponentiate (**) ints, the result will be another int."
+li,"ints have arbitrary precision in Python, meaning that your calculations will always be exact."
+pre input,7 - 15
+pre output,-8
+pre input,type(7 - 15)
+pre output,int
+pre input,2 ** 300
+pre output,2037035976334486086268445688409378161051468393665936250636140449354381299763336706183397376
+pre input,2 ** 3000
+pre output,1230231922161117176931558813276752514640713895736833715766118029160058800614672948775360067838593459582429649254051804908512884180898236823585082482065348331234959350355845017413023320111360666922624728239756880416434478315693675013413090757208690376793296658810662941824493488451726505303712916005346747908623702673480919353936813105736620402352744776903840477883651100322409301983488363802930540482487909763484098253940728685132044408863734754271212592471778643949486688511721051561970432780747454823776808464180697103083861812184348565522740195796682622205511845512080552010310050255801589349645928001133745474220715013683413907542779063759833876101354235184245096670042160720629411581502371248008430447184842098610320580417992206662247328722122088513643683907670360209162653670641130936997002170500675501374723998766005827579300723253474890612250135171889174899079911291512399773872178519018229989376
+h3,float
+li,A float is specified using a decimal point.
+li,A float might be printed using scientific notation.
+pre input,3.2 + 2.5
+pre output,5.7
+pre input,type(3.2 + 2.5)
+pre output,float
+pre input,"# The result is in scientific notation: e+90 means ""times 10^90"".
+2.0 ** 300"
+pre output,2.037035976334486e+90
+h3,The pitfalls of float
+li,"floats have limited precision; after arithmetic, the final few decimal places can be wrong in unexpected ways."
+li,"floats have limited size, though the limit is huge."
+pre input,1 + 0.2
+pre output,1.2
+pre input,1 + 0.1 + 0.1
+pre output,1.2000000000000002
+pre input,2.0 ** 3000
+pre output,"---------------------------------------------------------------------------
+OverflowError                             Traceback (most recent call last)
+/var/folders/28/vs8cp38n1r1520g8bhzr4v5h0000gn/T/ipykernel_6609/1310821553.py in <module>
+----> 1 2.0 ** 3000
+
+OverflowError: (34, 'Result too large')"
+h3,Converting between int and float
+li,"If you mix ints and floats in an expression, the result will always be a float.
+Note that when you divide two ints, you get a float back."
+li,A value can be explicity coerced (i.e. converted) using the int and float functions.
+pre input,2.0 + 3
+pre output,5.0
+pre input,12 / 2
+pre output,6.0
+pre input,"# Want an integer back.
+int(12 / 2)"
+pre output,6
+pre input,"# int chops off the decimal point!
+int(-2.9)"
+pre output,-2
+h2,Strings 🧶
+h3,Strings 🧶
+li,A string is a snippet of text of any length.
+li,"In Python, strings are enclosed by either single quotes or double quotes (doesn't matter which!)"
+pre input,'woof'
+pre output,'woof'
+pre input,type('woof')
+pre output,str
+pre input,"""woof"""
+pre output,'woof'
+pre input,"# A string, not an int!
+""1998"""
+pre output,'1998'
+h3,String arithmetic
+p,"When using the + symbol between two strings, the operation is called ""concatenation""."
+pre input,"s1 = 'baby'
+s2 = '🐼'"
+pre input,s1 + s2
+pre output,'baby🐼'
+pre input,s1 + ' ' + s2
+pre output,'baby 🐼'
+pre input,s2 * 3
+pre output,'🐼🐼🐼'
+h3,String methods
+li,"Associated with strings are special functions, called string methods."
+li,"Access string methods with a . after the string (""dot notation"").    
+For instance, to use the upper method on string s, we write s.upper()."
+li,"Examples include upper, title, and replace, but there are many more."
+pre input,my_cool_string = 'data science is super cool!'
+pre input,my_cool_string.title()
+pre output,'Data Science Is Super Cool!'
+pre input,my_cool_string.upper()
+pre output,'DATA SCIENCE IS SUPER COOL!'
+pre input,"my_cool_string.replace('super cool', '💯' * 3)"
+pre output,'data science is 💯💯💯!'
+pre input,"# len is not a method, since it doesn't use dot notation.
+len(my_cool_string)"
+pre output,27
+h3,Type conversion to and from strings
+li,Any value can be converted to a string using str.
+li,Some strings can be converted to int and float.
+pre input,str(3)
+pre output,'3'
+pre input,float('3')
+pre output,3.0
+pre input,int('4')
+pre output,4
+pre input,int('baby panda')
+pre output,"---------------------------------------------------------------------------
+ValueError                                Traceback (most recent call last)
+/var/folders/28/vs8cp38n1r1520g8bhzr4v5h0000gn/T/ipykernel_6609/455936715.py in <module>
+----> 1 int('baby panda')
+
+ValueError: invalid literal for int() with base 10: 'baby panda'"
+pre input,int('4.3')
+pre output,"---------------------------------------------------------------------------
+ValueError                                Traceback (most recent call last)
+/var/folders/28/vs8cp38n1r1520g8bhzr4v5h0000gn/T/ipykernel_6609/756068685.py in <module>
+----> 1 int('4.3')
+
+ValueError: invalid literal for int() with base 10: '4.3'"
+pre input,"x = 3
+y = '4'
+z = '5.6'"
+h3,Concept Check ✅ – Answer at cc.dsc10.com
+p,Assume you have run the following statements:
+p,Choose the expression that will be evaluated without an error.
+p,A. x + y
+p,B. x + int(y + z)
+p,C. str(x) + int(y)
+p,D. str(x) + z
+p,E. All of them have errors
+h2,Means and medians
+h3,Describing numerical data
+li,"We now know how to store individual numbers (as ints or floats) and pieces of text (as strings). But we often we'll work with sequences, or ordered collections, of several data values."
+li,"For any collection of numbers, say temperatures, it can be helpful to summarize the data by its mean (i.e. average) or median."
+li,"Both mean and median are measures of central tendency – that is, they tell us roughly where the ""center"" of the data falls."
+h3,The mean (i.e. average)
+p,The mean is a one-number summary of a collection of numbers.
+p,"For example, the mean of $1$, $4$, $7$, and $12$ is $\frac{1 + 4 + 7 + 12}{4} = 6$."
+p,Observe that the mean:
+li,Doesn't have to be equal to one of the data points.
+li,"Doesn't have to be an integer, even if all of the data points are integers."
+li,"Is somewhere between the min and max, but not necessarily halfway between."
+li,Has the same units as the data.
+h3,The median
+p,"Like the mean, the median is a one-number summary of a collection of numbers."
+li,"To calculate it, sort the data points and pick the number in the middle.
+If there are two middle numbers, we usually pick the number halfway between (i.e. the mean of the middle two)."
+li,"Example: 
+$\text{Median}(1, 4, 7, 12, 32) = 7$
+$\text{Median}(1, 4, 7, 12) = 5.5$"
+h3,Mean vs. median
+li,"The mean and median of a dataset can be the same, but they don't need to be. They measure the center of a dataset in two different ways."
+li,"Two different datasets can have the same mean without having the same median, and vice versa."
+h3,Activity
+li,Find two different datasets that have the same mean and different medians.
+p,Find two different datasets that have the same mean and different medians.
+li,Find two different datasets that have the same median and different means.
+p,Find two different datasets that have the same median and different means.
+li,Find two different datasets that have the same median and the same mean.
+p,Find two different datasets that have the same median and the same mean.
+p,Means and medians are just summaries; they don't tell the whole story about a dataset!
+img,https://dsc-courses.github.io/dsc10-2024-sp/resources/lectures/lec03/images/histograms.png
+p,"In a few weeks, we'll learn about how to visualize the distribution of a collection of numbers using a histogram."
+p,These two distributions have different means but the same median!
+h2,Lists
+h3,Average temperature for a week
+p,How would we store the temperatures for a week to compute the average temperature?
+p,Our best solution right now is to create a separate variable for each day of the week.
+pre input,"temp_sunday = 68
+temp_monday = 73
+temp_tuesday = 70
+temp_wednesday = 74
+temp_thursday = 76
+temp_friday = 72
+temp_saturday = 74"
+p,This technically allows us to do things like compute the average temperature:
+pre input,"avg_temperature = 1/7 * (
+    temp_sunday
+    + temp_monday
+    + temp_tuesday
+    + ...)"
+p,"Imagine a whole month's data, or a whole year's data. It seems like we need a better solution."
+h3,Lists in Python
+p,"In Python, a list is used to store multiple values within a single value. To create a new list from scratch, we use [square brackets]."
+pre input,"temperature_list = [68, 73, 70, 74, 76, 72, 74]"
+pre input,len(temperature_list)
+pre output,7
+p,Notice that the elements in a list don't need to be unique!
+h3,Lists make working with sequences easy!
+p,"To find the average temperature, we just need to divide the sum of the temperatures by the number of temperatures recorded:"
+pre input,temperature_list
+pre output,"[68, 73, 70, 74, 76, 72, 74]"
+pre input,sum(temperature_list) / len(temperature_list)
+pre output,72.42857142857143
+h3,Types
+p,The type of a list is... list.
+pre input,temperature_list
+pre output,"[68, 73, 70, 74, 76, 72, 74]"
+pre input,type(temperature_list)
+pre output,list
+p,"Within a list, you can store elements of different types."
+pre input,"mixed_list = [-2, 2.5, 'ucsd', [1, 3]]
+mixed_list"
+pre output,"[-2, 2.5, 'ucsd', [1, 3]]"
+h3,There's a problem...
+li,Lists are very slow.
+li,"This is not a big deal when there aren't many entries, but it's a big problem when there are millions or billions of entries."
+h2,Arrays
+h3,NumPy
+img,https://dsc-courses.github.io/dsc10-2024-sp/resources/lectures/lec03/images/numpy.png
+li,"NumPy (pronounced ""num pie"") is a Python library (module) that provides support for arrays and operations on them."
+p,"NumPy (pronounced ""num pie"") is a Python library (module) that provides support for arrays and operations on them."
+li,"The babypandas library, which you will learn about soon, goes hand-in-hand with NumPy.
+
+NumPy is used heavily in the real world."
+li,"To use numpy, we need to import it. It's usually imported as np (but doesn't have to be!)"
+p,"To use numpy, we need to import it. It's usually imported as np (but doesn't have to be!)"
+pre input,import numpy as np
+h3,Arrays
+p,"Think of NumPy arrays (just ""arrays"" from now on) as fancy, faster lists."
+img,https://dsc-courses.github.io/dsc10-2024-sp/resources/lectures/lec03/images/fast-slow.jpg
+p,"To create an array, we pass a list as input to the np.array function."
+pre input,"np.array([4, 9, 1, 2])"
+pre output,"array([4, 9, 1, 2])"
+img,https://dsc-courses.github.io/dsc10-2024-sp/resources/lectures/lec03/images/brackets.png
+pre input,"temperature_array = np.array([68, 73, 70, 74, 76, 72, 74])
+temperature_array"
+pre output,"array([68, 73, 70, 74, 76, 72, 74])"
+pre input,temperature_list
+pre output,"[68, 73, 70, 74, 76, 72, 74]"
+pre input,"# No square brackets, because temperature_list is already a list!
+np.array(temperature_list)"
+pre output,"array([68, 73, 70, 74, 76, 72, 74])"
+h3,Positions
+p,"When people wait in line, each person has a position."
+img,https://dsc-courses.github.io/dsc10-2024-sp/resources/lectures/lec03/images/waiting-room.jpg
+p,"Similarly, each element of an array (and list) has a position."
+h3,Accessing elements by position
+li,"Python, like most programming languages, is ""0-indexed."" 
+This means that the position of the first element in an array is 0, not 1. 
+One interpretation is that an element's position represents the number of elements in front of it."
+li,"To access the element in array arr_name at position pos, we use the syntax arr_name[pos]."
+pre input,temperature_array
+pre output,"array([68, 73, 70, 74, 76, 72, 74])"
+pre input,temperature_array[0]
+pre output,68
+pre input,temperature_array[1]
+pre output,73
+pre input,temperature_array[3]
+pre output,74
+pre input,"# Access the last element.
+temperature_array[6]"
+pre output,74
+pre input,"# Doesn't work!
+temperature_array[7]"
+pre output,"---------------------------------------------------------------------------
+IndexError                                Traceback (most recent call last)
+/var/folders/28/vs8cp38n1r1520g8bhzr4v5h0000gn/T/ipykernel_6609/3291506737.py in <module>
+      1 # Doesn't work!
+----> 2 temperature_array[7]
+
+IndexError: index 7 is out of bounds for axis 0 with size 7"
+pre input,"# If a position is negative, count from the end!
+temperature_array[-1]"
+pre output,74
+h3,Types
+p,"Earlier in the lecture, we saw that lists can store elements of multiple types."
+pre input,"nums_and_strings_lst = ['uc', 'sd', 1961, 3.14]
+nums_and_strings_lst"
+pre output,"['uc', 'sd', 1961, 3.14]"
+p,This is not true of arrays – all elements in an array must be of the same type.
+pre input,"# All elements are converted to strings!
+np.array(nums_and_strings_lst)"
+pre output,"array(['uc', 'sd', '1961', '3.14'], dtype='<U32')"
+h3,Array-number arithmetic
+p,"Arrays make it easy to perform the same operation to every element. This behavior is formally known as ""broadcasting""."
+img,https://dsc-courses.github.io/dsc10-2024-sp/resources/lectures/lec03/images/broadcasting.jpg
+pre input,temperature_array
+pre output,"array([68, 73, 70, 74, 76, 72, 74])"
+pre input,"# Increase all temperatures by 3 degrees.
+temperature_array + 3"
+pre output,"array([71, 76, 73, 77, 79, 75, 77])"
+pre input,"# Halve all temperatures.
+temperature_array / 2"
+pre output,"array([34. , 36.5, 35. , 37. , 38. , 36. , 37. ])"
+pre input,"# Convert all temperatures to Celsius.
+(5 / 9) * (temperature_array - 32)"
+pre output,"array([20.        , 22.77777778, 21.11111111, 23.33333333, 24.44444444,
+       22.22222222, 23.33333333])"
+p,Note: In none of the above cells did we actually modify temperature_array! Each of those expressions created a new array.
+pre input,temperature_array
+pre output,"array([68, 73, 70, 74, 76, 72, 74])"
+p,"To actually change temperature_array, we need to reassign it to a new array."
+pre input,temperature_array = (5 / 9) * (temperature_array - 32)
+pre input,"# Now in Celsius!
+temperature_array"
+pre output,"array([20.        , 22.77777778, 21.11111111, 23.33333333, 24.44444444,
+       22.22222222, 23.33333333])"
+h3,Element-wise arithmetic
+li,"We can apply arithmetic operations to multiple arrays, provided they have the same length."
+li,"The result is computed element-wise, which means that the arithmetic operation is applied to one pair of elements from each array at a time."
+img,https://dsc-courses.github.io/dsc10-2024-sp/resources/lectures/lec03/images/elementwise.jpg
+pre input,"a = np.array([4, 5, -1])
+b = np.array([2, 3, 2])"
+pre input,a + b
+pre output,"array([6, 8, 1])"
+pre input,a / b
+pre output,"array([ 2.        ,  1.66666667, -0.5       ])"
+pre input,a ** 2 + b ** 2
+pre output,"array([20, 34,  5])"
+h2,"Summary, next time"
+h3,Summary
+li,Strings are used to store text. Enclose them in single or double quotes.
+li,"Lists and arrays are used to store sequences.
+Arrays are faster and more convenient for numerical operations.
+Access elements by position, starting at position 0."
+li,Remember to refer to the resources from the start of lecture!
+h3,Next time
+p,We'll learn more about arrays and we'll see how to use Python to work with real-world tabular data.

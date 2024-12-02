@@ -1,0 +1,129 @@
+tag,content
+pre input,"import numpy as np
+import babypandas as bpd
+import pandas as pd"
+h1,"Lecture 28 – Review, Conclusion"
+h2,"DSC 10, Spring 2024"
+h3,Announcements
+li,"The Final Exam is tomorrow, June 8th, from 7-10PM in Solis 104 and Solis 107. See this post on Ed for more details.
+Check your email for an assigned seat."
+li,"If at least 75% of the class fills out both SETs and the internal End-of-Quarter Survey by tomorrow at 8AM, then the entire class will have 1% of extra credit added to their overall grade."
+h3,Agenda
+li,More review of old exam problems.
+li,Working on personal projects.
+li,Demo: Gapminder 🌎.
+li,Some parting thoughts.
+h2,More review
+h3,Selected problems
+p,We're going to work on as many of the following problems as we can in class. There's a PDF template linked on the course website that you can write on; we'll post annotated slides after class.
+li,"Winter 2023 Final Exam, Problem 16 (CLT and hypothesis testing)."
+li,"Winter 2024 Final Exam, Problem 9 (merge)."
+li,"Winter 2024 Final Exam, Problem 11 (TVD)."
+h2,Personal projects
+h3,Using Jupyter Notebooks after DSC 10
+li,You may be interested in working on data science projects of your own.
+li,"In this video, we show you how to make blank notebooks and upload datasets of your own to DataHub."
+li,"After this quarter, depending on the classes you're enrolled in, you may not have access to DataHub. Eventually, you'll want to install Jupyter Notebooks on your computer.
+Anaconda is a great way to do that, as it also installs many commonly used packages.
+You may want to download your work from DataHub so you can refer to it after the course ends (though you can look at it on Gradescope too).
+Remember, all babypandas code is regular pandas code, too!"
+h3,Finding data
+p,These sites allow you to search for datasets (in CSV format) from a variety of different domains. Some may require you to sign up for an account; these are generally reputable sources.
+p,Note that all of these links are also available at rampure.org/find-datasets.
+li,Data is Plural
+li,FiveThirtyEight.
+li,CORGIS.
+li,Kaggle Datasets.
+li,Google’s dataset search.
+li,DataHub.io.
+li,Data.world.
+li,R datasets.
+li,Wikipedia. (Use this site to extract and download tables as CSVs.)
+li,Awesome Public Datasets GitHub repo.
+li,Links to even more sources.
+h3,Domain-specific sources of data
+li,"Sports: Basketball Reference, Baseball Reference, etc."
+li,"US Government Sources: census.gov, data.gov, data.ca.gov, data.sfgov.org, FBI’s Crime Data Explorer, Centers for Disease Control and Prevention."
+li,"Global Development: data.worldbank.org, databank.worldbank.org, WHO."
+li,"Transportation: New York Taxi trips, Bureau of Transportation Statistics, SFO Air Traffic Statistics."
+li,Music: Spotify Charts.
+li,COVID: Johns Hopkins.
+li,"Any Google Forms survey you’ve administered! (Go to the results spreadsheet, then go to “File > Download > Comma-separated values”.)"
+p,"Tip: if a site only allows you to download a file as an Excel file, not a CSV file, you can download it, open it in a spreadsheet viewer (Excel, Numbers, Google Sheets), and export it to a CSV."
+h2,Demo: Gapminder 🌎
+h3,plotly
+li,"All of the visualizations (scatter plots, histograms, etc.) in this course were created using a library called matplotlib.
+This library was called under-the-hood everytime we wrote df.plot."
+li,plotly is a different visualization library that allows us to create interactive visualizations.
+li,"You may learn about it in a future course, but we'll briefly show you some cool visualizations you can make with it."
+pre input,import plotly.express as px
+h3,Gapminder dataset
+p,"Gapminder Foundation is a non-profit venture registered in Stockholm, Sweden, that promotes sustainable global development and achievement of the United Nations Millennium Development Goals by increased use and understanding of statistics and other information about social, economic and environmental development at local, national and global levels. - Gapminder Wikipedia"
+pre input,"gapminder = px.data.gapminder()
+gapminder"
+table,"[['', 'country', 'continent', 'year', 'lifeExp', 'pop', 'gdpPercap', 'iso_alpha', 'iso_num'], ['0', 'Afghanistan', 'Asia', '1952', '28.801', '8425333', '779.445314', 'AFG', '4'], ['1', 'Afghanistan', 'Asia', '1957', '30.332', '9240934', '820.853030', 'AFG', '4'], ['2', 'Afghanistan', 'Asia', '1962', '31.997', '10267083', '853.100710', 'AFG', '4'], ['3', 'Afghanistan', 'Asia', '1967', '34.020', '11537966', '836.197138', 'AFG', '4'], ['4', 'Afghanistan', 'Asia', '1972', '36.088', '13079460', '739.981106', 'AFG', '4'], ['...', '...', '...', '...', '...', '...', '...', '...', '...'], ['1699', 'Zimbabwe', 'Africa', '1987', '62.351', '9216418', '706.157306', 'ZWE', '716'], ['1700', 'Zimbabwe', 'Africa', '1992', '60.377', '10704340', '693.420786', 'ZWE', '716'], ['1701', 'Zimbabwe', 'Africa', '1997', '46.809', '11404948', '792.449960', 'ZWE', '716'], ['1702', 'Zimbabwe', 'Africa', '2002', '39.989', '11926563', '672.038623', 'ZWE', '716'], ['1703', 'Zimbabwe', 'Africa', '2007', '43.487', '12311143', '469.709298', 'ZWE', '716']]"
+p,1704 rows × 8 columns
+p,The dataset contains information for each country for several different years.
+pre input,gapminder.get('year').unique()
+pre output,"array([1952, 1957, 1962, 1967, 1972, 1977, 1982, 1987, 1992, 1997, 2002,
+       2007])"
+p,Let's start by just looking at 2007 data (the most recent year in the dataset).
+pre input,"gapminder_2007 = gapminder[gapminder.get('year') == 2007]
+gapminder_2007"
+table,"[['', 'country', 'continent', 'year', 'lifeExp', 'pop', 'gdpPercap', 'iso_alpha', 'iso_num'], ['11', 'Afghanistan', 'Asia', '2007', '43.828', '31889923', '974.580338', 'AFG', '4'], ['23', 'Albania', 'Europe', '2007', '76.423', '3600523', '5937.029526', 'ALB', '8'], ['35', 'Algeria', 'Africa', '2007', '72.301', '33333216', '6223.367465', 'DZA', '12'], ['47', 'Angola', 'Africa', '2007', '42.731', '12420476', '4797.231267', 'AGO', '24'], ['59', 'Argentina', 'Americas', '2007', '75.320', '40301927', '12779.379640', 'ARG', '32'], ['...', '...', '...', '...', '...', '...', '...', '...', '...'], ['1655', 'Vietnam', 'Asia', '2007', '74.249', '85262356', '2441.576404', 'VNM', '704'], ['1667', 'West Bank and Gaza', 'Asia', '2007', '73.422', '4018332', '3025.349798', 'PSE', '275'], ['1679', 'Yemen, Rep.', 'Asia', '2007', '62.698', '22211743', '2280.769906', 'YEM', '887'], ['1691', 'Zambia', 'Africa', '2007', '42.384', '11746035', '1271.211593', 'ZMB', '894'], ['1703', 'Zimbabwe', 'Africa', '2007', '43.487', '12311143', '469.709298', 'ZWE', '716']]"
+p,142 rows × 8 columns
+h3,Scatter plot
+p,"We can plot life expectancy vs. GDP per capita. If you hover over a point, you will see the name of the country."
+pre input,"px.scatter(gapminder_2007, x='gdpPercap', y='lifeExp', hover_name='country')"
+p,"In future courses, you'll learn about transformations. Here, we'll apply a log transformation to the x-axis to make the plot look a little more linear."
+pre input,"px.scatter(gapminder_2007, x='gdpPercap', y='lifeExp', log_x=True, hover_name='country')"
+h3,Animated scatter plot
+p,We can take things one step further.
+pre input,"px.scatter(gapminder,
+           x = 'gdpPercap',
+           y = 'lifeExp', 
+           hover_name = 'country',
+           color = 'continent',
+           size = 'pop',
+           size_max = 60,
+           log_x = True,
+           range_y = [30, 90],
+           animation_frame = 'year',
+           title = 'Life Expectancy, GDP Per Capita, and Population over Time'
+          )"
+p,Watch this video if you want to see an even-more-animated version of this plot.
+h3,Animated histogram
+pre input,"px.histogram(gapminder,
+            x = 'lifeExp',
+            animation_frame = 'year',
+            range_x = [20, 90],
+            range_y = [0, 50],
+            title = 'Distribution of Life Expectancy over Time')"
+h3,Choropleth
+pre input,"px.choropleth(gapminder,
+              locations = 'iso_alpha',
+              color = 'lifeExp',
+              hover_name = 'country',
+              hover_data = {'iso_alpha': False},
+              title = 'Life Expectancy Per Country',
+              color_continuous_scale = px.colors.sequential.tempo
+)"
+h2,Parting thoughts
+h3,"From Lecture 1: What is ""data science""?"
+p,"Data science is about drawing useful conclusions from data using computation. Throughout the quarter, we touched on several aspects of data science:"
+li,"In the first 4 weeks, we used Python to explore data.
+Lots of visualization 📈📊 and ""data manipulation"", using industry-standard tools."
+li,"In the next 4 weeks, we used data to infer about a population, given just a sample.
+Rely heavily on simulation, rather than formulas."
+li,"In the last 2 weeks, we used data from the past to predict what may happen in the future.
+A taste of machine learning 🤖."
+li,In future DSC courses – including DSC 20 and 40A – you'll revisit all three of these aspects of data science.
+h3,Thank you!
+p,This course would not have been possible without...
+li,Graduate TA: Arya Rahnama.
+li,"Undergraduate tutors: Daniel Budidharma, Oren Ciolli, Sophia Fang, Kate Feng, Charlie Gillet, Ashley Ho, Chia-Chan Ho, Raine Hoang, Michelle Hong, Jason Huynh, Norah Kerendian, Minchan Kim, Vivian Lin, Calvin Nguyen, Kathleen Nguyen, Athulith Paraselli, Pallavi Prabhu, Pranav Rajaram, Aaron Rasin, Keenan Serrao, Abel Seyoum, Yutian Shi, Sofia Tkachenko, Claire Wang, Sophie Wang, Cici Xu, Tiffany Yu, Ciro Zhang."
+li,"Learn more about tutoring – it's fun, and you can be a tutor as early as your 3rd quarter at UCSD!"
+li,"Keep in touch! dsc10.com/staff
+After grades are released, we'll make a post on Ed where you can ask course staff for advice on courses and UCSD more generally."
+h2,Good luck on your finals...
+h3,...and see you tomorrow at 7PM 😊.

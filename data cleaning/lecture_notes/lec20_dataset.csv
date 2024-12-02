@@ -1,0 +1,180 @@
+lecture_number,lecture_title,section_name,section
+20,Hypothesis Testing,Announcements,"Quiz 4 is today.
+
+It covers Lectures 13, 15, 16, and related assignments.
+Prepare by solving relevant problems on practice.dsc10.com. It covers Lectures 13, 15, 16, and related assignments. Prepare by solving relevant problems on practice.dsc10.com. Homework 5 is due on Tuesday at 11:59PM. The Final Project will be released shortly. It is due on Tuesday, June 4th at 11:59PM.
+
+Consider finding a partner for the project; you can work with a different partner than you did on the Midterm Project.
+If you choose to work with a partner, you must follow these guidelines and in particular, you must both contribute to all parts of the project.
+In the project you'll work with data from the TV show Friends. Consider finding a partner for the project; you can work with a different partner than you did on the Midterm Project. If you choose to work with a partner, you must follow these guidelines and in particular, you must both contribute to all parts of the project. In the project you'll work with data from the TV show Friends."
+20,Hypothesis Testing,Agenda,"Recap: Statistical models. Example: Is our coin fair?
+
+Hypothesis tests.
+Null and alternative hypotheses.
+Test statistics, and how to choose them. Hypothesis tests. Null and alternative hypotheses. Test statistics, and how to choose them."
+20,Hypothesis Testing,Models,"A model is a set of assumptions about how data was generated. Example: Jury panels are selected randomly from the population of eligible jurors, which is 26% Black. Our goal is to assess the quality of a model. Given a dataset, our goal is to determine whether a model ""explains"" the patterns in the dataset. Example: How likely is it to draw a sample of 100 men from a population that is 26% Black and end up with only 8 Black men? Our approach involves simulation. We assume the model is true, simulate many samples based on this model, and compare how frequently these samples look like our observed data. Example: In 10,000 simulated jury panels drawn randomly from a population that is 26% Black, rarely, if ever, did we see a sample that was only 8% Black. Finally, we use the results of our simulation to draw a conclusion about the validity of the model. Example: It is unlikely that Robert Swain's jury panel was determined through random selection from among the eligible population of jurors. The model is likely wrong."
+20,Hypothesis Testing,Simulating a single jury panel using np.random.multinomial,"A randomly selected member of our population is Black with probability 0.26 and not Black with probability 1 - 0.26 = 0.74. Input: demographics = [0.26, 0.74] Each time we run the following cell, we'll get a new random sample of 100 people from this population. The first element of the resulting array is the number of Black men in the sample. The second element is the number of non-Black men in the sample. Input: np.random.multinomial(100, demographics) Output: array([24, 76]) We also need to calculate our statistic, which in this case is the number of Black men in the random sample of 100. Input: np.random.multinomial(100, demographics)[0] Output: 19"
+20,Hypothesis Testing,Simulating many jury panels,"Let's run 10,000 simulations. We'll keep track of the number of Black men in each simulated jury panel in the array counts. Input: counts = np.array([])
+
+for i in np.arange(10000):
+    count = np.random.multinomial(100, demographics)[0]
+    counts = np.append(counts, count)
+    
+counts Output: array([31., 25., 36., ..., 29., 21., 23.])"
+20,Hypothesis Testing,Visualizing the empirical distribution of our statistic,"Was a jury panel with 8 Black men suspiciously unusual? Input: (bpd.DataFrame().assign(count_black_men=counts)
+                .plot(kind='hist', bins = np.arange(9.5, 45, 1), 
+                      density=True, ec='w', figsize=(10, 5),
+                      title='Empiricial Distribution of the Number of Black Men in Simulated Jury Panels of Size 100'));
+observed_count = 8
+plt.axvline(observed_count, color='black', linewidth=4, label='Observed Number of Black Men in Actual Jury Panel')
+plt.legend(); Input: # In 10,000 random experiments, the panel with the fewest Black men had how many?
+counts.min() Output: 11.0"
+20,Hypothesis Testing,Conclusion,"Our simulation shows that there's essentially no chance that a random sample of 100 men drawn from a population in which 26% of men are Black will contain 8 or fewer Black men. As a result, it seems that the model we proposed – that the jury panel was drawn at random from the eligible population – is flawed. There were likely factors other than chance that explain why there were only 8 Black men on the jury panel."
+20,Hypothesis Testing,Example: Is our coin fair?,"Let's suppose we find a coin on the ground and we aren't sure whether it's a fair coin. Out of curiosity (and boredom), we flip it 400 times. Input: flips_400 = bpd.read_csv('data/flips-400.csv')
+flips_400 flip
+outcome
+
+
+0
+1
+Tails
+
+
+1
+2
+Tails
+
+
+2
+3
+Tails
+
+
+...
+...
+...
+
+
+397
+398
+Heads
+
+
+398
+399
+Heads
+
+
+399
+400
+Tails flip
+outcome  flip outcome 0
+1
+Tails 0 1 Tails 1
+2
+Tails 1 2 Tails 2
+3
+Tails 2 3 Tails ...
+...
+... ... ... ... 397
+398
+Heads 397 398 Heads 398
+399
+Heads 398 399 Heads 399
+400
+Tails 399 400 Tails 400 rows × 2 columns Input: flips_400.groupby('outcome').count() flip
+
+
+outcome
+
+
+
+Heads
+188
+
+
+Tails
+212 flip  flip outcome outcome  Heads
+188 Heads 188 Tails
+212 Tails 212 Question: Does our coin look like a fair coin, or not? How ""weird"" is it to flip a fair coin 400 times and see only 188 heads? This question is posed similarly to the question ""were jury panels selected at random from the eligible population?"""
+20,Hypothesis Testing,Hypothesis tests,"Input: - ""This jury panel was selected at random"" or ""this jury panel was not selected at random, since there weren't enough Black men on it.""
+- ""This coin is fair"" or ""this coin is not fair."" In the examples we've seen so far, our goal has been to choose between two views of the world, based on data in a sample. A hypothesis test chooses between two views of how data were generated, based on data in a sample. The views are called hypotheses. The test picks the hypothesis that is better supported by the observed data; it doesn't guarantee that either hypothesis is correct."
+20,Hypothesis Testing,Null and alternative hypotheses,"In our current example, our two hypotheses are ""this coin is fair"" and ""this coin is not fair."" In a hypothesis test:
+
+One of the hypotheses needs to be a well-defined probability model about how the data was generated, so that we can use it for simulation. This hypothesis is called the null hypothesis.
+The alternative hypothesis, then, is a different view about how the data was generated. One of the hypotheses needs to be a well-defined probability model about how the data was generated, so that we can use it for simulation. This hypothesis is called the null hypothesis. The alternative hypothesis, then, is a different view about how the data was generated. We can simulate n flips of a fair coin using np.random.multinomial(n, [0.5, 0.5]), but we can't simulate n flips of an unfair coin.
+
+What does ""unfair"" mean? Does it flip heads with probability 0.51? 0.03? What does ""unfair"" mean? Does it flip heads with probability 0.51? 0.03?"
+20,Hypothesis Testing,Test statistics,"Once we've established our null and alternative hypotheses, we'll start by assuming the null hypothesis is true. Then, repeatedly, we'll generate samples under the assumption the null hypothesis is true (i.e. ""under the null""). In the jury panel example, we repeatedly drew samples from a population that was 26% Black. In our current example, we'll repeatedly flip a fair coin 400 times. For each sample, we'll calculate a single number – that is, a statistic. In the jury panel example, this was the number of Black men. In our current example, a reasonable choice is the number of heads. This single number is called the test statistic since we use it when ""testing"" which viewpoint the data better supports. Think of the test statistic a number you write down each time you perform an experiment. The test statistic evaluated on our observed data is called the observed statistic. In our current example, the observed statistic is 188. Our hypothesis test boils down to checking whether our observed statistic is a ""typical value"" in the distribution of our test statistic."
+20,Hypothesis Testing,Simulating under the null,"Since our null hypothesis is ""this coin is fair"", we'll repeatedly flip a fair coin 400 times. Since our test statistic is the number of heads, in each set of 400 flips, we'll count the number of heads. Doing this will give us an empirical distribution of our test statistic. Input: # Computes a single simulated test statistic.
+np.random.multinomial(400, [0.5, 0.5])[0] Output: 188 Input: # Computes 10,000 simulated test statistics.
+
+results = np.array([])
+for i in np.arange(10000):
+    result = np.random.multinomial(400, [0.5, 0.5])[0]
+    results = np.append(results, result)
+    
+results Output: array([198., 209., 182., ..., 197., 207., 186.])"
+20,Hypothesis Testing,Visualizing the empirical distribution of the test statistic,"Let's visualize the empirical distribution of the test statistic $\text{number of heads}$. Input: bpd.DataFrame().assign(results=results).plot(kind='hist', bins=np.arange(160, 240, 4), 
+                                             density=True, ec='w', figsize=(10, 5),
+                                             title='Empirical Distribution of the Number of Heads in 400 Flips of a Fair Coin');
+plt.legend(); If we observed close to 200 heads, we'd think our coin is fair. There are two cases in which we'd think our coin is unfair: If we observed lots of heads, e.g. 225. If we observed very few heads, e.g. 172. This means that the histogram above is divided into three regions, where two of them mean the same thing (we think our coin is unfair). It would be a bit simpler if we had a histogram that was divided into just two regions. How do we create such a histogram?"
+20,Hypothesis Testing,Choosing a test statistic,"We'd like our test statistic to be such that:
+
+Large observed values side with one hypothesis.
+Small observed values side with the other hypothesis. Large observed values side with one hypothesis. Small observed values side with the other hypothesis. In this case, our statistic should capture how far our number of heads is from that of a fair coin. One idea: $| \text{number of heads} - 200 |$.
+
+If we use this as our test statistic, the observed statistic is $| 188 - 200 | = 12$.
+By simulating, we can quantify whether 12 is a reasonable value of the test statistic, or if it's larger than we'd expect from a fair coin. If we use this as our test statistic, the observed statistic is $| 188 - 200 | = 12$. By simulating, we can quantify whether 12 is a reasonable value of the test statistic, or if it's larger than we'd expect from a fair coin."
+20,Hypothesis Testing,"Simulating under the null, again","Let's define a function that computes a single value of our test statistic. We'll do this often moving forward. Input: def num_heads_from_200(arr):
+    return abs(arr[0] - 200)
+
+num_heads_from_200([188, 212]) Output: 12 Now, we'll repeat the act of flipping a fair coin 10,000 times again. The only difference is the test statistic we'll compute each time. Input: results = np.array([])
+for i in np.arange(10000):
+    result = num_heads_from_200(np.random.multinomial(400, [0.5, 0.5]))
+    results = np.append(results, result)
+    
+results Output: array([ 5.,  6., 15., ...,  7., 17.,  5.])"
+20,Hypothesis Testing,"Visualizing the empirical distribution of the test statistic, again","Let's visualize the empirical distribution of our new test statistic, $| \text{number of heads} - 200 |$. Input: bpd.DataFrame().assign(results=results).plot(kind='hist', bins=np.arange(0, 60, 4), 
+                                             density=True, ec='w', figsize=(10, 5),
+                                             title=r'Empirical Distribution of | Num Heads - 200 | in 400 Flips of a Fair Coin');
+plt.axvline(12, color='black', linewidth=4, label='observed statistic (12)')
+plt.legend(); In black, we've drawn our observed statistic, 12. Does 12 seem like a reasonable value of the test statistic – that is, how rare was it to see a test statistic of 12 or larger in our simulations?"
+20,Hypothesis Testing,Drawing a conclusion,"It's not uncommon for the test statistic to be 12, or even higher, when flipping a fair coin 400 times. So it looks like our observed coin flips could have come from a fair coin. We are not saying that the coin is definitely fair, just that it's reasonably plausible that the coin is fair. More generally, if we frequently see values in the empirical distribution of the test statistic that are as or more extreme than our observed statistic, the null hypothesis seems plausible. In this case, we fail to reject the null hypothesis. If we rarely see values as extreme as our observed statistic, we reject the null hypothesis. Lingering question: How do we determine where to draw the line between ""fail to reject"" and ""reject""?
+
+The answer is coming soon. The answer is coming soon."
+20,Hypothesis Testing,Our choice of test statistic depends on our alternative hypothesis!,"Suppose that our alternative hypothesis is now ""this coin is biased towards tails."" Now, the test statistic $| \text{number of heads} - 200 |$ won't work. Why not? In our current example, the value of the statistic $| \text{number of heads} - 200 |$ is 12. However, given just this information, we can't tell whether we saw:
+
+188 heads (212 tails), which would be evidence that the coin is biased towards tails.
+212 heads (188 tails), which would not be evidence that the coin is biased towards tails. 188 heads (212 tails), which would be evidence that the coin is biased towards tails. 212 heads (188 tails), which would not be evidence that the coin is biased towards tails. As such, with this alternative hypothesis, we need another test statistic. Idea: $\text{number of heads}$.
+
+Small observed values side with the alternative hypothesis (""this coin is biased towards tails"").
+Large observed values side with the null hypothesis (""this coin is fair"").
+We could also use $\text{number of tails}$. Small observed values side with the alternative hypothesis (""this coin is biased towards tails""). Large observed values side with the null hypothesis (""this coin is fair""). We could also use $\text{number of tails}$."
+20,Hypothesis Testing,"Simulating under the null, one more time","Since we're using the number of heads as our test statistic again, our simulation code is the same as it was originally. Input: results = np.array([])
+for i in np.arange(10000):
+    result = np.random.multinomial(400, [0.5, 0.5])[0]
+    results = np.append(results, result)
+    
+results Output: array([190., 189., 186., ..., 182., 189., 193.])"
+20,Hypothesis Testing,"Visualizing the empirical distribution of the test statistic, one more time","Let's visualize the empirical distribution of the test statistic $\text{number of heads}$, one more time. Input: bpd.DataFrame().assign(results=results).plot(kind='hist', bins=np.arange(160, 240, 4), 
+                                             density=True, ec='w', figsize=(10, 5),
+                                             title='Empirical Distribution of the Number of Heads in 400 Flips of a Fair Coin');
+plt.axvline(188, color='black', linewidth=4, label='observed statistic (188)')
+plt.legend(); We frequently saw 188 or fewer heads in 400 flips of a fair coin; our observation doesn't seem to be that rare. As such, the null hypothesis seems plausible, so we fail to reject the null hypothesis."
+20,Hypothesis Testing,Questions to consider before choosing a test statistic,"Key idea: Our choice of test statistic depends on the pair of viewpoints we want to decide between. Our test statistic should be such that high observed values lean towards one hypothesis and low observed values lean towards the other. We will avoid test statistics where both high and low observed values lean towards one viewpoint and observed values in the middle lean towards the other.
+
+In other words, we will avoid ""two-sided"" tests.
+To do so, we can take an absolute value. In other words, we will avoid ""two-sided"" tests. To do so, we can take an absolute value. In our recent exploration, the null hypothesis was ""the coin is fair.""
+
+When the alternative hypothesis was ""the coin is biased,"" the test statistic we chose was $$|\text{number of heads} - 200 |.$$
+When the alternative hypothesis was ""the coin is biased towards tails,"" the test statistic we chose was $$\text{number of heads}.$$ When the alternative hypothesis was ""the coin is biased,"" the test statistic we chose was $$|\text{number of heads} - 200 |.$$ When the alternative hypothesis was ""the coin is biased towards tails,"" the test statistic we chose was $$\text{number of heads}.$$"
+20,Hypothesis Testing,Summary,"In assessing a model, we are choosing between one of two viewpoints, or hypotheses.
+
+The null hypothesis must be a well-defined probability model about how the data was generated.
+The alternative hypothesis can be any other viewpoint about how the data was generated. The null hypothesis must be a well-defined probability model about how the data was generated. The alternative hypothesis can be any other viewpoint about how the data was generated. To test a pair of hypotheses, we:
+
+Simulate the experiment many times under the assumption that the null hypothesis is true.
+Compute a test statistic on each of the simulated samples, as well as on the observed sample.
+Look at the resulting empirical distribution of test statistics and see where the observed test statistic falls. If it seems like an atypical value (too large or too small), we reject the null hypothesis; otherwise, we fail to reject the null. Simulate the experiment many times under the assumption that the null hypothesis is true. Compute a test statistic on each of the simulated samples, as well as on the observed sample. Look at the resulting empirical distribution of test statistics and see where the observed test statistic falls. If it seems like an atypical value (too large or too small), we reject the null hypothesis; otherwise, we fail to reject the null. When selecting a test statistic, we want to choose a quantity that helps us distinguish between the two hypotheses, in such a way that large observed values favor one hypothesis and small observed values favor the other."
+20,Hypothesis Testing,Next time,"We'll look more closely at how to draw a conclusion from a hypothesis test and come up with a more precise definition of being ""consistent"" with the empirical distribution of test statistics generated according to the model."

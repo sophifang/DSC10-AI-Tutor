@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+    <meta charset="utf-8">
+    <title>Lecture 1 Content</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+        img {
+            max-width: 70%;
+            height: auto;
+            display: block;
+            margin: 10px 0;
+        }
+        ul, ol {
+            padding-left: 20px;
+            margin-bottom: 1em;
+        }
+        ul ul, ol ol {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 0.5em;
+        }
+        .section {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        /* Styling for Jupyter Notebook-style code cells */
+        pre.code {
+            background-color: #f7f7f7;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 10px;
+            color: #333;
+            white-space: pre-wrap;
+        }
+        /* Styling for Jupyter Notebook-style output cells */
+        pre.output {
+            font-size: 10px;
+            color: #555;
+            white-space: pre-wrap;
+        }
+        /* Styling for tables */
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+    </head>
+    <body>
+    <div class="section">
+<h1>Lecture 3 – Strings, Lists, and Arrays</h1>
+</div>
+<div class="section">
+<h2>DSC 10, Spring 2024</h2>
+</div>
+<div class="section">
+<h3>Announcements</h3>
+<ul>
+<li>Lab 0 is due tomorrow at 11:59PM.</li></ul>
+<ul>
+<li>Lab 1 is due Tuesday at 11:59PM.
+<ul>
+<li>Work ahead so assignments don&#x27;t pile up!</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>The solutions to the pretest are now posted. See how you did and watch the 🎥 video at the end to learn more about important test-taking skills.</li></ul>
+<ul>
+<li>The first quiz is Friday of next week. There is no course meeting this afternoon!
+<ul>
+<li>Fill out the Welcome Survey with your time preferences. We&#x27;ll let you know your assigned time by Monday.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section">
+<h3>Resources 🤝</h3>
+<ul>
+<li>We&#x27;re covering a lot of content very quickly. If you&#x27;re overwhelmed, just know that we&#x27;re here to support you!
+<ul>
+<li>Ed and office hours are your friends!</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>Check the Resources tab of the course website for programming resources.</li></ul>
+</div>
+<div class="section">
+<h3>Agenda</h3>
+<ul>
+<li>Data types.</li></ul>
+<ul>
+<li>Strings. 🧶</li></ul>
+<ul>
+<li>Means and medians.</li></ul>
+<ul>
+<li>Lists.</li></ul>
+<ul>
+<li>Arrays.</li></ul>
+</div>
+<div class="section">
+<h2>Data types</h2>
+</div>
+<div class="section">
+<h3>int and float</h3>
+<ul>
+<li>Every value in Python has a type.</li></ul>
+<ul>
+<li>Use the type function to check a value&#x27;s type.</li></ul>
+<ul>
+<li>There are two numeric data types:
+<ul>
+<li>int: An integer of any size.</li>
+<li>float: A number with a decimal point.</li>
+</ul>
+</li>
+</ul>
+<pre class='code'># int.
+6 + 4</pre>
+<pre class='output'>10</pre>
+<pre class='code'># float.
+20 / 2</pre>
+<pre class='output'>10.0</pre>
+</div>
+<div class="section">
+<h3>int</h3>
+<ul>
+<li>If you add (+), subtract (-), multiply (*), or exponentiate (**) ints, the result will be another int.</li></ul>
+<ul>
+<li>ints have arbitrary precision in Python, meaning that your calculations will always be exact.</li></ul>
+<pre class='code'>7 - 15</pre>
+<pre class='output'>-8</pre>
+<pre class='code'>type(7 - 15)</pre>
+<pre class='output'>int</pre>
+<pre class='code'>2 ** 300</pre>
+<pre class='output'>2037035976334486086268445688409378161051468393665936250636140449354381299763336706183397376</pre>
+<pre class='code'>2 ** 3000</pre>
+<pre class='output'>1230231922161117176931558813276752514640713895736833715766118029160058800614672948775360067838593459582429649254051804908512884180898236823585082482065348331234959350355845017413023320111360666922624728239756880416434478315693675013413090757208690376793296658810662941824493488451726505303712916005346747908623702673480919353936813105736620402352744776903840477883651100322409301983488363802930540482487909763484098253940728685132044408863734754271212592471778643949486688511721051561970432780747454823776808464180697103083861812184348565522740195796682622205511845512080552010310050255801589349645928001133745474220715013683413907542779063759833876101354235184245096670042160720629411581502371248008430447184842098610320580417992206662247328722122088513643683907670360209162653670641130936997002170500675501374723998766005827579300723253474890612250135171889174899079911291512399773872178519018229989376</pre>
+</div>
+<div class="section">
+<h3>float</h3>
+<ul>
+<li>A float is specified using a decimal point.</li></ul>
+<ul>
+<li>A float might be printed using scientific notation.</li></ul>
+<pre class='code'>3.2 + 2.5</pre>
+<pre class='output'>5.7</pre>
+<pre class='code'>type(3.2 + 2.5)</pre>
+<pre class='output'>float</pre>
+<pre class='code'># The result is in scientific notation: e+90 means &quot;times 10^90&quot;.
+2.0 ** 300</pre>
+<pre class='output'>2.037035976334486e+90</pre>
+</div>
+<div class="section">
+<h3>The pitfalls of float</h3>
+<ul>
+<li>floats have limited precision; after arithmetic, the final few decimal places can be wrong in unexpected ways.</li></ul>
+<ul>
+<li>floats have limited size, though the limit is huge.</li></ul>
+<pre class='code'>1 + 0.2</pre>
+<pre class='output'>1.2</pre>
+<pre class='code'>1 + 0.1 + 0.1</pre>
+<pre class='output'>1.2000000000000002</pre>
+<pre class='code'>2.0 ** 3000</pre>
+<pre class='output'>---------------------------------------------------------------------------
+OverflowError                             Traceback (most recent call last)
+/var/folders/28/vs8cp38n1r1520g8bhzr4v5h0000gn/T/ipykernel_6609/1310821553.py in &lt;module&gt;
+----&gt; 1 2.0 ** 3000
+
+OverflowError: (34, &#x27;Result too large&#x27;)</pre>
+</div>
+<div class="section">
+<h3>Converting between int and float</h3>
+<ul>
+<li>If you mix ints and floats in an expression, the result will always be a float.
+<ul>
+<li>Note that when you divide two ints, you get a float back.</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>A value can be explicity coerced (i.e. converted) using the int and float functions.</li></ul>
+<pre class='code'>2.0 + 3</pre>
+<pre class='output'>5.0</pre>
+<pre class='code'>12 / 2</pre>
+<pre class='output'>6.0</pre>
+<pre class='code'># Want an integer back.
+int(12 / 2)</pre>
+<pre class='output'>6</pre>
+<pre class='code'># int chops off the decimal point!
+int(-2.9)</pre>
+<pre class='output'>-2</pre>
+</div>
+<div class="section">
+<h2>Strings 🧶</h2>
+</div>
+<div class="section">
+<h3>Strings 🧶</h3>
+<ul>
+<li>A string is a snippet of text of any length.</li></ul>
+<ul>
+<li>In Python, strings are enclosed by either single quotes or double quotes (doesn&#x27;t matter which!)</li></ul>
+<pre class='code'>&#x27;woof&#x27;</pre>
+<pre class='output'>&#x27;woof&#x27;</pre>
+<pre class='code'>type(&#x27;woof&#x27;)</pre>
+<pre class='output'>str</pre>
+<pre class='code'>&quot;woof&quot;</pre>
+<pre class='output'>&#x27;woof&#x27;</pre>
+<pre class='code'># A string, not an int!
+&quot;1998&quot;</pre>
+<pre class='output'>&#x27;1998&#x27;</pre>
+</div>
+<div class="section">
+<h3>String arithmetic</h3>
+<p>When using the + symbol between two strings, the operation is called &quot;concatenation&quot;.</p>
+<pre class='code'>s1 = &#x27;baby&#x27;
+s2 = &#x27;🐼&#x27;</pre>
+<pre class='code'>s1 + s2</pre>
+<pre class='output'>&#x27;baby🐼&#x27;</pre>
+<pre class='code'>s1 + &#x27; &#x27; + s2</pre>
+<pre class='output'>&#x27;baby 🐼&#x27;</pre>
+<pre class='code'>s2 * 3</pre>
+<pre class='output'>&#x27;🐼🐼🐼&#x27;</pre>
+</div>
+<div class="section">
+<h3>String methods</h3>
+<ul>
+<li>Associated with strings are special functions, called string methods.</li></ul>
+<ul>
+<li>Access string methods with a . after the string (&quot;dot notation&quot;).
+<ul>
+<li>For instance, to use the upper method on string s, we write s.upper().</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>Examples include upper, title, and replace, but there are many more.</li></ul>
+<pre class='code'>my_cool_string = &#x27;data science is super cool!&#x27;</pre>
+<pre class='code'>my_cool_string.title()</pre>
+<pre class='output'>&#x27;Data Science Is Super Cool!&#x27;</pre>
+<pre class='code'>my_cool_string.upper()</pre>
+<pre class='output'>&#x27;DATA SCIENCE IS SUPER COOL!&#x27;</pre>
+<pre class='code'>my_cool_string.replace(&#x27;super cool&#x27;, &#x27;💯&#x27; * 3)</pre>
+<pre class='output'>&#x27;data science is 💯💯💯!&#x27;</pre>
+<pre class='code'># len is not a method, since it doesn&#x27;t use dot notation.
+len(my_cool_string)</pre>
+<pre class='output'>27</pre>
+</div>
+<div class="section">
+<h3>Type conversion to and from strings</h3>
+<ul>
+<li>Any value can be converted to a string using str.</li></ul>
+<ul>
+<li>Some strings can be converted to int and float.</li></ul>
+<pre class='code'>str(3)</pre>
+<pre class='output'>&#x27;3&#x27;</pre>
+<pre class='code'>float(&#x27;3&#x27;)</pre>
+<pre class='output'>3.0</pre>
+<pre class='code'>int(&#x27;4&#x27;)</pre>
+<pre class='output'>4</pre>
+<pre class='code'>int(&#x27;baby panda&#x27;)</pre>
+<pre class='output'>---------------------------------------------------------------------------
+ValueError                                Traceback (most recent call last)
+/var/folders/28/vs8cp38n1r1520g8bhzr4v5h0000gn/T/ipykernel_6609/455936715.py in &lt;module&gt;
+----&gt; 1 int(&#x27;baby panda&#x27;)
+
+ValueError: invalid literal for int() with base 10: &#x27;baby panda&#x27;</pre>
+<pre class='code'>int(&#x27;4.3&#x27;)</pre>
+<pre class='output'>---------------------------------------------------------------------------
+ValueError                                Traceback (most recent call last)
+/var/folders/28/vs8cp38n1r1520g8bhzr4v5h0000gn/T/ipykernel_6609/756068685.py in &lt;module&gt;
+----&gt; 1 int(&#x27;4.3&#x27;)
+
+ValueError: invalid literal for int() with base 10: &#x27;4.3&#x27;</pre>
+<pre class='code'>x = 3
+y = &#x27;4&#x27;
+z = &#x27;5.6&#x27;</pre>
+</div>
+<div class="section">
+<h3>Concept Check ✅ – Answer at cc.dsc10.com</h3>
+<p>Assume you have run the following statements:</p>
+<p>Choose the expression that will be evaluated without an error.</p>
+<p>A. x + y</p>
+<p>B. x + int(y + z)</p>
+<p>C. str(x) + int(y)</p>
+<p>D. str(x) + z</p>
+<p>E. All of them have errors</p>
+</div>
+<div class="section">
+<h2>Means and medians</h2>
+</div>
+<div class="section">
+<h3>Describing numerical data</h3>
+<ul>
+<li>We now know how to store individual numbers (as ints or floats) and pieces of text (as strings). But we often we&#x27;ll work with sequences, or ordered collections, of several data values.</li></ul>
+<ul>
+<li>For any collection of numbers, say temperatures, it can be helpful to summarize the data by its mean (i.e. average) or median.</li></ul>
+<ul>
+<li>Both mean and median are measures of central tendency – that is, they tell us roughly where the &quot;center&quot; of the data falls.</li></ul>
+</div>
+<div class="section">
+<h3>The mean (i.e. average)</h3>
+<p>The mean is a one-number summary of a collection of numbers.</p>
+<p>For example, the mean of $1$, $4$, $7$, and $12$ is $\frac{1 + 4 + 7 + 12}{4} = 6$.</p>
+<p>Observe that the mean:</p>
+<ul>
+<li>Doesn&#x27;t have to be equal to one of the data points.</li></ul>
+<ul>
+<li>Doesn&#x27;t have to be an integer, even if all of the data points are integers.</li></ul>
+<ul>
+<li>Is somewhere between the min and max, but not necessarily halfway between.</li></ul>
+<ul>
+<li>Has the same units as the data.</li></ul>
+</div>
+<div class="section">
+<h3>The median</h3>
+<p>Like the mean, the median is a one-number summary of a collection of numbers.</p>
+<ul>
+<li>To calculate it, sort the data points and pick the number in the middle.
+<ul>
+<li>If there are two middle numbers, we usually pick the number halfway between (i.e. the mean of the middle two).</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>Example:
+<ul>
+<li>$\text{Median}(1, 4, 7, 12, 32) = 7$</li>
+<li>$\text{Median}(1, 4, 7, 12) = 5.5$</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section">
+<h3>Mean vs. median</h3>
+<ul>
+<li>The mean and median of a dataset can be the same, but they don&#x27;t need to be. They measure the center of a dataset in two different ways.</li></ul>
+<ul>
+<li>Two different datasets can have the same mean without having the same median, and vice versa.</li></ul>
+</div>
+<div class="section">
+<h3>Activity</h3>
+<ul>
+<li>Find two different datasets that have the same mean and different medians.</li></ul>
+<p>Find two different datasets that have the same mean and different medians.</p>
+<ul>
+<li>Find two different datasets that have the same median and different means.</li></ul>
+<p>Find two different datasets that have the same median and different means.</p>
+<ul>
+<li>Find two different datasets that have the same median and the same mean.</li></ul>
+<p>Find two different datasets that have the same median and the same mean.</p>
+<p>Means and medians are just summaries; they don&#x27;t tell the whole story about a dataset!</p>
+<img src="https://dsc-courses.github.io/dsc10-2024-sp/resources/lectures/lec03/images/histograms.png" alt="Image">
+<p>In a few weeks, we&#x27;ll learn about how to visualize the distribution of a collection of numbers using a histogram.</p>
+<p>These two distributions have different means but the same median!</p>
+</div>
+<div class="section">
+<h2>Lists</h2>
+</div>
+<div class="section">
+<h3>Average temperature for a week</h3>
+<p>How would we store the temperatures for a week to compute the average temperature?</p>
+<p>Our best solution right now is to create a separate variable for each day of the week.</p>
+<pre class='code'>temp_sunday = 68
+temp_monday = 73
+temp_tuesday = 70
+temp_wednesday = 74
+temp_thursday = 76
+temp_friday = 72
+temp_saturday = 74</pre>
+<p>This technically allows us to do things like compute the average temperature:</p>
+<pre class='code'>avg_temperature = 1/7 * (
+    temp_sunday
+    + temp_monday
+    + temp_tuesday
+    + ...)</pre>
+<p>Imagine a whole month&#x27;s data, or a whole year&#x27;s data. It seems like we need a better solution.</p>
+</div>
+<div class="section">
+<h3>Lists in Python</h3>
+<p>In Python, a list is used to store multiple values within a single value. To create a new list from scratch, we use [square brackets].</p>
+<pre class='code'>temperature_list = [68, 73, 70, 74, 76, 72, 74]</pre>
+<pre class='code'>len(temperature_list)</pre>
+<pre class='output'>7</pre>
+<p>Notice that the elements in a list don&#x27;t need to be unique!</p>
+</div>
+<div class="section">
+<h3>Lists make working with sequences easy!</h3>
+<p>To find the average temperature, we just need to divide the sum of the temperatures by the number of temperatures recorded:</p>
+<pre class='code'>temperature_list</pre>
+<pre class='output'>[68, 73, 70, 74, 76, 72, 74]</pre>
+<pre class='code'>sum(temperature_list) / len(temperature_list)</pre>
+<pre class='output'>72.42857142857143</pre>
+</div>
+<div class="section">
+<h3>Types</h3>
+<p>The type of a list is... list.</p>
+<pre class='code'>temperature_list</pre>
+<pre class='output'>[68, 73, 70, 74, 76, 72, 74]</pre>
+<pre class='code'>type(temperature_list)</pre>
+<pre class='output'>list</pre>
+<p>Within a list, you can store elements of different types.</p>
+<pre class='code'>mixed_list = [-2, 2.5, &#x27;ucsd&#x27;, [1, 3]]
+mixed_list</pre>
+<pre class='output'>[-2, 2.5, &#x27;ucsd&#x27;, [1, 3]]</pre>
+</div>
+<div class="section">
+<h3>There&#x27;s a problem...</h3>
+<ul>
+<li>Lists are very slow.</li></ul>
+<ul>
+<li>This is not a big deal when there aren&#x27;t many entries, but it&#x27;s a big problem when there are millions or billions of entries.</li></ul>
+</div>
+<div class="section">
+<h2>Arrays</h2>
+</div>
+<div class="section">
+<h3>NumPy</h3>
+<img src="https://dsc-courses.github.io/dsc10-2024-sp/resources/lectures/lec03/images/numpy.png" alt="Image">
+<ul>
+<li>NumPy (pronounced &quot;num pie&quot;) is a Python library (module) that provides support for arrays and operations on them.</li></ul>
+<p>NumPy (pronounced &quot;num pie&quot;) is a Python library (module) that provides support for arrays and operations on them.</p>
+<ul>
+<li>The babypandas library, which you will learn about soon, goes hand-in-hand with NumPy.
+<ul>
+<li></li>
+<li>NumPy is used heavily in the real world.</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>To use numpy, we need to import it. It&#x27;s usually imported as np (but doesn&#x27;t have to be!)</li></ul>
+<p>To use numpy, we need to import it. It&#x27;s usually imported as np (but doesn&#x27;t have to be!)</p>
+<pre class='code'>import numpy as np</pre>
+</div>
+<div class="section">
+<h3>Arrays</h3>
+<p>Think of NumPy arrays (just &quot;arrays&quot; from now on) as fancy, faster lists.</p>
+<img src="https://dsc-courses.github.io/dsc10-2024-sp/resources/lectures/lec03/images/fast-slow.jpg" alt="Image">
+<p>To create an array, we pass a list as input to the np.array function.</p>
+<pre class='code'>np.array([4, 9, 1, 2])</pre>
+<pre class='output'>array([4, 9, 1, 2])</pre>
+<img src="https://dsc-courses.github.io/dsc10-2024-sp/resources/lectures/lec03/images/brackets.png" alt="Image">
+<pre class='code'>temperature_array = np.array([68, 73, 70, 74, 76, 72, 74])
+temperature_array</pre>
+<pre class='output'>array([68, 73, 70, 74, 76, 72, 74])</pre>
+<pre class='code'>temperature_list</pre>
+<pre class='output'>[68, 73, 70, 74, 76, 72, 74]</pre>
+<pre class='code'># No square brackets, because temperature_list is already a list!
+np.array(temperature_list)</pre>
+<pre class='output'>array([68, 73, 70, 74, 76, 72, 74])</pre>
+</div>
+<div class="section">
+<h3>Positions</h3>
+<p>When people wait in line, each person has a position.</p>
+<img src="https://dsc-courses.github.io/dsc10-2024-sp/resources/lectures/lec03/images/waiting-room.jpg" alt="Image">
+<p>Similarly, each element of an array (and list) has a position.</p>
+</div>
+<div class="section">
+<h3>Accessing elements by position</h3>
+<ul>
+<li>Python, like most programming languages, is &quot;0-indexed.&quot;
+<ul>
+<li>This means that the position of the first element in an array is 0, not 1.</li>
+<li>One interpretation is that an element&#x27;s position represents the number of elements in front of it.</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>To access the element in array arr_name at position pos, we use the syntax arr_name[pos].</li></ul>
+<pre class='code'>temperature_array</pre>
+<pre class='output'>array([68, 73, 70, 74, 76, 72, 74])</pre>
+<pre class='code'>temperature_array[0]</pre>
+<pre class='output'>68</pre>
+<pre class='code'>temperature_array[1]</pre>
+<pre class='output'>73</pre>
+<pre class='code'>temperature_array[3]</pre>
+<pre class='output'>74</pre>
+<pre class='code'># Access the last element.
+temperature_array[6]</pre>
+<pre class='output'>74</pre>
+<pre class='code'># Doesn&#x27;t work!
+temperature_array[7]</pre>
+<pre class='output'>---------------------------------------------------------------------------
+IndexError                                Traceback (most recent call last)
+/var/folders/28/vs8cp38n1r1520g8bhzr4v5h0000gn/T/ipykernel_6609/3291506737.py in &lt;module&gt;
+      1 # Doesn&#x27;t work!
+----&gt; 2 temperature_array[7]
+
+IndexError: index 7 is out of bounds for axis 0 with size 7</pre>
+<pre class='code'># If a position is negative, count from the end!
+temperature_array[-1]</pre>
+<pre class='output'>74</pre>
+</div>
+<div class="section">
+<h3>Types</h3>
+<p>Earlier in the lecture, we saw that lists can store elements of multiple types.</p>
+<pre class='code'>nums_and_strings_lst = [&#x27;uc&#x27;, &#x27;sd&#x27;, 1961, 3.14]
+nums_and_strings_lst</pre>
+<pre class='output'>[&#x27;uc&#x27;, &#x27;sd&#x27;, 1961, 3.14]</pre>
+<p>This is not true of arrays – all elements in an array must be of the same type.</p>
+<pre class='code'># All elements are converted to strings!
+np.array(nums_and_strings_lst)</pre>
+<pre class='output'>array([&#x27;uc&#x27;, &#x27;sd&#x27;, &#x27;1961&#x27;, &#x27;3.14&#x27;], dtype=&#x27;&lt;U32&#x27;)</pre>
+</div>
+<div class="section">
+<h3>Array-number arithmetic</h3>
+<p>Arrays make it easy to perform the same operation to every element. This behavior is formally known as &quot;broadcasting&quot;.</p>
+<img src="https://dsc-courses.github.io/dsc10-2024-sp/resources/lectures/lec03/images/broadcasting.jpg" alt="Image">
+<pre class='code'>temperature_array</pre>
+<pre class='output'>array([68, 73, 70, 74, 76, 72, 74])</pre>
+<pre class='code'># Increase all temperatures by 3 degrees.
+temperature_array + 3</pre>
+<pre class='output'>array([71, 76, 73, 77, 79, 75, 77])</pre>
+<pre class='code'># Halve all temperatures.
+temperature_array / 2</pre>
+<pre class='output'>array([34. , 36.5, 35. , 37. , 38. , 36. , 37. ])</pre>
+<pre class='code'># Convert all temperatures to Celsius.
+(5 / 9) * (temperature_array - 32)</pre>
+<pre class='output'>array([20.        , 22.77777778, 21.11111111, 23.33333333, 24.44444444,
+       22.22222222, 23.33333333])</pre>
+<p>Note: In none of the above cells did we actually modify temperature_array! Each of those expressions created a new array.</p>
+<pre class='code'>temperature_array</pre>
+<pre class='output'>array([68, 73, 70, 74, 76, 72, 74])</pre>
+<p>To actually change temperature_array, we need to reassign it to a new array.</p>
+<pre class='code'>temperature_array = (5 / 9) * (temperature_array - 32)</pre>
+<pre class='code'># Now in Celsius!
+temperature_array</pre>
+<pre class='output'>array([20.        , 22.77777778, 21.11111111, 23.33333333, 24.44444444,
+       22.22222222, 23.33333333])</pre>
+</div>
+<div class="section">
+<h3>Element-wise arithmetic</h3>
+<ul>
+<li>We can apply arithmetic operations to multiple arrays, provided they have the same length.</li></ul>
+<ul>
+<li>The result is computed element-wise, which means that the arithmetic operation is applied to one pair of elements from each array at a time.</li></ul>
+<img src="https://dsc-courses.github.io/dsc10-2024-sp/resources/lectures/lec03/images/elementwise.jpg" alt="Image">
+<pre class='code'>a = np.array([4, 5, -1])
+b = np.array([2, 3, 2])</pre>
+<pre class='code'>a + b</pre>
+<pre class='output'>array([6, 8, 1])</pre>
+<pre class='code'>a / b</pre>
+<pre class='output'>array([ 2.        ,  1.66666667, -0.5       ])</pre>
+<pre class='code'>a ** 2 + b ** 2</pre>
+<pre class='output'>array([20, 34,  5])</pre>
+</div>
+<div class="section">
+<h2>Summary, next time</h2>
+</div>
+<div class="section">
+<h3>Summary</h3>
+<ul>
+<li>Strings are used to store text. Enclose them in single or double quotes.</li></ul>
+<ul>
+<li>Lists and arrays are used to store sequences.
+<ul>
+<li>Arrays are faster and more convenient for numerical operations.</li>
+<li>Access elements by position, starting at position 0.</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>Remember to refer to the resources from the start of lecture!</li></ul>
+</div>
+<div class="section">
+<h3>Next time</h3>
+<p>We&#x27;ll learn more about arrays and we&#x27;ll see how to use Python to work with real-world tabular data.</p>
+</div>
+</body>
+</html>
