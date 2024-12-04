@@ -1,11 +1,7 @@
-<!-- <script>
-  import App from '../components/App.svelte';
-</script>
-
-<App /> -->
-<script>
+ <script>
   import LecturePreview from '../components/LecturePreview.svelte';
   import LectureFullView from '../components/LectureFullView.svelte';
+  import QuizPage from '../components/QuizPage.svelte';
 
   // Data for lecture files
   let lectureFiles = [
@@ -34,6 +30,9 @@
     iframe.src = file;
   }
 </script>
+
+
+<QuizPage/>
 
 <!-- Google Docs-style homepage -->
 <div class="homepage" class:selected={!selectedLecture}>
