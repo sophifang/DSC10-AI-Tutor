@@ -57,8 +57,11 @@
 
      const handleQuizButtonClick = () => {
         const now = new Date();
+
         if (examSelected){
             lastClicked = now.toLocaleString();
+        } else{
+            handleGenerateQuestion();
         }
         examSelected = !examSelected;
     };
@@ -100,7 +103,6 @@
                     </p>
                     <textarea id="user-answer" type="text" placeholder="Enter your answer here!"/>
                     <br/>
-                    <button id="submit-answer" on:click={displayAnswer}>See Solution</button>
                     <p id="solution" class="{answer_hidden ? "hidden" : "display"}">
                         <b>Answer</b><br/>{response.Answer}
                     </p>
@@ -109,17 +111,26 @@
                         <b>Reasoning</b><br/>{response.Answer_reasoning}
                     </p>
                     {/if}
+                    <div class="button-container">
+                        <button id="submit-answer" on:click={displayAnswer}>{answer_hidden ? "See" : "Close"} Solution</button>
+                        <button class="refresh" on:click={handleGenerateQuestion}>
+                            <div class="btn">
+                                Generate New Question
+                                <img src={refreshImg} alt="Refresh" width="30px" style="margin-left: 5px;">
+                            </div>
+                        </button>
+                    </div>
                     <br/>
-                    <button class="refresh" on:click={handleGenerateQuestion}>
+                    <!-- <button class="refresh" on:click={handleGenerateQuestion}>
                         <div class="btn">
                             Generate New Question
                             <img src={refreshImg} alt="Refresh" width="30px" style="margin-left: 5px;">
                         </div>
-                    </button> 
+                    </button>  -->
+                    {#if lastClicked}
+                        <p id="timestamp">Last Quiz Check: {lastClicked}</p>
+                    {/if}
                 </div>
-                {#if lastClicked}
-                    <p id="timestamp">Last Quiz Check: {lastClicked}</p>
-                {/if}
             </div>
         </div>
     </aside>
@@ -131,11 +142,21 @@
         max-width: 400px;
     }
 
-    #timestamp{
-        padding-bottom: 20px;
+    .button-container {
+        display: flex; /* Align buttons in a row */
+        justify-content: center;
+        gap: 10px; /* Add a gap between the buttons */
+        margin-top: 10px; /* Optional margin for spacing */
+    }
+
+    #timestamp {
+        color: #333;
+        text-align: center;
+        padding-bottom: 10px;
     }
 
 	.wrapper {
+		width: 400px;
 		height: 100%;
 		position: relative;
 		color: black;
@@ -194,7 +215,6 @@
     }
 
 
-    /* Hover Effect */
     .difficulty-options label:hover {
         background-color: #eef;
         border-color: #5872d2;
@@ -243,7 +263,7 @@
     }
     
     #quiz-popup{
-        max-height: 100%;
+        max-height: 95%;
     }
 
     .btn{
@@ -259,6 +279,7 @@
         z-index: 3;
         transition: right 0.3s ease-in-out;
         height: 100%;
+        padding-bottom: 20px;
     }
 
     aside::after{
@@ -280,7 +301,7 @@
         border: none;
         color: white;
         border-radius: 10px;
-        margin-bottom: 10%;
+        margin-bottom: 1%;
     }
 
     .popup {
@@ -292,7 +313,6 @@
         text-align: center;
         height: 100%;
 		top: 0;
-        height: 100%;   
 		position: relative;
 		color: black;
     }
@@ -310,7 +330,11 @@
         }
 
         .popup{
-            width: 250px
+            width: 250px;
+        }
+
+        .wrapper{
+            width: 250px;
         }
     }
 
@@ -329,8 +353,8 @@
     }
 
     #submit-answer{
-        width: 100px;
-        height: 30px;
+        width: 120px;
+        height: 32px;
         background-color: #5872d2;
         margin-top: 5%;
         border: none;

@@ -14,15 +14,15 @@ const openai = new OpenAI({
 
 export const runPrompt = async (questionsAndAnswers) => {
     const prompt = `
-    Pick a question from the examples. Figure out how the matching answer was found.
+    Pick a question from the examples.
 
     Then, please generate a new question similar to the example you chose. Find the solution to 
     the question carefully and correctly. If the question and solution involve math,
     ensure all math is correct.**Do not give incorrect solutions**. 
     
-    Tell the user how they should find the solution as Answer_reasoning. If the reasoning 
-    does not have a definite answer due to lack of information, include more information in the question to get
-    a definite answer. Ensure the question matches the reasoning.
+    Tell the user how they should find the solution as Answer_reasoning. If you make any assumption in Answer_reasoning, 
+    include the assumption in your generated question. Give the final answer 
+    as Answer and ensure both question and final answer matches the reasoning.
 
     Return the qustion type where the options are: "select one", "select all", "integer", "code", and "fill in the
     blank". If the quiz type is "select one" or "select all", return the quesiton options that
