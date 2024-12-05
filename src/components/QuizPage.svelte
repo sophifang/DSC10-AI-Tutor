@@ -37,9 +37,11 @@
         exams = d3.csvParse(csv, d3.autoType)
     });
 
+    // Generates a new question
     const handleGenerateQuestion = async () => {
         loading.set(true);
-
+        
+        // Filters relevant questions
         let questionsAndAnswers = exams
             .filter(exam => exam.Exam_type === "Quiz" && exam.Quiz_type === 1 && exam.Difficulty_score === selectedDifficulty)
             .map(exam => ({
@@ -48,20 +50,24 @@
                 Difficulty_score: exam.Difficulty_score
         }));
         answer_hidden = true;
+        
+        // Generates questions
         response = await runPrompt(questionsAndAnswers);
      };
 
-     const displayAnswer = async () => {        
+    // Displays answer
+    const displayAnswer = async () => {        
         answer_hidden = !answer_hidden;
      };
 
+    // Handles quiz button
      const handleQuizButtonClick = () => {
         const now = new Date();
 
         if (examSelected){
             lastClicked = now.toLocaleString();
         } else{
-            handleGenerateQuestion();
+            // handleGenerateQuestion();
         }
         examSelected = !examSelected;
     };
@@ -69,6 +75,7 @@
   </script>
   
   <main>
+    <div class="overlay {examSelected ? 'active' : ''}" class:hidden={!examSelected}></div>
     <!-- Quiz Side Bar -->
     <aside class:examSelected>          
         <!-- New Quesiton Generator -->
@@ -85,8 +92,9 @@
                     Quiz Challenge
                 </h1>
                 <!-- Put your knowledge to the test! -->
-                <!-- <br/> -->
                 Powered by GPT-4o mini
+                
+                <!-- Select difficulty level -->
                 <div class="difficulty-selector">
                     <div class="difficulty-options">
                         <input type="radio" name="difficulty" value="Easy" id="easy" bind:group={selectedDifficulty} checked/>
@@ -97,20 +105,30 @@
                         <label for="hard" class="hard">Hard</label>
                     </div>
                 </div>
+
+                <!-- Question section -->
                 <div class="wrapper" use:loader={loading}>
                     <p id="question">
                         <b>Question</b><br/>{response.Question}
                     </p>
+                    
+                    <!-- Answer box -->
                     <textarea id="user-answer" type="text" placeholder="Enter your answer here!"/>
                     <br/>
+                   
+                    <!-- Answer -->
                     <p id="solution" class="{answer_hidden ? "hidden" : "display"}">
                         <b>Answer</b><br/>{response.Answer}
                     </p>
+
+                    <!-- Answer reasoning -->
                     {#if response.Answer_reasoning != '...'}
                     <p id="solution-reasoning" class="{answer_hidden ? "hidden" : "display"}">
                         <b>Reasoning</b><br/>{response.Answer_reasoning}
                     </p>
                     {/if}
+
+                    <!-- Display answer and reasoning -->
                     <div class="button-container">
                         <button id="submit-answer" on:click={displayAnswer}>{answer_hidden ? "See" : "Close"} Solution</button>
                         <button class="refresh" on:click={handleGenerateQuestion}>
@@ -121,12 +139,8 @@
                         </button>
                     </div>
                     <br/>
-                    <!-- <button class="refresh" on:click={handleGenerateQuestion}>
-                        <div class="btn">
-                            Generate New Question
-                            <img src={refreshImg} alt="Refresh" width="30px" style="margin-left: 5px;">
-                        </div>
-                    </button>  -->
+
+                    <!-- Quiz timestamp -->
                     {#if lastClicked}
                         <p id="timestamp">Last Quiz Check: {lastClicked}</p>
                     {/if}
@@ -137,16 +151,34 @@
   </main>
   
   <style>
+    .overlay {
+        position: fixed; /* Cover the entire viewport */
+        top: 0;
+        left: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent gray */
+        z-index: 2; /* Place it above the main content but below the sidebar */
+        opacity: 0; /* Start fully transparent */
+        visibility: hidden; /* Ensure it's not interactable when hidden */
+        transition: opacity 0.3s ease, visibility 0.3s ease; /* Smooth transition */
+    }
+
+    .overlay.active {
+        opacity: 1; /* Fully visible */
+        visibility: visible; /* Make it interactable */
+    }
+
     p{
         text-align: left;
-        max-width: 400px;
+        max-width: 500px;
     }
 
     .button-container {
-        display: flex; /* Align buttons in a row */
+        display: flex;
         justify-content: center;
-        gap: 10px; /* Add a gap between the buttons */
-        margin-top: 10px; /* Optional margin for spacing */
+        gap: 10px;
+        margin-top: 10px;
     }
 
     #timestamp {
@@ -156,7 +188,7 @@
     }
 
 	.wrapper {
-		width: 400px;
+		width: 500px;
 		height: 100%;
 		position: relative;
 		color: black;
@@ -275,7 +307,7 @@
         display: flex;
         position: fixed;
         top: 0;
-        right: -404px;
+        right: -504px;
         z-index: 3;
         transition: right 0.3s ease-in-out;
         height: 100%;
@@ -305,7 +337,7 @@
     }
 
     .popup {
-        width: 400px;
+        width: 500px;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -318,7 +350,7 @@
     }
 
     #question {
-        max-width: 400px;
+        max-width: 500px;
         white-space: pre-wrap;
         overflow-wrap: break-word;
         padding: 10px; 
