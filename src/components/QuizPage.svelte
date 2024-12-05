@@ -8,7 +8,7 @@
 
     let exams = [];
     let selectedDifficulty = "Easy";
-    let lastClicked = '';
+    let lastClicked = 'N/A';
     let response = {
         Question: `Which of the following quantities must be known in order to construct a CLT-based confidence interval for the population mean? Select all that apply.
 
@@ -57,7 +57,9 @@
 
      const handleQuizButtonClick = () => {
         const now = new Date();
-        lastClicked = now.toLocaleString();
+        if (examSelected){
+            lastClicked = now.toLocaleString();
+        }
         examSelected = !examSelected;
     };
 	
