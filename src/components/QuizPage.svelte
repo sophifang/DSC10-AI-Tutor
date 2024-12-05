@@ -8,6 +8,7 @@
 
     let exams = [];
     let selectedDifficulty = "Easy";
+    let lastClicked = '';
     let response = {
         Question: `Which of the following quantities must be known in order to construct a CLT-based confidence interval for the population mean? Select all that apply.
 
@@ -53,6 +54,12 @@
      const displayAnswer = async () => {        
         answer_hidden = !answer_hidden;
      };
+
+     const handleQuizButtonClick = () => {
+        const now = new Date();
+        lastClicked = now.toLocaleString();
+        examSelected = !examSelected;
+    };
 	
   </script>
   
@@ -61,7 +68,7 @@
     <aside class:examSelected>          
         <!-- New Quesiton Generator -->
         <div class="quiz-btn">
-            <button id="quiz-btn" class:examSelected on:click="{() => examSelected = !examSelected}">
+            <button id="quiz-btn" class:examSelected on:click={handleQuizButtonClick}>
                 <img src={quizImg} alt="Quiz!" width="50px"/>
             </button>
         </div>
@@ -108,6 +115,9 @@
                         </div>
                     </button> 
                 </div>
+                {#if lastClicked}
+                    <p id="timestamp">Last Quiz Check: {lastClicked}</p>
+                {/if}
             </div>
         </div>
     </aside>
@@ -116,7 +126,13 @@
   <style>
     p{
         text-align: left;
+        max-width: 400px;
     }
+
+    #timestamp{
+        padding-bottom: 20px;
+    }
+
 	.wrapper {
 		height: 100%;
 		position: relative;
@@ -253,6 +269,7 @@
         text-align: center;
         margin: 0;
         color: black;
+        padding-top: 20px;
     }
 
     .refresh{
@@ -270,7 +287,6 @@
         flex-direction: column;
         align-items: center;
         justify-content: space-around;
-        padding-top: 20px;
         text-align: center;
         height: 100%;
 		top: 0;
