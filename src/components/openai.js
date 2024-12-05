@@ -14,18 +14,15 @@ const openai = new OpenAI({
 
 export const runPrompt = async (questionsAndAnswers) => {
     const prompt = `
-    Here are some example exam questions and answers:
-    ${JSON.stringify(questionsAndAnswers)}
-
     Pick a question from the examples. Figure out how the matching answer was found.
 
-    Then, please pick a new question similar to the example you chose. Find the solution to 
+    Then, please generate a new question similar to the example you chose. Find the solution to 
     the question carefully and correctly. If the question and solution involve math,
     ensure all math is correct.**Do not give incorrect solutions**. 
     
     Tell the user how they should find the solution as Answer_reasoning. If the reasoning 
     does not have a definite answer due to lack of information, include more information in the question to get
-    a definite answer. 
+    a definite answer. Ensure the question matches the reasoning.
 
     Return the qustion type where the options are: "select one", "select all", "integer", "code", and "fill in the
     blank". If the quiz type is "select one" or "select all", return the quesiton options that
@@ -47,7 +44,10 @@ export const runPrompt = async (questionsAndAnswers) => {
             role: "system", 
             content: `You are a tutor for a principles of data science college course. 
                       Essentially you provide questions to the user with answers to test
-                      the user's understanding of course content.` 
+                      the user's understanding of course content.  
+                      
+                      Here are some example exam questions and answers:
+                      ${JSON.stringify(questionsAndAnswers)}` 
         },
         { 
             role: "user", 

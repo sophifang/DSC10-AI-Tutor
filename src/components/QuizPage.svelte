@@ -7,6 +7,7 @@
 	import { writable  }from 'svelte/store';
 
     let exams = [];
+    let selectedDifficulty = "Easy";
     let response = {
         Question: `Which of the following quantities must be known in order to construct a CLT-based confidence interval for the population mean? Select all that apply.
 
@@ -39,10 +40,11 @@
         loading.set(true);
 
         let questionsAndAnswers = exams
-            .filter(exam => exam.Exam_type === "Quiz" && exam.Quiz_type === 1)
+            .filter(exam => exam.Exam_type === "Quiz" && exam.Quiz_type === 1 && exam.Difficulty_score === selectedDifficulty)
             .map(exam => ({
                 Question: exam.Question,
-                Answer: exam.Answer
+                Answer: exam.Answer,
+                Difficulty_score: exam.Difficulty_score
         }));
         answer_hidden = true;
         response = await runPrompt(questionsAndAnswers);
@@ -56,7 +58,7 @@
   
   <main>
     <!-- Quiz Side Bar -->
-    <aside class:examSelected>  
+    <aside class:examSelected>          
         <!-- New Quesiton Generator -->
         <div class="quiz-btn">
             <button id="quiz-btn" class:examSelected on:click="{() => examSelected = !examSelected}">
@@ -73,6 +75,16 @@
                 <!-- Put your knowledge to the test! -->
                 <!-- <br/> -->
                 Powered by GPT-4o mini
+                <div class="difficulty-selector">
+                    <div class="difficulty-options">
+                        <input type="radio" name="difficulty" value="Easy" id="easy" bind:group={selectedDifficulty} checked/>
+                        <label for="easy" class="easy">Easy</label>
+                        <input type="radio" name="difficulty" value="Medium" id="medium" bind:group={selectedDifficulty}/>
+                        <label for="medium" class="medium">Medium</label>
+                        <input type="radio" name="difficulty" value="Hard" id="hard" bind:group={selectedDifficulty}/>
+                        <label for="hard" class="hard">Hard</label>
+                    </div>
+                </div>
                 <div class="wrapper" use:loader={loading}>
                     <p id="question">
                         <b>Question</b><br/>{response.Question}
@@ -113,19 +125,95 @@
 
     .examSelected{
         right: 0;
+        font-family: Arial, sans-serif;
     }
 
-    .quiz-btn{
+    .difficulty-selector {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        font-family: Arial, sans-serif;
+        margin: 20px 0;
+    }
+
+    .difficulty-options {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .difficulty-options input[type="radio"] {
+        display: none;
+    }
+
+    .difficulty-options label {
+        padding: 8px 16px;
+        font-size: 14px;
+        border: 2px solid #ddd;
+        border-radius: 20px;
+        cursor: pointer;
+        background-color: #f9f9f9;
+        transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    }
+
+    /* Selected/Checked Style */
+    .difficulty-options input[type="radio"]:checked + label.easy {
+        background-color: #2dbba2;
+        color: white;
+        border-color: #2dbba2;
+    }
+
+    .difficulty-options input[type="radio"]:checked + label.medium {
+        background-color: #ffb300;
+        color: white;
+        border-color: #ffb300;
+    }
+
+    .difficulty-options input[type="radio"]:checked + label.hard {
+        background-color: #e53935;
+        color: white;
+        border-color: #e53935;
+    }
+
+
+    /* Hover Effect */
+    .difficulty-options label:hover {
+        background-color: #eef;
+        border-color: #5872d2;
+    }
+
+
+    .quiz-btn {
+        display: inline-block;
         margin-top: 50px;
-        width: auto;
-        height: 100%;
+        width: 60px;
+        height: 60px;
         background-color: transparent;
-    }
-
-    #quiz-btn{
+        transition: width 0.3s ease;
+        position: relative;
+        text-align: center;
         background-color: white;
         border: 2px solid black;
         border-right: 0px solid black;
+    }
+
+    .quiz-btn:hover {
+        width: 80px;
+    }
+
+    .quiz-btn img {
+        width: 50px;
+        height: 50px;
+        transition: none;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    
+    #quiz-btn{
+        background-color: transparent;
+        border: 0px solid black;
     }
 
     .quiz-popup{
@@ -241,20 +329,6 @@
         white-space: pre-wrap;
         height: 120px;
     }
-
-    /* .popup button {
-        padding: 10px 20px;
-        background-color: #007bff;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        font-size: 16px;
-        cursor: pointer;
-    } */
-
-    /* .popup button:hover {
-        background-color: #0056b3;
-    } */
 
     .popup .hidden {
         display: none;

@@ -17,7 +17,7 @@
 		position: absolute;
 		left: 0;
 		right: 0;
-		top: -25%;
+		top: 2%;
 		bottom: 0;
 		color: rgb(0, 0, 0);
 		background: rgb(255 255 255)
@@ -38,6 +38,7 @@
   -webkit-transform: translateZ(0);
   -ms-transform: translateZ(0);
   transform: translateZ(0);
+  transform: translateY(-1000%);
 }
 @-webkit-keyframes load4 {
   0%,
