@@ -1,4 +1,5 @@
  <script>
+  import App from '../App.svelte'
   import LecturePreview from '../components/LecturePreview.svelte';
   import LectureFullView from '../components/LectureFullView.svelte';
   import QuizPage from '../components/QuizPage.svelte';

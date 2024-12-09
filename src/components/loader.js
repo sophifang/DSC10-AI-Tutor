@@ -11,7 +11,7 @@ export const loader = (node, loading) => {
 
 			setTimeout(() => {
 				loading.set(false);
-			}, 8000);
+			}, 8500);
 		} else {
 			if (Spin) {
 				Spin.$destroy?.();

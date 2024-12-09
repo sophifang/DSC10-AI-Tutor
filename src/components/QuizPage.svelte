@@ -67,7 +67,7 @@
         if (examSelected){
             lastClicked = now.toLocaleString();
         } else{
-            // handleGenerateQuestion();
+            handleGenerateQuestion();
         }
         examSelected = !examSelected;
     };
@@ -97,11 +97,11 @@
                 <!-- Select difficulty level -->
                 <div class="difficulty-selector">
                     <div class="difficulty-options">
-                        <input type="radio" name="difficulty" value="Easy" id="easy" bind:group={selectedDifficulty} checked/>
+                        <input type="radio" name="difficulty" value="Easy" id="easy" bind:group={selectedDifficulty} on:click={handleGenerateQuestion} checked/>
                         <label for="easy" class="easy">Easy</label>
-                        <input type="radio" name="difficulty" value="Medium" id="medium" bind:group={selectedDifficulty}/>
+                        <input type="radio" name="difficulty" value="Medium" id="medium" bind:group={selectedDifficulty} on:click={handleGenerateQuestion}/>
                         <label for="medium" class="medium">Medium</label>
-                        <input type="radio" name="difficulty" value="Hard" id="hard" bind:group={selectedDifficulty}/>
+                        <input type="radio" name="difficulty" value="Hard" id="hard" bind:group={selectedDifficulty} on:click={handleGenerateQuestion}/>
                         <label for="hard" class="hard">Hard</label>
                     </div>
                 </div>
@@ -152,16 +152,16 @@
   
   <style>
     .overlay {
-        position: fixed; /* Cover the entire viewport */
+        position: fixed;
         top: 0;
         left: 0;
-        width: 100%; /* Full width */
-        height: 100%; /* Full height */
-        background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent gray */
-        z-index: 2; /* Place it above the main content but below the sidebar */
-        opacity: 0; /* Start fully transparent */
-        visibility: hidden; /* Ensure it's not interactable when hidden */
-        transition: opacity 0.3s ease, visibility 0.3s ease; /* Smooth transition */
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 2;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
     }
 
     .overlay.active {
@@ -356,7 +356,21 @@
         padding: 10px; 
     }
 
-    @media (max-width: 450px) {
+    @media (max-width: 600px) {
+        aside {
+            right: -354px;
+        }
+
+        .popup{
+            width: 350px;
+        }
+
+        .wrapper{
+            width: 350px;
+        }
+    }
+
+    @media (max-width: 400px) {
         aside {
             right: -254px;
         }
