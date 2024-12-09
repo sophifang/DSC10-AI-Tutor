@@ -52,7 +52,7 @@
         answer_hidden = true;
         
         // Generates questions
-        response = await runPrompt(questionsAndAnswers);
+        // response = await runPrompt(questionsAndAnswers);
      };
 
     // Displays answer
