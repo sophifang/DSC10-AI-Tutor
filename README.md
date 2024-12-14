@@ -1,5 +1,5 @@
 # DSC 10 AI Tutor
-## Video Demo
+## Video demo
 Check out our [video demo](https://www.youtube.com/watch?v=owcdFCk__-E)!
 
 ## Getting started locally
