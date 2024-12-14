@@ -1,12 +1,12 @@
 <script>
     import { onMount } from "svelte";
     import * as d3 from 'd3';
-    import { runPrompt } from "./openai.js"
-    import Spinner from './Spinner.svelte';
 	import { loader } from './loader';
 	import { writable  }from 'svelte/store';
+    import { runPrompt } from "./openai.js"
 
     let exams = [];
+    let lec03 = [];
     let selectedDifficulty = "Easy";
     let lastClicked = 'N/A';
     let response = {
@@ -20,8 +20,6 @@
  Standard deviation of the sample
  Size of the population
  Size of the sample`, 
-        Question_type: "...", 
-        Question_options: "...", 
         Answer: "Mean of the sample, Standard deviation of the sample, Size of the sample", 
         Answer_reasoning: "..."
     };
@@ -35,8 +33,13 @@
         const res = await fetch('exams/dsc10_exams.csv'); 
         const csv = await res.text();
         exams = d3.csvParse(csv, d3.autoType)
+
+        const resLec = await fetch('lecture_notes/lec03_dataset.csv'); 
+        const csvLec = await resLec.text();
+        lec03 = d3.csvParse(csvLec, d3.autoType)
     });
 
+    let section_name = "NumPy";
     // Generates a new question
     const handleGenerateQuestion = async () => {
         loading.set(true);
@@ -49,10 +52,17 @@
                 Answer: exam.Answer,
                 Difficulty_score: exam.Difficulty_score
         }));
+        console.log(selectedDifficulty);
+        let currentLectureSection = lec03
+            .filter(section => section.section_name === section_name )
+            .map(section => ({
+                Section: section.section_name,
+        }));
+
         answer_hidden = true;
         
         // Generates questions
-        // response = await runPrompt(questionsAndAnswers);
+        response = await runPrompt(questionsAndAnswers, currentLectureSection, selectedDifficulty);
      };
 
     // Displays answer
@@ -97,11 +107,11 @@
                 <!-- Select difficulty level -->
                 <div class="difficulty-selector">
                     <div class="difficulty-options">
-                        <input type="radio" name="difficulty" value="Easy" id="easy" bind:group={selectedDifficulty} on:click={handleGenerateQuestion} checked/>
+                        <input type="radio" name="difficulty" value="Easy" id="easy" bind:group={selectedDifficulty} on:change={handleGenerateQuestion} checked/>
                         <label for="easy" class="easy">Easy</label>
-                        <input type="radio" name="difficulty" value="Medium" id="medium" bind:group={selectedDifficulty} on:click={handleGenerateQuestion}/>
+                        <input type="radio" name="difficulty" value="Medium" id="medium" bind:group={selectedDifficulty} on:change={handleGenerateQuestion}/>
                         <label for="medium" class="medium">Medium</label>
-                        <input type="radio" name="difficulty" value="Hard" id="hard" bind:group={selectedDifficulty} on:click={handleGenerateQuestion}/>
+                        <input type="radio" name="difficulty" value="Hard" id="hard" bind:group={selectedDifficulty} on:change={handleGenerateQuestion}/>
                         <label for="hard" class="hard">Hard</label>
                     </div>
                 </div>

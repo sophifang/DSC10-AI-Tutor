@@ -1,3 +1,4 @@
+<!-- referenced this example: https://svelte.dev/playground/14a03ba29cbc408f8d26904c2f59a985?version=3.46.4 -->
 <script>
 	import { fade } from 'svelte/transition'
 </script>

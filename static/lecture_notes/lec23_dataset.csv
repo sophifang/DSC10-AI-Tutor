@@ -1,0 +1,636 @@
+lecture_number,lecture_title,section_name,section
+23,Permutation Testing,Announcements,"Quiz 4 is today.
+
+It covers Lectures 17-19 and related assignments.
+Prepare by solving relevant problems on practice.dsc10.com. It covers Lectures 17-19 and related assignments. Prepare by solving relevant problems on practice.dsc10.com. Homework 6 is due on Tuesday at 11:59PM. The Final Project is due on Tuesday, June 4th at 11:59PM. Monday is a holiday, so there is no lecture and no office hours. Enjoy your long weekend!"
+23,Permutation Testing,Agenda,"Permutation testing.
+
+Are the distributions of weight for babies 👶 born to smoking mothers vs. non-smoking mothers different?
+Are the distributions of pressure drops for footballs 🏈 from two different teams different? Are the distributions of weight for babies 👶 born to smoking mothers vs. non-smoking mothers different? Are the distributions of pressure drops for footballs 🏈 from two different teams different?"
+23,Permutation Testing,Setting,"Standard hypothesis testing answers questions of the form: I have a population distribution, and I have one sample. Does this sample look like it was drawn from the population? Permutation testing answers questions of the form: I have two samples, but no information about any population distributions. Do these samples look like they were drawn from the same population? Standard hypothesis involves a known population distribution, but permutation testing involves an unknown population distribution. How do you determine whether two samples came from the same population distribution, if you don't know what that population distribution is?"
+23,Permutation Testing,A sample of babies,"Input: babies = bpd.read_csv('data/baby.csv').get(['Maternal Smoker', 'Birth Weight'])
+babies Maternal Smoker
+Birth Weight
+
+
+0
+False
+120
+
+
+1
+False
+113
+
+
+2
+True
+128
+
+
+...
+...
+...
+
+
+1171
+True
+130
+
+
+1172
+False
+125
+
+
+1173
+False
+117 Maternal Smoker
+Birth Weight  Maternal Smoker Birth Weight 0
+False
+120 0 False 120 1
+False
+113 1 False 113 2
+True
+128 2 True 128 ...
+...
+... ... ... ... 1171
+True
+130 1171 True 130 1172
+False
+125 1172 False 125 1173
+False
+117 1173 False 117 1174 rows × 2 columns The means of the two groups in our sample are different. Input: babies.groupby('Maternal Smoker').mean() Birth Weight
+
+
+Maternal Smoker
+
+
+
+False
+123.09
+
+
+True
+113.82 Birth Weight  Birth Weight Maternal Smoker Maternal Smoker  False
+123.09 False 123.09 True
+113.82 True 113.82 Input: diff_in_means = (babies.groupby('Maternal Smoker').mean().get('Birth Weight').loc[False] - 
+                 babies.groupby('Maternal Smoker').mean().get('Birth Weight').loc[True])
+diff_in_means Output: 9.266142572024918 Question: Is there a significant difference in the weights of babies born to mothers who smoked vs. babies born to mothers who didn't smoke?"
+23,Permutation Testing,Setup for the hypothesis test,"Null Hypothesis: In the population, birth weights of smokers' babies and non-smokers' babies have the same distribution, and the observed differences in our samples are due to random chance. Alternative Hypothesis: In the population, smokers' babies have lower birth weights than non-smokers' babies, on average. The observed differences in our samples cannot be explained by random chance alone. Test statistic: Difference in mean birth weight of non-smokers' babies and smokers' babies."
+23,Permutation Testing,Generating new samples under the null hypothesis,"We need the distribution of the test statistic under the assumption the null hypothesis is true. Under the null hypothesis, both groups are sampled from the same population distribution. We need to draw two samples from that population distribution (of the same sizes as our original smoking and non-smoking groups) and compute the difference in group means for our two samples. 🚨 Issue: We don't have the population distribution, so we can't draw samples from it!"
+23,Permutation Testing,Constructing a population,"Idea: We can construct a ""population"" by combining both of our samples. Then, to create two random samples from it, we just separate (or split) the population into two random groups. We can do this because, under the null hypothesis, the mother's smoking status has no impact on the baby's birth weight, so all baby weights come from the same population. Input: show_permutation_testing_intro()"
+23,Permutation Testing,Permutations,"A permutation of a sequence is a rearrangement of the elements in that sequence.
+
+For example, 'BAC' and 'CAB' are both permutations of the string 'ABC'.
+We create permutations by shuffling. For example, 'BAC' and 'CAB' are both permutations of the string 'ABC'. We create permutations by shuffling. In the previous animation, we repeatedly split the ""population"" into two random groups whose sizes were equal to the original samples' sizes.
+
+In the original non-smokers' sample, there were 7 weights, and in the original smokers' sample, there were 4 weights.
+Each time we created a pair of new samples, we randomly chose 7 weights to be part of the new non-smokers' sample, and the other 4 weights to be part of the new smokers' sample. In the original non-smokers' sample, there were 7 weights, and in the original smokers' sample, there were 4 weights. Each time we created a pair of new samples, we randomly chose 7 weights to be part of the new non-smokers' sample, and the other 4 weights to be part of the new smokers' sample. Key idea: To randomly assign weights to groups, in a way that preserves the sizes of the groups, we can just shuffle the 'Maternal Smoker' column of babies!"
+23,Permutation Testing,Permutation tests,"A permutation test is a type of A/B test (and a type of hypothesis test). It tests whether two samples come from the same population distribution. To conduct a permutation test: Shuffle the group labels (i.e. the Trues and Falses) to generate two new samples under the null. These two new samples have the same sizes as the original samples. Compute the difference in group means (the test statistic). Repeat steps 1 and 2 to generate an empirical distribution of the difference in group means. See where the observed statistic lies in the empirical distribution. If, in our simulations, we rarely saw a difference in group means as extreme as the observed difference in group means, we have evidence to reject the null."
+23,Permutation Testing,Permutation tests with DataFrames,"We want to randomly shuffle just the 'Maternal Smoker' column in the babies DataFrame. df.sample returns a random sample of the rows in a DataFrame, but we want to shuffle one column independently. Input: data = bpd.DataFrame().assign(x=['a', 'b', 'c', 'd', 'e'], y=[1, 2, 3, 4, 5])
+data x
+y
+
+
+0
+a
+1
+
+
+1
+b
+2
+
+
+2
+c
+3
+
+
+3
+d
+4
+
+
+4
+e
+5 x
+y  x y 0
+a
+1 0 a 1 1
+b
+2 1 b 2 2
+c
+3 2 c 3 3
+d
+4 3 d 4 4
+e
+5 4 e 5 Input: # The order of the rows are different,
+# but each x is still in a row with the same y.
+# This is NOT what we want.
+data.sample(data.shape[0]) x
+y
+
+
+1
+b
+2
+
+
+3
+d
+4
+
+
+0
+a
+1
+
+
+4
+e
+5
+
+
+2
+c
+3 x
+y  x y 1
+b
+2 1 b 2 3
+d
+4 3 d 4 0
+a
+1 0 a 1 4
+e
+5 4 e 5 2
+c
+3 2 c 3 Solution: Use np.random.permutation, which takes in a sequence and returns a shuffled version of it, as an array. Input: # Random!
+np.random.permutation(data.get('x')) Output: array(['d', 'b', 'c', 'e', 'a'], dtype=object) Input: data.assign(shuffled_x=np.random.permutation(data.get('x'))) x
+y
+shuffled_x
+
+
+0
+a
+1
+d
+
+
+1
+b
+2
+b
+
+
+2
+c
+3
+c
+
+
+3
+d
+4
+a
+
+
+4
+e
+5
+e x
+y
+shuffled_x  x y shuffled_x 0
+a
+1
+d 0 a 1 d 1
+b
+2
+b 1 b 2 b 2
+c
+3
+c 2 c 3 c 3
+d
+4
+a 3 d 4 a 4
+e
+5
+e 4 e 5 e"
+23,Permutation Testing,Shuffling one column,"As mentioned before, we'll shuffle the 'Maternal Smoker' column. Input: babies_with_shuffled = babies.assign(
+    Shuffled_Labels=np.random.permutation(babies.get('Maternal Smoker'))
+)
+babies_with_shuffled Maternal Smoker
+Birth Weight
+Shuffled_Labels
+
+
+0
+False
+120
+True
+
+
+1
+False
+113
+False
+
+
+2
+True
+128
+False
+
+
+...
+...
+...
+...
+
+
+1171
+True
+130
+False
+
+
+1172
+False
+125
+False
+
+
+1173
+False
+117
+False Maternal Smoker
+Birth Weight
+Shuffled_Labels  Maternal Smoker Birth Weight Shuffled_Labels 0
+False
+120
+True 0 False 120 True 1
+False
+113
+False 1 False 113 False 2
+True
+128
+False 2 True 128 False ...
+...
+...
+... ... ... ... ... 1171
+True
+130
+False 1171 True 130 False 1172
+False
+125
+False 1172 False 125 False 1173
+False
+117
+False 1173 False 117 False 1174 rows × 3 columns Let's look at the distributions of the two new samples we just generated. Input: fig, ax = plt.subplots()
+baby_bins = np.arange(50, 200, 5)
+smokers = babies_with_shuffled[babies_with_shuffled.get('Shuffled_Labels')]
+non_smokers = babies_with_shuffled[babies_with_shuffled.get('Shuffled_Labels') == False]
+non_smokers.plot(kind='hist', y='Birth Weight', density=True, ax=ax, alpha=0.75, bins=baby_bins, ec='w', figsize=(10, 5))
+smokers.plot(kind='hist',y='Birth Weight', density=True, ax=ax, alpha=0.75, bins=baby_bins)
+plt.legend(['Maternal Smoker = False', 'Maternal Smoker = True'])
+plt.xlabel('Birth Weight'); What do you notice? 👀"
+23,Permutation Testing,How close are the means of the shuffled groups?,"Input: babies_with_shuffled.groupby('Shuffled_Labels').mean().get(['Birth Weight']) Birth Weight
+
+
+Shuffled_Labels
+
+
+
+False
+119.31
+
+
+True
+119.70 Birth Weight  Birth Weight Shuffled_Labels Shuffled_Labels  False
+119.31 False 119.31 True
+119.70 True 119.70 Input: group_means = babies_with_shuffled.groupby('Shuffled_Labels').mean().get('Birth Weight')
+group_means.loc[False] - group_means.loc[True] Output: -0.3960113960114029 This is the test statistic for one experiment (one ""shuffle""). Let's write a function that can compute this test statistic for any shuffle. Input: def difference_in_group_means(weights_df):
+    group_means = weights_df.groupby('Shuffled_Labels').mean().get('Birth Weight')
+    return group_means.loc[False] - group_means.loc[True]
+
+difference_in_group_means(babies_with_shuffled) Output: -0.3960113960114029"
+23,Permutation Testing,Simulation,"This was just one random shuffle. How likely is it that a random shuffle results in a 9.26+ ounce difference in means? We have to repeat the shuffling a bunch of times. On each iteration:
+
+Shuffle the labels to create two new samples.
+Add them as a column to the DataFrame.
+Compute the difference in group means in the two new samples and store the result. Shuffle the labels to create two new samples. Add them as a column to the DataFrame. Compute the difference in group means in the two new samples and store the result."
+23,Permutation Testing,Running the simulation,"Input: n_repetitions = 500 # The dataset is large, so it takes too long to run if we use 5000 or 10000
+differences = np.array([])
+
+for i in np.arange(n_repetitions):
+    # Step 1: Shuffle the labels to create two new samples.
+    shuffled_labels = np.random.permutation(babies.get('Maternal Smoker'))
+    
+    # Step 2: Add them as a column to the DataFrame.
+    shuffled = babies_with_shuffled.assign(Shuffled_Labels=shuffled_labels)
+    
+    # Step 3: Compute the difference in group means in the two new samples and store the result.
+    difference = difference_in_group_means(shuffled)
+    
+    differences = np.append(differences, difference)
+    
+differences Output: array([-0.01, -0.08,  0.08, ..., -0.1 , -1.34,  2.17]) Input: (bpd.DataFrame()
+ .assign(simulated_diffs=differences)
+ .plot(kind='hist', bins=20, density=True, ec='w', figsize=(10, 5))
+); Note that the empirical distribution of the test statistic (difference in means) is centered around 0. This matches our intuition – if the null hypothesis is true, there should be no difference in the group means on average."
+23,Permutation Testing,Conclusion of the test,"Where does our observed statistic lie? Input: (bpd.DataFrame()
+ .assign(simulated_diffs=differences)
+ .plot(kind='hist', bins=20, density=True, ec='w', figsize=(10, 5))
+);
+plt.axvline(diff_in_means, color='black', linewidth=4, label='observed difference in means')
+plt.legend(); Input: smoker_p_value = np.count_nonzero(differences >= diff_in_means) / n_repetitions
+smoker_p_value Output: 0.0"
+23,Permutation Testing,Conclusion,"Under the null hypothesis, we rarely see differences as large as 9.26 ounces. Therefore, we reject the null hypothesis: the evidence implies that the groups do not come from the same distribution. Still, we can't conclude that smoking causes lower birth weight because there may be other factors at play. For instance, maybe smokers are more likely to drink caffeine, and caffeine causes lower birth weight. Input: show_permutation_testing_summary()"
+23,Permutation Testing,Concept Check ✅ – Answer at cc.dsc10.com,"Recall, babies has two columns. Input: babies.take(np.arange(3)) Maternal Smoker
+Birth Weight
+
+
+0
+False
+120
+
+
+1
+False
+113
+
+
+2
+True
+128 Maternal Smoker
+Birth Weight  Maternal Smoker Birth Weight 0
+False
+120 0 False 120 1
+False
+113 1 False 113 2
+True
+128 2 True 128 To randomly assign weights to groups, we shuffled 'Maternal Smoker' column. Could we have shuffled the 'Birth Weight' column instead? A. Yes B. No Yes, we could have. It doesn’t matter which column we shuffle – we could shuffle one or the other, or even both, as long as we shuffle each separately. Think about it like this – pretend you bring a gift 🎁 to a Christmas party 🎄 for a gift exchange, where everyone must leave the party with a random person’s gift. Pretend everyone stands around a circular table and puts the gift they bought in front of them. To randomly assign people to gifts, you could shuffle the gifts on the table and have all the people stay in the same spot, or you could have the people physically shuffle and keep the gifts in the same spots, or you could do both – either way, everyone will end up with a random gift!"
+23,Permutation Testing,Deflategate,"On January 18, 2015, the New England Patriots played the Indianapolis Colts for a spot in the Super Bowl. The Patriots won, 45-7. They went on to win the Super Bowl. After the game, it was alleged that the Patriots intentionally deflated footballs, making them easier to catch. This scandal was called ""Deflategate."""
+23,Permutation Testing,Background,"Each team brings 12 footballs to the game. Teams use their own footballs while on offense. NFL rules stipulate that each ball must be inflated to between 12.5 and 13.5 pounds per square inch (psi). Before the game, officials found that all of the Patriots' footballs were at about 12.5 psi, and that all of the Colts' footballs were at about 13.0 psi.
+
+This pre-game data was not written down. This pre-game data was not written down. In the second quarter, the Colts intercepted a Patriots ball and notified officials that it felt under-inflated. At halftime, two officials (Clete Blakeman and Dyrol Prioleau) independently measured the pressures of as many of the 24 footballs as they could.
+
+They ran out of time before they could finish. They ran out of time before they could finish. Note that the relevant quantity is the change in pressure from the start of the game to the halftime.
+
+The Patriots' balls started at a lower psi (which is not an issue on its own).
+The allegations were that the Patriots deflated their balls, during the game. The Patriots' balls started at a lower psi (which is not an issue on its own). The allegations were that the Patriots deflated their balls, during the game."
+23,Permutation Testing,The measurements,"Input: footballs = bpd.read_csv('data/footballs.csv')
+footballs Team
+Pressure
+PressureDrop
+
+
+0
+Patriots
+11.65
+0.85
+
+
+1
+Patriots
+11.03
+1.48
+
+
+2
+Patriots
+10.85
+1.65
+
+
+...
+...
+...
+...
+
+
+11
+Colts
+12.53
+0.47
+
+
+12
+Colts
+12.72
+0.28
+
+
+13
+Colts
+12.35
+0.65 Team
+Pressure
+PressureDrop  Team Pressure PressureDrop 0
+Patriots
+11.65
+0.85 0 Patriots 11.65 0.85 1
+Patriots
+11.03
+1.48 1 Patriots 11.03 1.48 2
+Patriots
+10.85
+1.65 2 Patriots 10.85 1.65 ...
+...
+...
+... ... ... ... ... 11
+Colts
+12.53
+0.47 11 Colts 12.53 0.47 12
+Colts
+12.72
+0.28 12 Colts 12.72 0.28 13
+Colts
+12.35
+0.65 13 Colts 12.35 0.65 14 rows × 3 columns There are only 14 rows (10 for Patriots footballs, 4 for Colts footballs) since the officials weren't able to record the pressures of every ball. The 'Pressure' column records the average of the two officials' measurements at halftime. The 'PressureDrop' column records the difference between the estimated starting pressure and the average recorded 'Pressure' of each football."
+23,Permutation Testing,The question,"Did the Patriots' footballs drop in pressure more than the Colts'? We want to test whether two samples came from the same distribution – this calls for a permutation test. Null Hypothesis: The drops in pressures for both teams came from the same distribution.
+
+By chance, the Patriots' footballs deflated more. By chance, the Patriots' footballs deflated more. Alternative Hypothesis: No, the Patriots' footballs deflated more than one would expect due to random chance alone."
+23,Permutation Testing,The test statistic,"Similar to the baby weights example, our test statistic will be the difference between the teams' average pressure drops. We'll calculate the mean drop for the 'Patriots' minus the mean drop for the 'Colts'. Input: means = footballs.groupby('Team').mean().get('PressureDrop')
+means Output: Team
+Colts       0.47
+Patriots    1.21
+Name: PressureDrop, dtype: float64 Input: # Calculate the observed statistic.
+observed_difference = means.loc['Patriots'] - means.loc['Colts']
+observed_difference Output: 0.7362500000000001 The average pressure drop for the Patriots was about 0.74 psi more than the Colts."
+23,Permutation Testing,Creating random groups and calculating one value of the test statistic,"We'll run a permutation test to see if 0.74 psi is a significant difference. To do this, we'll need to repeatedly shuffle either the 'Team' or the 'PressureDrop' column. We'll shuffle the 'PressureDrop' column. Tip: It's a good idea to simulate one value of the test statistic before putting everything in a for-loop. Input: # For simplicity, keep only the columns that are necessary for the test: 
+# one column of group labels and one column of numerical values.
+footballs = footballs.get(['Team', 'PressureDrop'])
+footballs Team
+PressureDrop
+
+
+0
+Patriots
+0.85
+
+
+1
+Patriots
+1.48
+
+
+2
+Patriots
+1.65
+
+
+...
+...
+...
+
+
+11
+Colts
+0.47
+
+
+12
+Colts
+0.28
+
+
+13
+Colts
+0.65 Team
+PressureDrop  Team PressureDrop 0
+Patriots
+0.85 0 Patriots 0.85 1
+Patriots
+1.48 1 Patriots 1.48 2
+Patriots
+1.65 2 Patriots 1.65 ...
+...
+... ... ... ... 11
+Colts
+0.47 11 Colts 0.47 12
+Colts
+0.28 12 Colts 0.28 13
+Colts
+0.65 13 Colts 0.65 14 rows × 2 columns Input: # Shuffle one column. 
+# We chose to shuffle the numerical data (pressure drops), but we could have shuffled the group labels (team names) instead.
+shuffled_drops = np.random.permutation(footballs.get('PressureDrop'))
+shuffled_drops Output: array([1.23, 1.8 , 1.38, 0.85, 0.42, 1.35, 1.48, 0.47, 0.65, 1.18, 0.72,
+       1.65, 0.28, 0.47]) Input: # Add the shuffled column back to the DataFrame.
+shuffled = footballs.assign(Shuffled_Drops=shuffled_drops)
+shuffled Team
+PressureDrop
+Shuffled_Drops
+
+
+0
+Patriots
+0.85
+1.23
+
+
+1
+Patriots
+1.48
+1.80
+
+
+2
+Patriots
+1.65
+1.38
+
+
+...
+...
+...
+...
+
+
+11
+Colts
+0.47
+1.65
+
+
+12
+Colts
+0.28
+0.28
+
+
+13
+Colts
+0.65
+0.47 Team
+PressureDrop
+Shuffled_Drops  Team PressureDrop Shuffled_Drops 0
+Patriots
+0.85
+1.23 0 Patriots 0.85 1.23 1
+Patriots
+1.48
+1.80 1 Patriots 1.48 1.80 2
+Patriots
+1.65
+1.38 2 Patriots 1.65 1.38 ...
+...
+...
+... ... ... ... ... 11
+Colts
+0.47
+1.65 11 Colts 0.47 1.65 12
+Colts
+0.28
+0.28 12 Colts 0.28 0.28 13
+Colts
+0.65
+0.47 13 Colts 0.65 0.47 14 rows × 3 columns Input: # Calculate the group means for the two randomly created groups.
+team_means = shuffled.groupby('Team').mean().get('Shuffled_Drops')
+team_means Output: Team
+Colts       0.78
+Patriots    1.08
+Name: Shuffled_Drops, dtype: float64 Input: # Calcuate the difference in group means (Patriots minus Colts) for the randomly created groups.
+team_means.loc['Patriots'] - team_means.loc['Colts'] Output: 0.29875000000000007"
+23,Permutation Testing,The simulation,"Repeat the process many times by wrapping it inside a for-loop. Keep track of the difference in group means in an array, appending each time. Optionally, create a function to calculate the difference in group means. Input: def difference_in_mean_pressure_drops(pressures_df):
+    team_means = pressures_df.groupby('Team').mean().get('Shuffled_Drops')
+    return team_means.loc['Patriots'] - team_means.loc['Colts'] Input: n_repetitions = 5000 # The dataset is much smaller than in the baby weights example, so a larger number of repetitions will still run quickly.
+
+differences = np.array([])
+for i in np.arange(n_repetitions):
+    # Step 1: Shuffle the pressure drops.
+    shuffled_drops = np.random.permutation(footballs.get('PressureDrop'))
+    
+    # Step 2: Put them in a DataFrame.
+    shuffled = footballs.assign(Shuffled_Drops=shuffled_drops)
+    
+    # Step 3: Compute the difference in group means and add the result to the differences array.
+    difference = difference_in_mean_pressure_drops(shuffled)
+
+    differences = np.append(differences, difference)
+    
+differences Output: array([ 0.  ,  0.44,  0.02, ...,  0.19, -0.28, -0.06])"
+23,Permutation Testing,Conclusion,"Input: bpd.DataFrame().assign(SimulatedDifferenceInMeans=differences).plot(kind='hist', bins=20, density=True, ec='w', figsize=(10, 5))
+plt.axvline(observed_difference, color='black', linewidth=4, label='observed difference in means')
+plt.legend(); It doesn't look good for the Patriots. What is the p-value? Recall, the p-value is the probability, under the null hypothesis, of seeing a result as or more extreme than the observation. In this case, that's the probability of the difference in mean pressure drops being greater than or equal to 0.74 psi. Input: np.count_nonzero(differences >= observed_difference) / n_repetitions Output: 0.004 This p-value is low enough to consider this result to be highly statistically significant ($p<0.01$)."
+23,Permutation Testing,🚨 Caution!,"We reject the null hypothesis, as it is unlikely that the difference in mean pressure drops is due to chance alone. But this doesn't establish causation. That is, we can't conclude that the Patriots intentionally deflated their footballs."
+23,Permutation Testing,Aftermath,"Quote from an investigative report commissioned by the NFL: “[T]he average pressure drop of the Patriots game balls exceeded the average pressure drop of the Colts balls by 0.45 to 1.02 psi, depending on various possible assumptions regarding the gauges used, and assuming an initial pressure of 12.5 psi for the Patriots balls and 13.0 for the Colts balls.” Many different methods were used to determine whether the drop in pressures were due to chance, including physics.
+
+We computed an observed difference of 0.74, which is in line with the findings of the report. We computed an observed difference of 0.74, which is in line with the findings of the report. In the end, Tom Brady (quarterback for the Patriots at the time) was suspended 4 games and the team was fined $1 million dollars. The Deflategate Wikipedia article is extremely thorough; give it a read if you're curious!"
+23,Permutation Testing,Summary,"Permutation tests help us determine if two samples came from the same population. We can answers questions like:
+
+""Do smokers' babies and non-smokers babies' weigh the same?""
+More generally: are these things like those things? ""Do smokers' babies and non-smokers babies' weigh the same?"" More generally: are these things like those things? Permutation testing strategy:
+
+Create a ""population"" by pooling data from both samples together.
+Randomly divide this ""population"" into two groups of the same sizes as the original samples.
+Repeat this process, calculating the test statistic for each pair of random groups.
+Generate an empirical distribution of test statistics and see whether the observed statistic is consistent with it. Create a ""population"" by pooling data from both samples together. Randomly divide this ""population"" into two groups of the same sizes as the original samples. Repeat this process, calculating the test statistic for each pair of random groups. Generate an empirical distribution of test statistics and see whether the observed statistic is consistent with it. Implementation:
+
+To randomly divide the ""population"" into two groups of the same sizes as the original samples, we'll just shuffle the group labels and use the shuffled group labels to define the two random groups. To randomly divide the ""population"" into two groups of the same sizes as the original samples, we'll just shuffle the group labels and use the shuffled group labels to define the two random groups."
+23,Permutation Testing,A/B testing,"Permutation tests are one way to perform A/B tests. These are both also hypothesis tests. An A/B test aims to determine if two samples are from the same population (the name comes from giving names to the samples – sample A and sample B). We implemented A/B tests by using permutations. Butside of this class, permutation tests can be used for other purposes, and A/B tests can be done without permutations. For us, they mean the same thing, so if you see A/B test anywhere in the class, it refers to a permutation test."
+23,Permutation Testing,Next time,"We'll switch our focus to prediction – given a sample, what can I predict about data not in that sample? In the next 3 lectures, we'll focus on linear regression, a prediction technique that tries to find the best ""linear relationship"" between two numerical variables.
+
+Along the way, we'll address another idea – correlation.
+You will see linear regression in many more courses – it is one of the most important tools in the data science toolkit. Along the way, we'll address another idea – correlation. You will see linear regression in many more courses – it is one of the most important tools in the data science toolkit."

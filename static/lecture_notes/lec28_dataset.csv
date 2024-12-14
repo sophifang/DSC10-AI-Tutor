@@ -1,0 +1,503 @@
+lecture_number,lecture_title,section_name,section
+28,"Review, Conclusion",Announcements,"The Final Exam is tomorrow, June 8th, from 7-10PM in Solis 104 and Solis 107. See this post on Ed for more details.
+
+Check your email for an assigned seat. Check your email for an assigned seat. If at least 75% of the class fills out both SETs and the internal End-of-Quarter Survey by tomorrow at 8AM, then the entire class will have 1% of extra credit added to their overall grade."
+28,"Review, Conclusion",Agenda,More review of old exam problems. Working on personal projects. Demo: Gapminder 🌎. Some parting thoughts.
+28,"Review, Conclusion",Selected problems,"We're going to work on as many of the following problems as we can in class. There's a PDF template linked on the course website that you can write on; we'll post annotated slides after class. Winter 2023 Final Exam, Problem 16 (CLT and hypothesis testing). Winter 2024 Final Exam, Problem 9 (merge). Winter 2024 Final Exam, Problem 11 (TVD)."
+28,"Review, Conclusion",Using Jupyter Notebooks after DSC 10,"You may be interested in working on data science projects of your own. In this video, we show you how to make blank notebooks and upload datasets of your own to DataHub. After this quarter, depending on the classes you're enrolled in, you may not have access to DataHub. Eventually, you'll want to install Jupyter Notebooks on your computer.
+
+Anaconda is a great way to do that, as it also installs many commonly used packages.
+You may want to download your work from DataHub so you can refer to it after the course ends (though you can look at it on Gradescope too).
+Remember, all babypandas code is regular pandas code, too! Anaconda is a great way to do that, as it also installs many commonly used packages. You may want to download your work from DataHub so you can refer to it after the course ends (though you can look at it on Gradescope too). Remember, all babypandas code is regular pandas code, too!"
+28,"Review, Conclusion",Finding data,These sites allow you to search for datasets (in CSV format) from a variety of different domains. Some may require you to sign up for an account; these are generally reputable sources. Note that all of these links are also available at rampure.org/find-datasets. Data is Plural FiveThirtyEight. CORGIS. Kaggle Datasets. Google’s dataset search. DataHub.io. Data.world. R datasets. Wikipedia. (Use this site to extract and download tables as CSVs.) Awesome Public Datasets GitHub repo. Links to even more sources.
+28,"Review, Conclusion",Domain-specific sources of data,"Sports: Basketball Reference, Baseball Reference, etc. US Government Sources: census.gov, data.gov, data.ca.gov, data.sfgov.org, FBI’s Crime Data Explorer, Centers for Disease Control and Prevention. Global Development: data.worldbank.org, databank.worldbank.org, WHO. Transportation: New York Taxi trips, Bureau of Transportation Statistics, SFO Air Traffic Statistics. Music: Spotify Charts. COVID: Johns Hopkins. Any Google Forms survey you’ve administered! (Go to the results spreadsheet, then go to “File > Download > Comma-separated values”.) Tip: if a site only allows you to download a file as an Excel file, not a CSV file, you can download it, open it in a spreadsheet viewer (Excel, Numbers, Google Sheets), and export it to a CSV."
+28,"Review, Conclusion",plotly,"All of the visualizations (scatter plots, histograms, etc.) in this course were created using a library called matplotlib.
+
+This library was called under-the-hood everytime we wrote df.plot. This library was called under-the-hood everytime we wrote df.plot. plotly is a different visualization library that allows us to create interactive visualizations. You may learn about it in a future course, but we'll briefly show you some cool visualizations you can make with it. Input: import plotly.express as px"
+28,"Review, Conclusion",Gapminder dataset,"Gapminder Foundation is a non-profit venture registered in Stockholm, Sweden, that promotes sustainable global development and achievement of the United Nations Millennium Development Goals by increased use and understanding of statistics and other information about social, economic and environmental development at local, national and global levels. - Gapminder Wikipedia Input: gapminder = px.data.gapminder()
+gapminder country
+continent
+year
+lifeExp
+pop
+gdpPercap
+iso_alpha
+iso_num
+
+
+0
+Afghanistan
+Asia
+1952
+28.801
+8425333
+779.445314
+AFG
+4
+
+
+1
+Afghanistan
+Asia
+1957
+30.332
+9240934
+820.853030
+AFG
+4
+
+
+2
+Afghanistan
+Asia
+1962
+31.997
+10267083
+853.100710
+AFG
+4
+
+
+3
+Afghanistan
+Asia
+1967
+34.020
+11537966
+836.197138
+AFG
+4
+
+
+4
+Afghanistan
+Asia
+1972
+36.088
+13079460
+739.981106
+AFG
+4
+
+
+...
+...
+...
+...
+...
+...
+...
+...
+...
+
+
+1699
+Zimbabwe
+Africa
+1987
+62.351
+9216418
+706.157306
+ZWE
+716
+
+
+1700
+Zimbabwe
+Africa
+1992
+60.377
+10704340
+693.420786
+ZWE
+716
+
+
+1701
+Zimbabwe
+Africa
+1997
+46.809
+11404948
+792.449960
+ZWE
+716
+
+
+1702
+Zimbabwe
+Africa
+2002
+39.989
+11926563
+672.038623
+ZWE
+716
+
+
+1703
+Zimbabwe
+Africa
+2007
+43.487
+12311143
+469.709298
+ZWE
+716 country
+continent
+year
+lifeExp
+pop
+gdpPercap
+iso_alpha
+iso_num  country continent year lifeExp pop gdpPercap iso_alpha iso_num 0
+Afghanistan
+Asia
+1952
+28.801
+8425333
+779.445314
+AFG
+4 0 Afghanistan Asia 1952 28.801 8425333 779.445314 AFG 4 1
+Afghanistan
+Asia
+1957
+30.332
+9240934
+820.853030
+AFG
+4 1 Afghanistan Asia 1957 30.332 9240934 820.853030 AFG 4 2
+Afghanistan
+Asia
+1962
+31.997
+10267083
+853.100710
+AFG
+4 2 Afghanistan Asia 1962 31.997 10267083 853.100710 AFG 4 3
+Afghanistan
+Asia
+1967
+34.020
+11537966
+836.197138
+AFG
+4 3 Afghanistan Asia 1967 34.020 11537966 836.197138 AFG 4 4
+Afghanistan
+Asia
+1972
+36.088
+13079460
+739.981106
+AFG
+4 4 Afghanistan Asia 1972 36.088 13079460 739.981106 AFG 4 ...
+...
+...
+...
+...
+...
+...
+...
+... ... ... ... ... ... ... ... ... ... 1699
+Zimbabwe
+Africa
+1987
+62.351
+9216418
+706.157306
+ZWE
+716 1699 Zimbabwe Africa 1987 62.351 9216418 706.157306 ZWE 716 1700
+Zimbabwe
+Africa
+1992
+60.377
+10704340
+693.420786
+ZWE
+716 1700 Zimbabwe Africa 1992 60.377 10704340 693.420786 ZWE 716 1701
+Zimbabwe
+Africa
+1997
+46.809
+11404948
+792.449960
+ZWE
+716 1701 Zimbabwe Africa 1997 46.809 11404948 792.449960 ZWE 716 1702
+Zimbabwe
+Africa
+2002
+39.989
+11926563
+672.038623
+ZWE
+716 1702 Zimbabwe Africa 2002 39.989 11926563 672.038623 ZWE 716 1703
+Zimbabwe
+Africa
+2007
+43.487
+12311143
+469.709298
+ZWE
+716 1703 Zimbabwe Africa 2007 43.487 12311143 469.709298 ZWE 716 1704 rows × 8 columns The dataset contains information for each country for several different years. Input: gapminder.get('year').unique() Output: array([1952, 1957, 1962, 1967, 1972, 1977, 1982, 1987, 1992, 1997, 2002,
+       2007]) Let's start by just looking at 2007 data (the most recent year in the dataset). Input: gapminder_2007 = gapminder[gapminder.get('year') == 2007]
+gapminder_2007 country
+continent
+year
+lifeExp
+pop
+gdpPercap
+iso_alpha
+iso_num
+
+
+11
+Afghanistan
+Asia
+2007
+43.828
+31889923
+974.580338
+AFG
+4
+
+
+23
+Albania
+Europe
+2007
+76.423
+3600523
+5937.029526
+ALB
+8
+
+
+35
+Algeria
+Africa
+2007
+72.301
+33333216
+6223.367465
+DZA
+12
+
+
+47
+Angola
+Africa
+2007
+42.731
+12420476
+4797.231267
+AGO
+24
+
+
+59
+Argentina
+Americas
+2007
+75.320
+40301927
+12779.379640
+ARG
+32
+
+
+...
+...
+...
+...
+...
+...
+...
+...
+...
+
+
+1655
+Vietnam
+Asia
+2007
+74.249
+85262356
+2441.576404
+VNM
+704
+
+
+1667
+West Bank and Gaza
+Asia
+2007
+73.422
+4018332
+3025.349798
+PSE
+275
+
+
+1679
+Yemen, Rep.
+Asia
+2007
+62.698
+22211743
+2280.769906
+YEM
+887
+
+
+1691
+Zambia
+Africa
+2007
+42.384
+11746035
+1271.211593
+ZMB
+894
+
+
+1703
+Zimbabwe
+Africa
+2007
+43.487
+12311143
+469.709298
+ZWE
+716 country
+continent
+year
+lifeExp
+pop
+gdpPercap
+iso_alpha
+iso_num  country continent year lifeExp pop gdpPercap iso_alpha iso_num 11
+Afghanistan
+Asia
+2007
+43.828
+31889923
+974.580338
+AFG
+4 11 Afghanistan Asia 2007 43.828 31889923 974.580338 AFG 4 23
+Albania
+Europe
+2007
+76.423
+3600523
+5937.029526
+ALB
+8 23 Albania Europe 2007 76.423 3600523 5937.029526 ALB 8 35
+Algeria
+Africa
+2007
+72.301
+33333216
+6223.367465
+DZA
+12 35 Algeria Africa 2007 72.301 33333216 6223.367465 DZA 12 47
+Angola
+Africa
+2007
+42.731
+12420476
+4797.231267
+AGO
+24 47 Angola Africa 2007 42.731 12420476 4797.231267 AGO 24 59
+Argentina
+Americas
+2007
+75.320
+40301927
+12779.379640
+ARG
+32 59 Argentina Americas 2007 75.320 40301927 12779.379640 ARG 32 ...
+...
+...
+...
+...
+...
+...
+...
+... ... ... ... ... ... ... ... ... ... 1655
+Vietnam
+Asia
+2007
+74.249
+85262356
+2441.576404
+VNM
+704 1655 Vietnam Asia 2007 74.249 85262356 2441.576404 VNM 704 1667
+West Bank and Gaza
+Asia
+2007
+73.422
+4018332
+3025.349798
+PSE
+275 1667 West Bank and Gaza Asia 2007 73.422 4018332 3025.349798 PSE 275 1679
+Yemen, Rep.
+Asia
+2007
+62.698
+22211743
+2280.769906
+YEM
+887 1679 Yemen, Rep. Asia 2007 62.698 22211743 2280.769906 YEM 887 1691
+Zambia
+Africa
+2007
+42.384
+11746035
+1271.211593
+ZMB
+894 1691 Zambia Africa 2007 42.384 11746035 1271.211593 ZMB 894 1703
+Zimbabwe
+Africa
+2007
+43.487
+12311143
+469.709298
+ZWE
+716 1703 Zimbabwe Africa 2007 43.487 12311143 469.709298 ZWE 716 142 rows × 8 columns"
+28,"Review, Conclusion",Scatter plot,"We can plot life expectancy vs. GDP per capita. If you hover over a point, you will see the name of the country. Input: px.scatter(gapminder_2007, x='gdpPercap', y='lifeExp', hover_name='country') In future courses, you'll learn about transformations. Here, we'll apply a log transformation to the x-axis to make the plot look a little more linear. Input: px.scatter(gapminder_2007, x='gdpPercap', y='lifeExp', log_x=True, hover_name='country')"
+28,"Review, Conclusion",Animated scatter plot,"We can take things one step further. Input: px.scatter(gapminder,
+           x = 'gdpPercap',
+           y = 'lifeExp', 
+           hover_name = 'country',
+           color = 'continent',
+           size = 'pop',
+           size_max = 60,
+           log_x = True,
+           range_y = [30, 90],
+           animation_frame = 'year',
+           title = 'Life Expectancy, GDP Per Capita, and Population over Time'
+          ) Watch this video if you want to see an even-more-animated version of this plot."
+28,"Review, Conclusion",Animated histogram,"Input: px.histogram(gapminder,
+            x = 'lifeExp',
+            animation_frame = 'year',
+            range_x = [20, 90],
+            range_y = [0, 50],
+            title = 'Distribution of Life Expectancy over Time')"
+28,"Review, Conclusion",Choropleth,"Input: px.choropleth(gapminder,
+              locations = 'iso_alpha',
+              color = 'lifeExp',
+              hover_name = 'country',
+              hover_data = {'iso_alpha': False},
+              title = 'Life Expectancy Per Country',
+              color_continuous_scale = px.colors.sequential.tempo
+)"
+28,"Review, Conclusion","From Lecture 1: What is ""data science""?","Data science is about drawing useful conclusions from data using computation. Throughout the quarter, we touched on several aspects of data science: In the first 4 weeks, we used Python to explore data.
+
+Lots of visualization 📈📊 and ""data manipulation"", using industry-standard tools. Lots of visualization 📈📊 and ""data manipulation"", using industry-standard tools. In the next 4 weeks, we used data to infer about a population, given just a sample.
+
+Rely heavily on simulation, rather than formulas. Rely heavily on simulation, rather than formulas. In the last 2 weeks, we used data from the past to predict what may happen in the future.
+
+A taste of machine learning 🤖. A taste of machine learning 🤖. In future DSC courses – including DSC 20 and 40A – you'll revisit all three of these aspects of data science."
+28,"Review, Conclusion",Thank you!,"This course would not have been possible without... Graduate TA: Arya Rahnama. Undergraduate tutors: Daniel Budidharma, Oren Ciolli, Sophia Fang, Kate Feng, Charlie Gillet, Ashley Ho, Chia-Chan Ho, Raine Hoang, Michelle Hong, Jason Huynh, Norah Kerendian, Minchan Kim, Vivian Lin, Calvin Nguyen, Kathleen Nguyen, Athulith Paraselli, Pallavi Prabhu, Pranav Rajaram, Aaron Rasin, Keenan Serrao, Abel Seyoum, Yutian Shi, Sofia Tkachenko, Claire Wang, Sophie Wang, Cici Xu, Tiffany Yu, Ciro Zhang. Learn more about tutoring – it's fun, and you can be a tutor as early as your 3rd quarter at UCSD! Keep in touch! dsc10.com/staff
+
+After grades are released, we'll make a post on Ed where you can ask course staff for advice on courses and UCSD more generally. After grades are released, we'll make a post on Ed where you can ask course staff for advice on courses and UCSD more generally."

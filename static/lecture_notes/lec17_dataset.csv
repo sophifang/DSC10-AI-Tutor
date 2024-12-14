@@ -1,0 +1,325 @@
+lecture_number,lecture_title,section_name,section
+17,Standardization and the Normal Distribution,Announcements,"Homework 4 is due Tuesday at 11:59PM. The Midterm Project is past due but you can still submit it by 11:59PM tonight using slip days.
+
+If working with a partner, this will detract from both partners' allocations. If working with a partner, this will detract from both partners' allocations."
+17,Standardization and the Normal Distribution,Agenda,Chebyshev's inequality. Standardization. The normal distribution.
+17,Standardization and the Normal Distribution,Recap: variance and standard deviation,where $n$ is the number of observations.
+17,Standardization and the Normal Distribution,What can we do with the standard deviation?,"It turns out, in any numerical distribution, the bulk of the data are in the range “mean ± a few SDs”. Let's make this more precise."
+17,Standardization and the Normal Distribution,Chebyshev’s inequality,"Fact: In any numerical distribution, the proportion of values in the range “mean ± $z$ SDs” is at least Range
+Proportion
+
+
+mean ± 2 SDs
+at least $1 - \frac{1}{4}$   (75%)
+
+
+mean ± 3 SDs
+at least $1 - \frac{1}{9}$   (88.88..%)
+
+
+mean ± 4 SDs
+at least $1 - \frac{1}{16}$ (93.75%)
+
+
+mean ± 5 SDs
+at least $1 - \frac{1}{25}$  (96%) Range
+Proportion Range Proportion mean ± 2 SDs
+at least $1 - \frac{1}{4}$   (75%) mean ± 2 SDs at least $1 - \frac{1}{4}$   (75%) mean ± 3 SDs
+at least $1 - \frac{1}{9}$   (88.88..%) mean ± 3 SDs at least $1 - \frac{1}{9}$   (88.88..%) mean ± 4 SDs
+at least $1 - \frac{1}{16}$ (93.75%) mean ± 4 SDs at least $1 - \frac{1}{16}$ (93.75%) mean ± 5 SDs
+at least $1 - \frac{1}{25}$  (96%) mean ± 5 SDs at least $1 - \frac{1}{25}$  (96%)"
+17,Standardization and the Normal Distribution,"Flight delays, revisited ✈️","Input: delays = bpd.read_csv('data/united_summer2015.csv')
+delays.plot(kind='hist', y='Delay', bins=np.arange(-20.5, 210, 5), density=True, ec='w', figsize=(10, 5), title='Flight Delays')
+plt.xlabel('Delay (minutes)'); Input: delay_mean = delays.get('Delay').mean()
+delay_mean Output: 16.658155515370705 Input: delay_std = np.std(delays.get('Delay')) # There is no .std() method in babypandas!
+delay_std Output: 39.480199851609314"
+17,Standardization and the Normal Distribution,Mean and standard deviation,"Chebyshev's inequality tells us that At least 75% of delays are in the following interval: Input: delay_mean - 2 * delay_std, delay_mean + 2 * delay_std Output: (-62.30224418784792, 95.61855521858934) At least 88.88% of delays are in the following interval: Input: delay_mean - 3 * delay_std, delay_mean + 3 * delay_std Output: (-101.78244403945723, 135.09875507019865) Let's visualize these intervals! Input: delays.plot(kind='hist', y='Delay', bins=np.arange(-20.5, 210, 5), density=True, alpha=0.65, ec='w', figsize=(10, 5), title='Flight Delays')
+plt.axvline(delay_mean - 2 * delay_std, color='maroon', label='± 2 SD')
+plt.axvline(delay_mean + 2 * delay_std, color='maroon')
+
+plt.axvline(delay_mean + 3 * delay_std, color='blue',  label='± 3 SD')
+plt.axvline(delay_mean - 3 * delay_std, color='blue')
+
+plt.axvline(delay_mean, color='green', label='Mean')
+plt.scatter([delay_mean], [-0.0017], color='green', marker='^', s=250)
+plt.ylim(-0.0038, 0.06)
+plt.legend();"
+17,Standardization and the Normal Distribution,Chebyshev's inequality provides lower bounds!,"Remember, Chebyshev's inequality states that at least $1 - \frac{1}{z^2}$ of values are within $z$ SDs from the mean, for any numerical distribution. For instance, it tells us that at least 75% of delays are in the following interval: Input: delay_mean - 2 * delay_std, delay_mean + 2 * delay_std Output: (-62.30224418784792, 95.61855521858934) However, in this case, a much larger fraction of delays are in that interval. Input: within_2_sds = delays[(delays.get('Delay') >= delay_mean - 2 * delay_std) & 
+                      (delays.get('Delay') <= delay_mean + 2 * delay_std)]
+
+within_2_sds.shape[0] / delays.shape[0] Output: 0.9560940325497288 If we know more about the shape of the distribution, we can provide better guarantees for the proportion of values within $z$ SDs of the mean."
+17,Standardization and the Normal Distribution,Activity,"For a particular set of data points, Chebyshev's inequality states that at least $\frac{8}{9}$ of the data points are between $-20$ and $40$. What is the standard deviation of the data?"
+17,Standardization and the Normal Distribution,Heights and weights 📏,"We'll work with a data set containing the heights and weights of 5000 adult males. Input: height_and_weight = bpd.read_csv('data/height_and_weight.csv')
+height_and_weight Height
+Weight
+
+
+0
+73.85
+241.89
+
+
+1
+68.78
+162.31
+
+
+2
+74.11
+212.74
+
+
+...
+...
+...
+
+
+4997
+67.01
+199.20
+
+
+4998
+71.56
+185.91
+
+
+4999
+70.35
+198.90 Height
+Weight  Height Weight 0
+73.85
+241.89 0 73.85 241.89 1
+68.78
+162.31 1 68.78 162.31 2
+74.11
+212.74 2 74.11 212.74 ...
+...
+... ... ... ... 4997
+67.01
+199.20 4997 67.01 199.20 4998
+71.56
+185.91 4998 71.56 185.91 4999
+70.35
+198.90 4999 70.35 198.90 5000 rows × 2 columns"
+17,Standardization and the Normal Distribution,Distributions of height and weight,"Let's look at the distributions of both numerical variables. Input: height_and_weight.plot(kind='hist', y='Height', density=True, ec='w', bins=30, alpha=0.8, figsize=(10, 5)); Input: height_and_weight.plot(kind='hist', y='Weight', density=True, ec='w', bins=30, alpha=0.8, color='C1', figsize=(10, 5)); Input: height_and_weight.plot(kind='hist', density=True, ec='w', bins=60, alpha=0.8, figsize=(10, 5)); Observation: The two distributions look like shifted and stretched versions of the same basic shape, called a bell curve 🔔. Distributions shaped like this are called normal distributions."
+17,Standardization and the Normal Distribution,Many normal distributions,"There are many normal distributions, with different means and different standard deviations. All normal distributions are shaped like bell curves, but they vary in center and spread. The mean and standard deviation uniquely define a normal distribution. There is only one normal distribution with a given mean and SD. Input: show_many_normal_distributions() Note that the area underneath each curve is 1. Therefore, the taller curves are narrower, and the shorter curves are wider. Any normal distribution can be shifted and scaled to look like any other normal distribution. Let's see how with height and weight!"
+17,Standardization and the Normal Distribution,Standard units,"Suppose $x$ is a numerical variable, and $x_i$ is one value of that variable. Then, $$x_{i \: \text{(su)}} = \frac{x_i - \text{mean of $x$}}{\text{SD of $x$}}$$ represents $x_i$ in standard units – the number of standard deviations $x_i$ is above the mean. Example: Suppose someone weighs 225 pounds. What is their weight in standard units? Input: weights = height_and_weight.get('Weight')
+(225 - weights.mean()) / np.std(weights) Output: 1.920169918158094 Interpretation: 225 is 1.92 standard deviations above the mean weight. 225 becomes 1.92 in standard units."
+17,Standardization and the Normal Distribution,Standardization,"The process of converting all values of a variable (i.e. a column) to standard units is known as standardization, and the resulting values are considered to be standardized. Input: def standard_units(col):
+    return (col - col.mean()) / np.std(col) Input: standardized_height = standard_units(height_and_weight.get('Height'))
+standardized_height Output: 0       1.68
+1      -0.09
+2       1.78
+        ... 
+4997   -0.70
+4998    0.88
+4999    0.46
+Name: Height, Length: 5000, dtype: float64 Input: standardized_weight = standard_units(height_and_weight.get('Weight'))
+standardized_weight Output: 0       2.77
+1      -1.25
+2       1.30
+        ... 
+4997    0.62
+4998   -0.06
+4999    0.60
+Name: Weight, Length: 5000, dtype: float64"
+17,Standardization and the Normal Distribution,The effect of standardization,"Standardized variables have: A mean of 0. An SD of 1. We often standardize variables to bring them to the same scale. Input: # e-15 means 10^(-15), which is a very small number, effectively zero.
+standardized_height.describe() Output: count    5.00e+03
+mean     1.64e-14
+std      1.00e+00
+           ...   
+50%      4.76e-04
+75%      6.85e-01
+max      3.48e+00
+Name: Height, Length: 8, dtype: float64 Input: standardized_weight.describe() Output: count    5.00e+03
+mean     1.64e-14
+std      1.00e+00
+           ...   
+50%      6.53e-04
+75%      6.74e-01
+max      4.19e+00
+Name: Weight, Length: 8, dtype: float64 Let's look at how the process of standardization works visually. Input: HTML('data/height_anim.html') Input: HTML('data/weight_anim.html')"
+17,Standardization and the Normal Distribution,Standardized histograms,"Now that we've standardized the distributions of height and weight, let's see how they look on the same set of axes. Input: standardized_height_and_weight = bpd.DataFrame().assign(
+    Height=standardized_height,
+    Weight=standardized_weight
+)
+standardized_height_and_weight.plot(kind='hist', density=True, ec='w',bins=30, alpha=0.8, figsize=(10, 5)); These both look pretty similar!"
+17,Standardization and the Normal Distribution,The standard normal distribution,"The distributions we've seen look essentially the same once standardized. This distribution is called the standard normal distribution. It is defined by its mean of 0 and its standard deviation of 1. The shape of such a distribution is called the standard normal curve. You don't need to know the formula – just the shape!
+
+We'll just use the formula today to make plots. We'll just use the formula today to make plots."
+17,Standardization and the Normal Distribution,The standard normal curve,"Input: def normal_curve(z):
+    return 1 / np.sqrt(2 * np.pi) * np.exp((-z**2)/2)
+
+x = np.linspace(-4, 4, 1000)
+y = normal_curve(x)
+
+plt.figure(figsize=(10, 5))
+plt.plot(x, y, color='black');
+plt.xlabel('$z$');
+plt.title(r'$\phi(z) = \frac{1}{\sqrt{2 \pi}} e^{-\frac{1}{2}z^2}$');"
+17,Standardization and the Normal Distribution,Heights/weights are roughly normal,"If a distribution follows this shape, we say it is roughly normal. Input: standardized_height_and_weight.plot(kind='hist', density=True, ec='w', bins=120, alpha=0.8, figsize=(10, 5));
+plt.plot(x, y, color='black', linestyle='--', label='Normal', linewidth=5)
+plt.legend(loc='upper right');"
+17,Standardization and the Normal Distribution,The standard normal distribution,"Think of the normal distribution as a ""continuous histogram"". Its mean and median are both 0 – it is symmetric. It has inflection points at $\pm 1$.
+
+More on this later. More on this later. Like a histogram:
+
+The area between $a$ and $b$ is the proportion of values between $a$ and $b$.
+The total area underneath the normal curve is is 1. The area between $a$ and $b$ is the proportion of values between $a$ and $b$. The total area underneath the normal curve is is 1. Input: sliders() Output: HBox(children=(FloatSlider(value=0.0, description='a', max=3.0, min=-4.0, step=0.25), FloatSlider(value=1.0, d…"
+17,Standardization and the Normal Distribution,Cumulative density functions,"The cumulative density function (CDF) of a distribution is a function that takes in a value $z$ and returns the proportion of values in the distribution that are less than or equal to $z$, i.e. the area under the curve to the left of $z$. Input: # cdf(0) should give us the gold area below.
+normal_area(-np.inf, 0) To find areas under curves, we typically use integration (calculus). However, the standard normal curve has no closed-form integral. Often, people refer to tables that contain approximations of the CDF of the standard normal distribution. We'll use an approximation built into the scipy module in Python. The function scipy.stats.norm.cdf(z) computes the area under the standard normal curve to the left of z."
+17,Standardization and the Normal Distribution,Areas under the standard normal curve,"What does scipy.stats.norm.cdf(0) evaluate to? Why? Input: normal_area(-np.inf, 0) Input: from scipy import stats
+stats.norm.cdf(0) Output: 0.5"
+17,Standardization and the Normal Distribution,Areas under the standard normal curve,"Suppose we want to find the area to the right of 2 under the standard normal curve. Input: normal_area(2, np.inf) The following expression gives us the area to the left of 2. Input: stats.norm.cdf(2) Output: 0.9772498680518208 Input: normal_area(-np.inf, 2) However, since the total area under the standard normal curve is 1: Input: 1 - stats.norm.cdf(2) Output: 0.02275013194817921"
+17,Standardization and the Normal Distribution,Areas under the standard normal curve,"How might we use stats.norm.cdf to compute the area between -1 and 0? Input: normal_area(-1, 0) Strategy: Input: stats.norm.cdf(0) - stats.norm.cdf(-1) Output: 0.3413447460685429 Input: stats.norm.cdf(b) - stats.norm.cdf(a)"
+17,Standardization and the Normal Distribution,General strategy for finding area,"The area under a standard normal curve in the interval $[a, b]$ is What can we do with this? We're about to see!"
+17,Standardization and the Normal Distribution,Using the normal distribution,"Let's return to our data set of heights and weights. Input: height_and_weight Height
+Weight
+
+
+0
+73.85
+241.89
+
+
+1
+68.78
+162.31
+
+
+2
+74.11
+212.74
+
+
+...
+...
+...
+
+
+4997
+67.01
+199.20
+
+
+4998
+71.56
+185.91
+
+
+4999
+70.35
+198.90 Height
+Weight  Height Weight 0
+73.85
+241.89 0 73.85 241.89 1
+68.78
+162.31 1 68.78 162.31 2
+74.11
+212.74 2 74.11 212.74 ...
+...
+... ... ... ... 4997
+67.01
+199.20 4997 67.01 199.20 4998
+71.56
+185.91 4998 71.56 185.91 4999
+70.35
+198.90 4999 70.35 198.90 5000 rows × 2 columns As we saw before, both variables are roughly normal. What benefit is there to knowing that the two distributions are roughly normal?"
+17,Standardization and the Normal Distribution,Standard units and the normal distribution,"Key idea: The $x$-axis in a plot of the standard normal distribution is in standard units.
+
+For instance, the area between -1 and 1 is the proportion of values within 1 standard deviation of the mean. For instance, the area between -1 and 1 is the proportion of values within 1 standard deviation of the mean. Suppose a distribution is (roughly) normal. Then, these are two are approximately equal:
+
+The proportion of values in the distribution between $a$ and $b$.
+The area between $a_{\: \text{(su)}}$ and $b_{\: \text{(su)}}$ under the standard normal curve.
+Recall, $x_{i \: \text{(su)}} = \frac{x_i - \text{mean of $x$}}{\text{SD of $x$}}$. The proportion of values in the distribution between $a$ and $b$. The area between $a_{\: \text{(su)}}$ and $b_{\: \text{(su)}}$ under the standard normal curve. Recall, $x_{i \: \text{(su)}} = \frac{x_i - \text{mean of $x$}}{\text{SD of $x$}}$."
+17,Standardization and the Normal Distribution,Example: Proportion of weights between 200 and 225 pounds,"Let's suppose, as is often the case, that we don't have access to the entire distribution of weights, but just the mean and SD. Input: weight_mean = weights.mean()
+weight_mean Output: 187.02062065819288 Input: weight_std = np.std(weights)
+weight_std Output: 19.779176302396458 Using just this information, we can estimate the proportion of weights between 200 and 225 pounds: Convert 200 to standard units. Convert 225 to standard units. Use stats.norm.cdf to find the area between (1) and (2). Input: left = (200 - weight_mean) / weight_std
+left Output: 0.6562143510614508 Input: right = (225 - weight_mean) / weight_std
+right Output: 1.920169918158094 Input: normal_area(left, right) Input: approximation = stats.norm.cdf(right) - stats.norm.cdf(left)
+approximation Output: 0.22842488819306006"
+17,Standardization and the Normal Distribution,Checking the approximation,"Since we have access to the entire set of weights, we can compute the true proportion of weights between 200 and 225 pounds. Input: # True proportion of values between 200 and 225.
+height_and_weight[
+    (height_and_weight.get('Weight') >= 200) &
+    (height_and_weight.get('Weight') <= 225)
+].shape[0] / height_and_weight.shape[0] Output: 0.2294 Input: # Approximation using the standard normal curve.
+approximation Output: 0.22842488819306006 Pretty good for an approximation! 🤩"
+17,Standardization and the Normal Distribution,Warning: Standardization doesn't make a distribution normal!,"Consider the distribution of delays from earlier in the lecture. Input: delays.plot(kind='hist', y='Delay', bins=np.arange(-20.5, 210, 5), density=True, ec='w', figsize=(10, 5), title='Flight Delays')
+plt.xlabel('Delay (minutes)'); The distribution above does not look normal. It won't look normal even if we standardize it. By standardizing a distribution, all we do is move it horizontally and stretch it vertically – the shape itself doesn't change. Input: HTML('data/delay_anim.html')"
+17,Standardization and the Normal Distribution,Chebyshev's inequality and the normal distribution,"Recall that Chebyshev's inequality states that the proportion of values within $z$ SDs of the mean is at least $1-\frac{1}{z^2}$.
+
+This works for any distribution, and is a lower bound. This works for any distribution, and is a lower bound. If we know that the distribution is normal, we can be even more specific! Range
+All Distributions (via Chebyshev's inequality)
+Normal Distribution
+
+
+mean $\pm \ 1$ SD
+$\geq 0\%$
+$\approx 68\%$
+
+
+mean $\pm \ 2$ SDs
+$\geq 75\%$
+$\approx 95\%$
+
+
+mean $\pm \ 3$ SDs
+$\geq 88.8\%$
+$\approx 99.73\%$ Range
+All Distributions (via Chebyshev's inequality)
+Normal Distribution Range All Distributions (via Chebyshev's inequality) Normal Distribution mean $\pm \ 1$ SD
+$\geq 0\%$
+$\approx 68\%$ mean $\pm \ 1$ SD $\geq 0\%$ $\approx 68\%$ mean $\pm \ 2$ SDs
+$\geq 75\%$
+$\approx 95\%$ mean $\pm \ 2$ SDs $\geq 75\%$ $\approx 95\%$ mean $\pm \ 3$ SDs
+$\geq 88.8\%$
+$\approx 99.73\%$ mean $\pm \ 3$ SDs $\geq 88.8\%$ $\approx 99.73\%$"
+17,Standardization and the Normal Distribution,68% of values are within 1 SD of the mean,"Remember, the values on the $x$-axis for the standard normal curve are in standard units. So, the proportion of values within 1 SD of the mean is the area under the standard normal curve between -1 and 1. Input: normal_area(-1, 1, bars=True) Input: stats.norm.cdf(1) - stats.norm.cdf(-1) Output: 0.6826894921370859 This means that if a variable follows a normal distribution, approximately 68% of values will be within 1 SD of the mean."
+17,Standardization and the Normal Distribution,95% of values are within 2 SDs of the mean,"Input: normal_area(-2, 2, bars=True) Input: stats.norm.cdf(2) - stats.norm.cdf(-2) Output: 0.9544997361036416 If a variable follows a normal distribution, approximately 95% of values will be within 2 SDs of the mean. Consequently, 5% of values will be outside this range. Since the normal curve is symmetric,
+
+2.5% of values will be more than 2 SDs above the mean, and
+2.5% of values will be more than 2 SDs below the mean. 2.5% of values will be more than 2 SDs above the mean, and 2.5% of values will be more than 2 SDs below the mean."
+17,Standardization and the Normal Distribution,Recap: Proportion of values within $z$ SDs of the mean,"Range
+All Distributions (via Chebyshev's inequality)
+Normal Distribution
+
+
+mean $\pm \ 1$ SD
+$\geq 0\%$
+$\approx 68\%$
+
+
+mean $\pm \ 2$ SDs
+$\geq 75\%$
+$\approx 95\%$
+
+
+mean $\pm \ 3$ SDs
+$\geq 88.8\%$
+$\approx 99.73\%$ Range
+All Distributions (via Chebyshev's inequality)
+Normal Distribution Range All Distributions (via Chebyshev's inequality) Normal Distribution mean $\pm \ 1$ SD
+$\geq 0\%$
+$\approx 68\%$ mean $\pm \ 1$ SD $\geq 0\%$ $\approx 68\%$ mean $\pm \ 2$ SDs
+$\geq 75\%$
+$\approx 95\%$ mean $\pm \ 2$ SDs $\geq 75\%$ $\approx 95\%$ mean $\pm \ 3$ SDs
+$\geq 88.8\%$
+$\approx 99.73\%$ mean $\pm \ 3$ SDs $\geq 88.8\%$ $\approx 99.73\%$ The percentages you see for normal distributions above are approximate, but are not lower bounds. Important: They apply to all normal distributions, standardized or not. This is because all normal distributions are just stretched and shifted versions of the standard normal distribution."
+17,Standardization and the Normal Distribution,Inflection points,"We mentioned that the standard normal curve has inflection points at $z = \pm 1$.
+
+An inflection point is where a curve goes from ""opening down"" 🙁 to ""opening up"" 🙂. An inflection point is where a curve goes from ""opening down"" 🙁 to ""opening up"" 🙂. Input: normal_area(-1, 1) We know that the $x$-axis of the standard normal curve represents standard units, so the inflection points are at 1 standard deviation above and below the mean. This means that if a distribution is roughly normal, we can determine its standard deviation by finding the distance between each inflection point and the mean."
+17,Standardization and the Normal Distribution,Example: Inflection points,"Remember: The distribution of heights is roughly normal, but it is not a standard normal distribution. Input: height_and_weight.plot(kind='hist', y='Height', density=True, ec='w', bins=40, alpha=0.8, figsize=(10, 5));
+plt.xticks(np.arange(60, 78, 2)); The center appears to be around 69. The inflection points appear to be around 66 and 72. So, the standard deviation is roughly 72 - 69 = 3. Input: np.std(height_and_weight.get('Height')) Output: 2.863075878119538"
+17,Standardization and the Normal Distribution,Summary: Spread and Chebyshev's inequality,"Variance and standard deviation (SD) quantify how spread out data points are.
+
+Standard deviation is the square root of variance.
+Roughly speaking, the standard deviation describes how far values in a dataset typically are from the mean. Standard deviation is the square root of variance. Roughly speaking, the standard deviation describes how far values in a dataset typically are from the mean. Chebyshev's inequality states that, in any numerical distribution, the proportion of values within $z$ SDs of the mean is at least $1 - \frac{1}{z^2}$.
+
+The true proportion of values within $z$ SDs of the mean may be larger than $1 - \frac{1}{z^2}$, depending on the distribution, but it cannot be smaller. The true proportion of values within $z$ SDs of the mean may be larger than $1 - \frac{1}{z^2}$, depending on the distribution, but it cannot be smaller."
+17,Standardization and the Normal Distribution,Summary: Standard units and the normal distribution,"To convert a value $x_i$ from a column $x$ to standard units, use $x_{i \: \text{(su)}} = \frac{x_i - \text{mean of $x$}}{\text{SD of $x$}}$.
+
+A value in standard units measures the number of SDs the value is above the mean. A value in standard units measures the number of SDs the value is above the mean. The normal distribution is bell-shaped, and arises often in nature. The $x$-axis of the standard normal distribution is in standard units. If we know a distribution is roughly normal, and we know its mean and SD, then we can use the standard normal distribution's curve to approximate the proportion of values within a given range without needing access to all of the data.
+
+If a variable is roughly normally distributed, then approximately 68% of its values are within 1 SD of the mean, and approximately 95% of its values are within 2 SDs of the mean. If a variable is roughly normally distributed, then approximately 68% of its values are within 1 SD of the mean, and approximately 95% of its values are within 2 SDs of the mean."
+17,Standardization and the Normal Distribution,Next time,"The Central Limit Theorem. Confidence intervals, another way."
