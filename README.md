@@ -1,6 +1,7 @@
 # DSC 10 AI Tutor
 ## Video Demo
-Check out our video demo at https://www.youtube.com/watch?v=owcdFCk__-E.
+Check out our [video demo](https://www.youtube.com/watch?v=owcdFCk__-E)!
+
 ## Getting started locally
 After the repository is cloned, open a terminal and navigate to the repository. Run the following lines:
 
