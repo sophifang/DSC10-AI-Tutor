@@ -11,13 +11,6 @@
     let progress = 0;
     let sections = []; // Holds the table of contents
 
-    // Mock question data for the sidebar
-    const questions = [
-        { section: 'Introduction', question: 'What is hypothesis testing?' },
-        { section: 'Agenda', question: 'What is a null hypothesis?' },
-        { section: 'Models', question: 'How do models explain data?' }
-    ];
-
     function goBack() {
         dispatch('goBack');
     }
@@ -65,14 +58,15 @@
 <main>
     <header>
         <button on:click={goBack}>← Back</button>
-        <h1>Lecture 20 – Hypothesis Testing</h1>
+        <h1>{lecture.title || 'Lecture'}</h1>
     </header>
     <div class="progress-bar" style="width: {progress}%;"></div>
 
     <div class="content">
         <div class="notes" on:scroll={updateProgress}>
-            <svelte:component this={Lecture20} />
+            <svelte:component this={lecture.component} />
         </div>
+        
 
         <aside class="sidebar">
             <h2>Current Section</h2>
@@ -139,5 +133,8 @@
 
     button:hover {
         color: #0056b3;
+    }
+    img {
+    width: 100%;
     }
 </style>

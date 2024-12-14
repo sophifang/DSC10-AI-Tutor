@@ -33,8 +33,9 @@ export const runPrompt = async (questionsAndAnswers, currentLectureSection, diff
                       ${JSON.stringify(questionsAndAnswers)}.
                       
                       Step 2 -
-                      Use the related questions to generate a new question(different numbers or names) based on the lecture section with a difficulty level of ${difficultyScore}. 
-                      If no related questions exist, simply generate a quesiton related to the current lecture section.
+                      Based on the current lecture section, generate a new question with a difficulty level of ${difficultyScore}. Use
+                      the example exam questions as examples. If no related questions exist, simply generate a quesiton related to 
+                      the current lecture section.
 
                       Step 3 -
                       Find the solution to the question carefully and correctly. If the question and solution involve math,

@@ -1,3 +1,4 @@
 import { writable } from 'svelte/store';
 
-export const currentLecture = writable(null);
+export let selectedLecture = writable(null);
+export let currentLecture = writable(null);

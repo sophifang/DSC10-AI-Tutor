@@ -1,11 +1,6 @@
 <pre class='code'># Run this cell to set up packages for lecture.
     from lec20_imports import *</pre>
-    <div class="section">
-    <h1>Lecture 20 – Hypothesis Testing</h1>
-    </div>
-    <div class="section">
-    <h2>DSC 10, Spring 2024</h2>
-    </div>
+
     <div class="section">
     <h3>Announcements</h3>
     <ul>

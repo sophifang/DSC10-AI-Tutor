@@ -1,3 +1,56 @@
+
+  img {
+    max-width: 70%;
+    height: auto;
+    display: block;
+    margin: 10px 0;
+}
+ul, ol {
+    padding-left: 20px;
+    margin-bottom: 1em;
+}
+ul ul, ol ol {
+    padding-left: 20px;
+}
+li {
+    margin-bottom: 0.5em;
+}
+.section {
+    padding: 5px;
+}
+/* Styling for Jupyter Notebook-style code cells */
+pre.code {
+    background-color: #f7f7f7;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 10px;
+    color: #333;
+    white-space: pre-wrap;
+}
+/* Styling for Jupyter Notebook-style output cells */
+pre.output {
+    font-size: 10px;
+    color: #555;
+    white-space: pre-wrap;
+}
+/* Styling for tables */
+table {
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 10px;
+}
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+th {
+    background-color: #f2f2f2;
+}
 /* global.css
 body {
     margin: 0;
