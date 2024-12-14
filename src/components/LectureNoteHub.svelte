@@ -12,6 +12,7 @@
 
   import Lecture15 from './Lecture15.svelte';
   import Lecture22 from './Lecture22.svelte';
+  import { selectedLecture } from './currentLecture.js';
 
   // Define the available lectures and their corresponding components
   export let notes = [
@@ -28,14 +29,14 @@
       
   ];
 
-  let selectedLecture = null; // Track the currently selected lecture
+//   let selectedLecture = null; // Track the currently selected lecture
 
   function openLecture(note) {
-      selectedLecture = note; // Set the selected lecture
+      $selectedLecture = note; // Set the selected lecture
   }
 
   function closeLecture() {
-      selectedLecture = null; // Return to the hub
+      $selectedLecture = null; // Return to the hub
   }
 
 
@@ -60,9 +61,9 @@
 
 
 <!-- Conditionally render the lecture notes page or the hub -->
-{#if selectedLecture}
+{#if $selectedLecture}
   <LectureNotesPage 
-      lecture={selectedLecture} 
+      lecture={$selectedLecture} 
       on:goBack={closeLecture} />
 {:else}
   <div class="lecture-note-hub">

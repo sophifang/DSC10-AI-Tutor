@@ -4,6 +4,8 @@
 	import { loader } from './loader';
 	import { writable  }from 'svelte/store';
     import { runPrompt } from "./openai.js"
+    import { selectedLecture } from './currentLecture.js';
+    import { currentSection } from './currentSection.js';
 
     let exams = [];
     let lec03 = [];
@@ -28,6 +30,7 @@
 	let loading = writable(false);
     let refreshImg = "refresh.png"
     let quizImg = "quiz.png"
+    let combinedData = [];
 
     onMount(async () => {
         const res = await fetch('exams/dsc10_exams.csv'); 
@@ -37,27 +40,49 @@
         const resLec = await fetch('lecture_notes/lec03_dataset.csv'); 
         const csvLec = await resLec.text();
         lec03 = d3.csvParse(csvLec, d3.autoType)
+
+        const fileUrls = [
+            "lecture_notes/lec01_dataset.csv", "lecture_notes/lec03_dataset.csv", "lecture_notes/lec04_dataset.csv",
+            "lecture_notes/lec06_dataset.csv", "lecture_notes/lec08_dataset.csv", "lecture_notes/lec12_dataset.csv",
+            "lecture_notes/lec15_dataset.csv", "lecture_notes/lec20_dataset.csv", "lecture_notes/lec22_dataset.csv",
+            "lecture_notes/lec23_dataset.csv",
+        ];
+        const csvPromises = fileUrls.map(url => fetch(url).then(res => res.text()));
+
+        const csvTexts = await Promise.all(csvPromises);
+
+        combinedData = csvTexts
+            .map(csvText => d3.csvParse(csvText, d3.autoType)) 
+            .flat();
+
+        // console.log("Combined Data:", combinedData);
+
     });
 
     let section_name = "NumPy";
     // Generates a new question
     const handleGenerateQuestion = async () => {
+        // console.log($currentSection)
+        // console.log($selectedLecture)
+
         loading.set(true);
         
         // Filters relevant questions
         let questionsAndAnswers = exams
             .filter(exam => exam.Exam_type === "Quiz" && exam.Quiz_type === 1 && exam.Difficulty_score === selectedDifficulty)
+            // .filter(exam => exam.Difficulty_score === selectedDifficulty)
             .map(exam => ({
                 Question: exam.Question,
                 Answer: exam.Answer,
                 Difficulty_score: exam.Difficulty_score
         }));
-        console.log(selectedDifficulty);
-        let currentLectureSection = lec03
-            .filter(section => section.section_name === section_name )
+        let currentLectureSection = combinedData
+            .filter(section => section.lecture_number === parseInt($selectedLecture.id.slice(-2), 10) && section.section_name === $currentSection )
             .map(section => ({
-                Section: section.section_name,
+                Section: section.section,
         }));
+        // console.log(currentLectureSection)
+        // let currentLectureSection = {};
 
         answer_hidden = true;
         

@@ -3,6 +3,7 @@
   import LectureNotesPage from './components/LectureNotesPage.svelte';
   import Lecture20 from './components/Lecture20.svelte';
   import Lecture23 from './components/Lecture23.svelte';
+  import { currentLecture } from './components/currentLecture.js';
   import Lecture03 from './components/Lecture03.svelte';
   import Lecture01 from './components/Lecture01.svelte';
   import Lecture04 from './components/Lecture04.svelte';
@@ -12,14 +13,15 @@
 
   import Lecture15 from './components/Lecture15.svelte';
   import Lecture22 from './components/Lecture22.svelte';
-  let currentLecture = null;
+
+
 
   function openLecture(lecture) {
-    currentLecture = lecture;
+    $currentLecture = lecture;
   }
 
   function goBack() {
-    currentLecture = null;
+    $currentLecture = null;
   }
 
   const lectures = [
@@ -36,9 +38,9 @@
   ];
 </script>
 
-{#if currentLecture}
-  <LectureNotesPage lecture={currentLecture} on:goBack={goBack}>
-    <svelte:component this={currentLecture.component} />
+{#if $currentLecture}
+  <LectureNotesPage lecture={$currentLecture} on:goBack={goBack}>
+    <svelte:component this={$currentLecture.component} />
   </LectureNotesPage>
 {:else}
   <LectureNoteHub notes={lectures} on:openLecture={openLecture} />

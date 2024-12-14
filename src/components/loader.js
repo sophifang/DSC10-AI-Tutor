@@ -1,5 +1,3 @@
-// referenced this example: https://svelte.dev/playground/14a03ba29cbc408f8d26904c2f59a985?version=3.46.4
-
 import Spinner from './Spinner.svelte';
 
 export const loader = (node, loading) => {
@@ -13,7 +11,7 @@ export const loader = (node, loading) => {
 
 			setTimeout(() => {
 				loading.set(false);
-			}, 10_000);
+			}, 12_000);
 		} else {
 			if (Spin) {
 				Spin.$destroy?.();

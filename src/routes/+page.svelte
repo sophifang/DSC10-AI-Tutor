@@ -4,5 +4,5 @@
   import QuizPage from '../components/QuizPage.svelte';
 </script>
 
-<App />
+<App/>
 <QuizPage/>
