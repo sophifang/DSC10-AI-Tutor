@@ -1,5 +1,4 @@
 <script>
-  import { createEventDispatcher } from 'svelte';
   import LectureNotePreview from './LectureNotePreview.svelte';
   import LectureNotesPage from './LectureNotesPage.svelte';
   import Lecture20 from './Lecture20.svelte';
@@ -13,20 +12,19 @@
 
   import Lecture15 from './Lecture15.svelte';
   import Lecture22 from './Lecture22.svelte';
-  const dispatch = createEventDispatcher();
 
   // Define the available lectures and their corresponding components
   export let notes = [
-      { id: 'lecture01', title: 'Introduction', component: Lecture01 },
-      { id: 'lecture03', title: 'Strings, Lists, and Arrays', component: Lecture03 },
-      { id: 'lecture04', title: 'Arrays and DataFrames', component: Lecture04 },
-      { id: 'lecture06', title: 'Grouping and Data Visualization', component: Lecture06 },
-      { id: 'lecture08', title: 'Functions and Applying', component: Lecture08 },
-      { id: 'lecture12', title: 'Simulation', component: Lecture12 },
-      { id: 'lecture15', title: 'Bootstrapping and Confidence Intervals', component: Lecture15 },
-      { id: 'lecture20', title: 'Hypothesis Testing', component: Lecture20 },
-      { id: 'lecture22', title: 'TVD, Hypothesis Testing, and Permutation Testing', component: Lecture22 },
-      { id: 'lecture23', title: 'Permutation Testing', component: Lecture23 }
+      { id: 'lecture01', title: 'Introduction', component: Lecture01,  previewImage: "lecture_previews/lecture01.png"},
+      { id: 'lecture03', title: 'Strings, Lists, and Arrays', component: Lecture03 ,  previewImage: "lecture_previews/lecture03.png"},
+      { id: 'lecture04', title: 'Arrays and DataFrames', component: Lecture04 ,  previewImage: "lecture_previews/lecture04.png"},
+      { id: 'lecture06', title: 'Grouping and Data Visualization', component: Lecture06 ,  previewImage: "lecture_previews/lecture06.png"},
+      { id: 'lecture08', title: 'Functions and Applying', component: Lecture08 ,  previewImage: "lecture_previews/lecture08.png"},
+      { id: 'lecture12', title: 'Simulation', component: Lecture12 ,  previewImage: "lecture_previews/lecture12.png"},
+      { id: 'lecture15', title: 'Bootstrapping and Confidence Intervals', component: Lecture15 ,  previewImage: "lecture_previews/lecture15.png"},
+      { id: 'lecture20', title: 'Hypothesis Testing', component: Lecture20 ,  previewImage: "lecture_previews/lecture20.png"},
+      { id: 'lecture22', title: 'TVD, Hypothesis Testing, and Permutation Testing', component: Lecture22 ,  previewImage: "lecture_previews/lecture22.png"},
+      { id: 'lecture23', title: 'Permutation Testing', component: Lecture23 ,  previewImage: "lecture_previews/lecture23.png"},
       
   ];
 
@@ -39,6 +37,8 @@
   function closeLecture() {
       selectedLecture = null; // Return to the hub
   }
+
+
 </script>
 
 <style>
@@ -57,6 +57,7 @@
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   }
 </style>
+
 
 <!-- Conditionally render the lecture notes page or the hub -->
 {#if selectedLecture}

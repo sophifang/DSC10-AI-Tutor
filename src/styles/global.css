@@ -5,6 +5,9 @@
     display: block;
     margin: 10px 0;
 }
+.image-preview {
+  max-width: 100%;
+}
 ul, ol {
     padding-left: 20px;
     margin-bottom: 1em;
