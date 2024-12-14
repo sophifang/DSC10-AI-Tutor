@@ -1,11 +1,12 @@
 <script>
     import { createEventDispatcher, onMount } from 'svelte';
     import Lecture20 from './Lecture20.svelte';
-    
+    import { currentSection } from './currentSection.js';
+
     export let lecture;
     const dispatch = createEventDispatcher();
 
-    let currentSection = ''; // Tracks the section being viewed
+    // let currentSection = ''; // Tracks the section being viewed
     let totalSections = 0;
     let progress = 0;
     let sections = []; // Holds the table of contents
@@ -47,7 +48,7 @@
         });
 
         progress = ((currentIndex + 1) / totalSections) * 100;
-        currentSection = sections[currentIndex]?.querySelector('h1, h2, h3')?.textContent || '';
+        currentSection.set(sections[currentIndex]?.querySelector('h1, h2, h3')?.textContent || '');
     }
 
     onMount(() => {
@@ -75,7 +76,7 @@
 
         <aside class="sidebar">
             <h2>Current Section</h2>
-            <p>{currentSection || 'Introduction'}</p>
+            <p>{$currentSection || 'Introduction'}</p>
 
             <h3>Table of Contents</h3>
             <ul>

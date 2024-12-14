@@ -4,6 +4,8 @@
 	import { loader } from './loader';
 	import { writable  }from 'svelte/store';
     import { runPrompt } from "./openai.js"
+    import { currentLecture } from './currentLecture.js';
+    import { currentSection } from './currentSection.js';
 
     let exams = [];
     let lec03 = [];
@@ -42,22 +44,26 @@
     let section_name = "NumPy";
     // Generates a new question
     const handleGenerateQuestion = async () => {
+        console.log($currentSection)
+        console.log($currentLecture)
+
         loading.set(true);
         
         // Filters relevant questions
         let questionsAndAnswers = exams
-            .filter(exam => exam.Exam_type === "Quiz" && exam.Quiz_type === 1 && exam.Difficulty_score === selectedDifficulty)
+            // .filter(exam => exam.Exam_type === "Quiz" && exam.Quiz_type === 1 && exam.Difficulty_score === selectedDifficulty)
+            .filter(exam => exam.Difficulty_score === selectedDifficulty)
             .map(exam => ({
                 Question: exam.Question,
                 Answer: exam.Answer,
                 Difficulty_score: exam.Difficulty_score
         }));
-        console.log(selectedDifficulty);
-        let currentLectureSection = lec03
-            .filter(section => section.section_name === section_name )
-            .map(section => ({
-                Section: section.section_name,
-        }));
+        // let currentLectureSection = lec03
+        //     .filter(section => section.section_name === section_name )
+        //     .map(section => ({
+        //         Section: section.section_name,
+        // }));
+        let currentLectureSection = {};
 
         answer_hidden = true;
         
