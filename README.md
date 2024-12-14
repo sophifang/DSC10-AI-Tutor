@@ -1,7 +1,4 @@
 # DSC 10 AI Tutor
-
-Try out our project at https://dsc10-ai-tutor.netlify.app/.
-
 ## Getting started locally
 After the repository is cloned, open a terminal and navigate to the repository. Run the following lines:
 
